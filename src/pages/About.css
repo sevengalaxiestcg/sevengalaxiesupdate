@@ -1,0 +1,260 @@
+.about {
+  width: 100%;
+  height: 100vh;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 10;
+  background-color: rgba(0, 0, 0);
+  background-position: top;
+  background-repeat: no-repeat;
+  background-size: cover;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  animation: fadein 0.1s linear;
+  color: #fff;
+  user-select: none;
+}
+
+.about p {
+  font-family: 'Open Sans', sans-serif;
+  line-height: normal;
+  padding-top: 1.6vmin;
+}
+
+.about-container {
+  pointer-events: all;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  align-items: center;
+  animation: fadein 0.4s linear;
+  width: 80vmin;
+}
+
+.about-7g {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-top: 3vmin;
+}
+
+.about-7g img {
+  width: 33vmin;
+}
+
+.about-title {
+  font-weight: bold;
+  width: 100%;
+  font-size: 4.5vmin;
+  margin: 4vmin 0 3.5vmin 0;
+}
+
+.about-message {
+  font-size: 3vmin;
+}
+
+.about-divisa {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  margin: 4vmin 0 1vmin 0;
+}
+
+.about-social {
+  /* width: 30vmin; */
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.about-social img {
+  margin: 1.2vmin;
+  width: 6.5vmin;
+}
+
+.about-linha {
+  background-color: rgb(127, 127, 127, 0.5);
+  height: 0.30vmin;
+}
+
+.about-linha.small {
+  width: 5vmin;
+}
+
+.about-linha.large {
+  flex-grow: 1;
+}
+
+.about-developer {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-end;
+}
+
+.about-andregt500 {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.about-andregt500 {
+  font-weight: bold;
+  font-size: 2.5vmin;
+}
+
+.about-andregt500 img {
+  width: 26vmin;
+  margin: 1.7vmin 0 0.6vmin 0;
+}
+
+.about-developer-message {
+  padding-left: 2vmin;
+  font-size: 2vmin;
+}
+
+.about-developer-email {
+  text-decoration: underline;
+}
+
+@media screen and (min-width: 300px) And (max-height: 890px) And (min-aspect-ratio: 9/16) {
+  /* VMAX */
+  .about p {
+    padding-top: 0.89vmax;
+  }
+  .about-container {
+    width: 44.6vmax;
+  }
+  .about-7g {
+    padding-top: 1.67vmax;
+  }
+  .about-7g img {
+    width: 18.4vmax;
+  }
+  .about-title {
+    font-size: 2.51vmax;
+    margin: 2.51vmax 0 1.95vmax 0;
+  }
+  .about-message {
+    font-size: 1.67vmax;
+  }
+  .about-divisa {
+    margin: 2.23vmax 0 0.56vmax 0;
+  }
+  .about-social img {
+    margin: 0.67vmax;
+    width: 3.62vmax;
+  }
+  .about-linha {
+    height: 0.17vmax;
+  }
+  .about-linha.small {
+    width: 2.79vmax;
+  }
+  .about-andregt500 {
+    font-size: 1.39vmax;
+  }
+  .about-andregt500 img {
+    width: 14.5vmax;
+    margin: 0.95vmax 0 0.33vmax 0;
+  }
+  .about-developer-message {
+    padding-left: 1.12vmax;
+    font-size: 1.12vmax;
+  }
+}
+
+@media screen and (min-width: 300px) And (max-height: 890px) And (min-aspect-ratio: 1/1) {
+  /* VMIN */
+  .about p {
+    padding-top: 0.89vmin;
+  }
+  .about-container {
+    width: 44.6vmin;
+  }
+  .about-7g {
+    padding-top: 1.67vmin;
+  }
+  .about-7g img {
+    width: 18.4vmin;
+  }
+  .about-title {
+    font-size: 2.51vmin;
+    margin: 2.51vmin 0 1.95vmin 0;
+  }
+  .about-message {
+    font-size: 1.67vmin;
+  }
+  .about-divisa {
+    margin: 2.23vmin 0 0.56vmin 0;
+  }
+  .about-social img {
+    margin: 0.67vmin;
+    width: 3.62vmin;
+  }
+  .about-linha {
+    height: 0.17vmin;
+  }
+  .about-linha.small {
+    width: 2.79vmin;
+  }
+  .about-andregt500 {
+    font-size: 1.39vmin;
+  }
+  .about-andregt500 img {
+    width: 14.5vmin;
+    margin: 0.95vmin 0 0.33vmin 0;
+  }
+  .about-developer-message {
+    padding-left: 1.12vmin;
+    font-size: 1.12vmin;
+  }
+}
+
+@media screen and (min-width: 500px) And (min-height: 891px) {
+  .about p {
+    padding-top: 8px;
+  }
+  .about-container {
+    width: 400px;
+  }
+  .about-7g {
+    padding-top: 15px;
+  }
+  .about-7g img {
+    width: 165px;
+  }
+  .about-title {
+    font-size: 22.5px;
+    margin: 20px 0 17.5px 0;
+  }
+  .about-message {
+    font-size: 15px;
+  }
+  .about-divisa {
+    margin: 20px 0 5px 0;
+  }
+  .about-social img {
+    margin: 6px;
+    width: 32.5px;
+  }
+  .about-linha {
+    height: 1.5px;
+  }
+  .about-linha.small {
+    width: 25px;
+  }
+  .about-andregt500 {
+    font-size: 12.5px;
+  }
+  .about-andregt500 img {
+    width: 130px;
+    margin: 8.5px 0 3px 0;
+  }
+  .about-developer-message {
+    padding-left: 10px;
+    font-size: 10px;
+  }
+}

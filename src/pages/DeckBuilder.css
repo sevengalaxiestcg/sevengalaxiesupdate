@@ -1,0 +1,320 @@
+
+.deckBuilder {
+  width: 100vw;
+  max-width: 100vw;
+  display: block;
+}
+
+.deckBuilder-header {
+  width: -webkit-fill-available;
+  margin: 1vmin 2vmin 0 2vmin;
+}
+
+.deckBuilder-header-block {
+  display: flex;
+}
+
+.deckBuilder-header-block .title {
+  font-family: 'Open Sans', sans-serif;
+  font-weight: 600;
+  width: 60vmin;
+  text-align: left;
+  margin: 3vmin 0 0 6vmin;
+}
+
+.deckBuilder-header-block .header-options {
+  width: -webkit-fill-available;
+  display: flex;
+  flex-direction: row-reverse;
+}
+
+.deckBuilder-header-block .bt-option {
+  height: 7.5vmin;
+  width: 7.5vmin;
+  margin: 1vmin 2vmin;
+  background-color: var(--cor-thema);
+  border-radius: 5vmin;
+}
+
+.deckBuilder-header-block .bt-option:first-child {
+  margin-right: 6vmin;
+}
+
+.deckBuilder-header-block .bt-option img {
+  height: 4.5vmin;
+  width: 4.5vmin;
+  margin: 1.5vmin 1.5vmin;
+  filter: var(--filter-icone-tema);
+}
+
+.deckBuilder-header .bt-deckBuilder-search {
+  margin: 0 2vmin 0 2vmin;
+  width: -webkit-fill-available;
+}
+
+.deckBuilder-cards-categories {
+  margin-top: 2vmin;
+  display: flex;
+}
+
+.deckBuilder-cards-categories-item:first-child {
+  margin-left: 6vmin;
+}
+
+.deckBuilder-filterContainer-item.title {
+  margin-left: 3vmin;
+  text-align: left;
+}
+
+.deckBuilder-filterContainer-item:first-child {
+  align-self: center;
+  width: -webkit-fill-available;
+}
+
+.deckBuilder-filterContainer-item span {
+  display: inline-flex;
+  vertical-align: -webkit-baseline-middle;
+}
+
+.deckBuilder-cards-categories-item {
+  margin: 0vmin 3vmin;
+}
+
+.deckBuilder-cards-categories-item.category-selected {
+  border-bottom: 2px solid var(--cor-thema);
+  border-radius: 0vmin;
+}
+
+.deckBuilder-cards-categories-item .count {
+  font-weight: bold;
+  font-size: x-large;
+}
+
+.deckBuilder-cards-categories-item .title {
+  /* font-weight: bold; */
+  margin-left: 0.35vmin;
+}
+
+.deckBuilder-body {
+  display: inline-block;
+  margin: 1vh 2vmin 1vmin 2vmin;
+  width: -webkit-fill-available;
+  max-height: var(--max-height-content);
+  overflow: auto;
+}
+
+.deckBuilder-body.deckList-body {
+  max-height: var(--max-height-content-deckList);
+}
+
+.deckBuilder-body.has-shadow {
+  border-radius: 5vmin;
+  box-shadow: inset 0px 12px 16px -17px black;
+  /* box-shadow: 0px -9px 22px -15px black; */
+}
+
+.bt-deckBuilder {
+  display: flex;
+  cursor: pointer;
+  margin: 0.5vmin auto 2vmin auto;
+}
+
+.bt-deckBuilder img {
+  pointer-events: none;
+  width: 13vmin;
+  height: 13vmin;
+}
+
+.deckBuilder-item {
+  /* font-family: "Agency FB", sans-serif; */
+  display: inline-block;
+  margin: 2vmin;
+}
+
+.deckBuilder-item-thumb {
+  display: flex;
+  width: 40vmin;
+  height: 56vmin;
+  border-radius: 2vmin;
+}
+
+.deckBuilder-item-nameBox {
+  width: 40vmin;
+}
+
+.deckBuilder-item-nameBox,
+.bt-deckBuilder-search input[type='text'] {
+  padding: 0.5vmin 0;
+  margin-bottom: 0.5vmin;
+  background-color: black;
+  border: 1px solid #ffffff50;
+  border-radius: 3vmin;
+  min-height: 7.5vmin;
+  position: relative;
+  display: inline-flex;
+  top: -2vmin;
+  left: -0.25em;
+}
+
+.bt-deckBuilder-search input[type='text'] {
+  height: 7.5vmin;
+  width: -webkit-fill-available;
+  margin: 3vmin 0 0 2vmin;
+  padding-left: 4vmin;
+  font-size: large;
+  background-color: #000000A0;
+  color: white;
+  border-radius: 8vmin;
+}
+
+.bt-deckBuilder-search img {
+  position: fixed;
+  right: 9vmin;
+  margin-top: 2.75vmin;
+  height: 4vmin;
+  width: 4vmin;
+}
+
+.deckBuilder-galaxiesContainer,
+.deckBuilder-filterContainer {
+  display: flex;
+  margin: 0 2vmin 0 2vmin;
+}
+
+.bt-galaxy,
+.bt-filterOption {
+  height: 8vmin;
+  width: 8vmin;
+  width: -webkit-fill-available;
+  border: 1px solid #ffffff50;
+  border-radius: 6vmin;
+  background-color: #000000A0;
+  margin: 0 1vmin;
+}
+
+.bt-galaxy.galaxy-selected,
+.bt-filterOption.filter-selected {
+  background-color: var(--cor-thema);
+  color: var(--cor-texto-tema)
+}
+
+.bt-galaxy img,
+.bt-filterOption span {
+  display: inline-flex;
+  align-items: center;
+  justify-content: space-evenly;
+  height: 6.5vmin;
+  width: 5.5vmin;
+  margin-top: 0.5vmin;
+}
+
+.img-triangle {
+  margin-top: 0 !important;
+}
+
+.deckBuilder-item-nameBox h4,
+.deckBuilder-item-nameBox img {
+  margin: auto;
+}
+
+.deckBuilder-item-nameBox h4 {
+  width: -webkit-fill-available;
+  max-width: 21vmin;
+  word-break: break-all;
+}
+
+.deckBuilder-item-nameBox input[type='text'] {
+  background-color: transparent;
+  padding-left: 3vmin;
+  font-size: large;
+  color: white;
+  width: 30vmin;
+  border: none;
+}
+
+.bt-deck-editName {
+  cursor: pointer;
+  float: right;
+}
+
+.deckBuilder-span-cardAmount {
+  display: inline-flex;
+  margin: auto;
+}
+
+.deckBuilder-footer {
+  position: fixed;
+  bottom: 0;
+  width: -webkit-fill-available;
+  height: 15vmin;
+  box-shadow: inset 0px -51px 34px -19px black;
+}
+
+.deckBuilder-footer-item {
+  display: inline-flex;
+  margin: 2vmin 4vmin;
+}
+
+.deckBuilder-footer-itemBox {
+  display: grid;
+}
+
+.deckBuilder-footer-itemBox img  {
+  margin: auto;
+  height: 5vmin;
+}
+
+.deckBuilder-footer-itemBox span {
+  margin: auto;
+}
+
+.deckBuilder-edit-block {
+  margin-top: 1vmin;
+  background-color: #00000080;
+  border-radius: 5vmin;
+}
+
+@media screen and (min-width: 500px) {
+  .deckBuilder {
+    row-gap: 4.62px;
+  }
+
+  .bt-deckBuilder {
+    margin-bottom: 1vmin;
+  }
+
+  .bt-deckBuilder img {
+    width: 8vmin;
+    height: 8vmin;
+  }
+
+  .deckBuilder-item-nameBox {
+    /* width: 31vmin; */
+    min-height: 7vmin;
+    /* left: -0.3em; */
+  }
+
+  .bt-deckBuilder-search img {
+    position: fixed;
+    height: 4vmin;
+    width: 4vmin;
+  }
+
+  .bt-deckBuilder-search input[type='text'] {
+    top: -2vmin;
+    width: -webkit-fill-available;
+  }
+
+  .bt-deck-editName {
+    position: relative !important;
+    height: 5vmin !important;
+    top: 0.5vmin !important;
+    /* right: 1vmin; */
+  }
+}
+
+@media screen and (min-width: 500px) and (max-width: 971px){
+  .deckBuilder-item-nameBox input[type='text'] {
+    /* max-width: 23vmin; */
+  }
+}

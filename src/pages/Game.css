@@ -1,0 +1,447 @@
+
+.game {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  align-items: center;
+  grid-row-gap: 1vmin;
+  row-gap: 1vmin;
+}
+
+.rodada {
+  order: 1;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  width: 80vmin;
+  padding: 0 0 0 1vmin;
+  animation: fadein 0.1s linear;
+}
+
+.rodada-nova {
+  width: 35vmin;
+  padding: 2.3vmin 0 1.5vmin 0;
+  border-top: 35vmin;
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+}
+
+.rodada-escolha {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  transition: all 0.25s linear;
+  flex-grow: 1;
+}
+
+.rodada-button, .rodada-button-new {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  flex-grow: 1;
+  cursor: pointer;
+}
+
+.bt-first {
+  margin-right: 3vmin;
+}
+
+.rodada-button p {
+  font-size: 11vmin;
+  text-shadow: none;
+}
+
+.rodada-button-new p {
+  font-family: "Agency FB", sans-serif;
+  font-size: 9vmin;
+}
+
+.rodada-button-new img {
+  width: 40vmin;
+  pointer-events: none;
+}
+
+.rodada-num {
+  background-image: url(../images/Rodada.png);
+  background-repeat: no-repeat;
+  background-position: center;
+  /* background-repeat: round; */
+  background-size: contain;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 26.3vmin;
+  height: 22.8vmin;
+  font-size: 14vmin;
+  /* padding: 1vmin 0 0vmin 0; */
+  margin-left: 3vmin;
+}
+
+/* .rodada-num p {
+  line-height: 1;
+} */
+
+.nivel {
+  order: 2;
+  background-image: url(../images/Nivel.png);
+  animation: fadein 0.2s linear;
+  /* margin-bottom: 2vmin; */
+}
+
+.energia {
+  order: 4;
+  background-image: url(../images/Energia.png);
+  animation: fadein 0.3s linear;
+  /* margin-bottom: 2vmin; */
+}
+
+.fortaleza {
+  order: 5;
+  background-image: url(../images/Fortaleza.png);
+  animation: fadein 0.4s linear;
+}
+
+.nivel, .energia, .fortaleza {
+  background-repeat: no-repeat;
+  background-position: center;
+  /* background-repeat: round; */
+  background-size: contain;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  width: 80vmin;
+  height: 44.8vmin;
+  padding-top: 3vmin;
+  /* max-height: 224px;/*/
+  /*remover*/
+  /*height: 224px; /*/
+  /* border-style: solid;
+  border-width: calc(0.3vmin);
+  border-color: #c7c3cf; */
+}
+
+.fortaleza {
+  height: 48.4vmin;
+  padding-top: 4.2vmin;
+  padding-bottom: 1vmin;
+  justify-content: space-around;
+}
+
+.reserva-movel-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  flex-grow: 1;
+  width: 80vmin;
+}
+
+.reserva-movel {
+  /* display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between; */
+  display: grid;
+  justify-content: center;
+  align-items: center;
+  /* flex-grow: 1; */
+  grid-template-columns: 1fr 2fr 1fr;
+  width: 80%;
+  column-gap: 20px;
+  font-size: 25vmin;
+  padding-bottom: .5%;
+  padding-top: 1.2vmin;
+}
+
+/* .reserva-movel#fortaleza {
+  height: 26vmin;
+} */
+
+.reserva-movel-num {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  /* padding-top: 2.2vmin; */
+  /* background-color: rgba(0, 0, 0, .55); */
+}
+
+.bt-movel {
+  display: flex;
+  /* background-color: unset;
+  box-shadow: unset;
+  border: unset;
+  background-image: unset; */
+  padding-top: 20%;
+  cursor: pointer;
+}
+
+.bt-movel img {
+  pointer-events: none;
+  width: 13vmin;
+  height: 13vmin;
+}
+
+/* .bt-movel:hover {
+  animation: dropshadow 2s ease-in-out;
+  ;
+  /* animation: spin 3s linear infinite; 
+} */
+
+.reserva-conquista {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  /* grid-template-columns: 1fr 1fr 1fr; */
+  /* flex-grow: 1; */
+  width: 40.5vmin;
+  font-size: 11vmin;
+  padding-bottom: 1vmin;
+}
+
+.reserva-conquista-bt {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 12.5vmin;
+  height: 11.5vmin;
+}
+
+.reserva-conquista-bt img {
+  pointer-events: none;
+}
+
+.reserva-conquista-bt img {
+  width: 12vmin;
+}
+
+.reserva-conquista-num {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-color: rgba(0, 0, 0, .55);
+}
+
+.compra {
+  width: 80vmin;
+  padding: 0 0 3vmin 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.compra p {
+  line-height: 1;
+}
+
+.compra-aviso {
+  width: 100%;
+  height: 5.4vmin;
+  padding: 0 5vmin 0 5vmin;
+  font-size: 4vmin;
+  text-shadow: 1px 2px 6px rgba(0, 0, 0, .3);
+  font-weight: bold;
+  font-style: italic;
+  display: grid;
+  grid-template-columns: 1fr 2fr 1fr;
+  justify-items: center;
+  align-items: center;
+  animation: fadein 0.5s linear;
+}
+
+.compra-divisa {
+  width: 100%;
+  height: 5.4vmin;
+  padding: 0 5vmin 0 5vmin;
+  font-size: 4vmin;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.compra-linha {
+  width: 100%;
+  /* border-top: 2px solid #fff;/ */
+  height: 0.35vmin;
+  background-color: #fff;
+  -webkit-box-shadow: 1px 2px 6px rgba(0, 0, 0, .3);
+  -moz-box-shadow: 1px 2px 6px rgba(0, 0, 0, .3);
+  box-shadow: 1px 2px 6px rgba(0, 0, 0, .3);
+}
+
+.compra-card {
+  width: 70%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 8vmin;
+}
+
+.compra-card button {
+  background-color: unset;
+  box-shadow: unset;
+  border: unset;
+  background-image: unset;
+}
+
+.compra-marco {
+  display: flex;
+  flex-direction: row;
+}
+
+.marco-checked {
+  display: flex;
+  flex-direction: column;
+  width: 6vmin;
+}
+
+.marco-checked svg {
+  filter: drop-shadow(1px 2px 6px rgba(0, 0, 0, .5));
+}
+
+.checked {
+  height: 65%;
+  width: auto;
+  /*display: flex;
+  flex-direction: column;
+  align-items: top; */
+}
+
+.marco-checked img {
+  width: 6vmin;
+}
+
+/* anima ao ativar */
+
+.compra-ativa {
+  cursor: pointer;
+  will-change: animate;
+  /* animation: dropshadow 1.5s ease-in; */
+  animation: color-on-off 1s ease-in;
+  animation-iteration-count: infinite;
+}
+
+/* anima cada modificação de elemento*/
+
+.teste {
+  transition: background-image 2s linear;
+}
+
+.entrada {
+  animation: fadein 0.5s linear;
+}
+
+/* animação que ocorre ao aumentar ou diminuir um dos contadores (brilho externo de destaque) */
+.destaque {
+  animation: dropshadow 0.3s ease-in-out;
+}
+
+.destaque-bt {
+  animation: dropshadow 0.08s linear;
+}
+
+/* animação que ocorre ao aumentar o contador de controle de máximo (coloração do número) */
+.destaque-on {
+  animation: color-on 0.4s linear;
+}
+
+@media screen and (min-width: 500px) And (min-height: 891px) {
+  .game {
+    row-gap: 4.62px;
+  }
+  .rodada {
+    width: 400px;
+    padding: 0 0 0 6px;
+  }
+  .rodada-nova {
+    width: 248px;
+    padding: 11.5px 0 7.5px 0;
+  }
+  .rodada-num {
+    width: 131px;
+    height: 114px;
+    font-size: 70px;
+    margin-left: 15px;
+  }
+  .rodada-button p {
+    font-size: 55px;
+  }
+  .bt-first {
+    margin-right: 15px;
+  }
+  .rodada-button-new p {
+    font-size: 45px;
+  }
+  .rodada-button-new img {
+    width: 200px;
+  }
+  .nivel, .energia, .fortaleza {
+    width: 400px;
+    height: 224px;
+    padding-top: 15px;
+  }
+  .fortaleza {
+    height: 242px;
+    padding-top: 21px;
+    padding-bottom: 5px;
+  }
+  .reserva-movel-container {
+    width: 400px;
+  }
+  .reserva-movel {
+    font-size: 125px;
+    padding-bottom: 0;
+    padding-top: 6px;
+  }
+  .reserva-movel#fortaleza {
+    height: 130px;
+  }
+  .reserva-conquista {
+    font-size: 55px;
+    width: 202.5px;
+    /* height: 64.75px;; */
+    padding-bottom: 3.5px;
+  }
+  .reserva-conquista-bt {
+    width: 62.5px;
+    height: 57.5px;
+  }
+  .reserva-conquista-bt img {
+    width: 60px;
+  }
+  .bt-movel img {
+    width: 65px;
+    height: 65px;
+  }
+  .compra {
+    width: 400px;
+    padding: 0 0 12px 0;
+  }
+  .compra-aviso {
+    height: 27px;
+    padding: 0 25px 0 25px;
+    font-size: 20px;
+  }
+  .compra-divisa {
+    height: 27px;
+    padding: 0 25px 0 25px;
+    font-size: 20px;
+  }
+  .compra-linha {
+    height: 1.75px;
+  }
+  .compra-card {
+    font-size: 40px;
+  }
+  .marco-checked {
+    width: 29.97px;
+  }
+  .marco-checked img {
+    width: 29.97px;
+  }
+}

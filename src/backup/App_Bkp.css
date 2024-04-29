@@ -1,0 +1,271 @@
+.App-header {
+  /*background-color: #282c34;*/
+  /*min-height: 100vh;*/
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  box-shadow: 1px 10px 18px 7px #000;
+}
+
+.App-header img {
+  width: calc(40vmin);
+}
+
+main {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding-top: 3vmin;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  row-gap: calc(5px + 2vmin);
+  text-align: center;
+  font-size: calc(10px + 2vmin);
+  color: white;
+}
+
+.Rodada {
+  order: 1;
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  width: calc(100px + 20vmin);
+  column-gap: calc(5px + 2vmin);
+}
+
+.Rodada-nova, .Rodada-escolha, .Rodada-no-escolha {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+}
+
+.Rodada-escolha {
+  animation-name: anima-escolha;
+  animation-duration: 0.5s;
+}
+
+.Rodada-no-escolha {
+  animation-name: anima-no-escolha;
+  animation-duration: 0.5s;
+}
+
+.Rodada button {
+  flex-grow: 1;
+  border: solid calc(0.3vmin);
+  border-radius: 2px;
+  border-color: #c7c3cf;
+  background-color: transparent;
+  color: white;
+  font-size: 100%;
+  /* animation: animatetop 0.5s;
+  animation-play-state: initial;
+  position: relative; */
+}
+
+@keyframes anima-escolha {
+  from {
+    transform-style: preserve-3d;
+    transform: rotateX(45deg);
+  }
+  to {
+    transform-style: preserve-3d;
+    transform: rotateX(0deg);
+  }
+}
+
+@keyframes anima-no-escolha {
+  from {
+    transform-style: preserve-3d;
+    transform: rotateX(-45deg);
+  }
+  to {
+    transform-style: preserve-3d;
+    transform: rotateX(0deg);
+  }
+}
+
+@keyframes animatetop {
+  from {
+    top: -7px;
+    opacity: 0
+  }
+  to {
+    top: 0;
+    opacity: 1
+  }
+}
+
+@keyframes fadein {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.Rodada-count {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-style: solid;
+  border-width: 0.3vmin;
+  border-color: #c7c3cf;
+  border-radius: 2px;
+  font-size: calc(24px + 5vmin);
+  animation-name: anima-escolha;
+  animation-duration: 0.5s;
+}
+
+.Reserva-Nivel {
+  order: 2;
+}
+
+.Reserva-Energia {
+  order: 4;
+}
+
+.Reserva-Nivel, .Reserva-Energia {
+  display: grid;
+  justify-content: center;
+  width: calc(100px + 20vmin);
+  border-style: solid;
+  border-width: calc(0.3vmin);
+  border-color: #c7c3cf;
+  border-radius: 2px;
+  row-gap: calc(5px + 2vmin);
+}
+
+.Reserva-Nivel button, .Reserva-Energia button {
+  border: none;
+  background-color: transparent;
+  color: #c7c3cf;
+}
+
+.Reserva-movel {
+  display: grid;
+  justify-content: center;
+  grid-template-columns: 1fr 2fr 1fr;
+  width: calc(100px + 20vmin);
+  column-gap: 20px;
+  font-size: calc(40px + 5vmin);
+  align-items: center;
+}
+
+.Reserva-movel button {
+  font-size: calc(50px + 3vmin);
+}
+
+.Reserva-conquista {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  border-style: solid solid none solid;
+  border-width: calc(0.3vmin);
+  column-gap: 5px;
+  font-size: calc(20px + 3vmin);
+  text-align: center;
+  align-items: center;
+}
+
+.Reserva-conquista button {
+  font-size: calc(20px + 3vmin);
+}
+
+.Fortaleza {
+  order: 5;
+  display: grid;
+  justify-content: center;
+  grid-template-rows: 1fr 2fr 0.7fr 0.7fr;
+  row-gap: 2vmin;
+  width: calc(100px + 20vmin);
+  border-style: solid;
+  border-width: calc(0.3vmin);
+  border-color: #c7c3cf;
+  border-radius: 2px;
+}
+
+.Fortaleza button {
+  border: none;
+  background-color: transparent;
+  color: #c7c3cf;
+}
+
+.Fortaleza-Vida {
+  display: grid;
+  justify-content: center;
+  grid-template-columns: 1fr 2fr 1fr;
+  width: calc(100px + 20vmin);
+  column-gap: 20px;
+  font-size: calc(40px + 5vmin);
+  align-items: center;
+}
+
+.Fortaleza-Vida button {
+  font-size: calc(50px + 3vmin);
+}
+
+.Aviso {
+  display: grid;
+  font-size: calc(6px + 2vmin);
+  justify-content: center;
+  align-items: center;
+}
+
+.Compra {
+  display: grid;
+  justify-content: center;
+  grid-template-columns: 1fr 1fr 1fr;
+  align-items: center;
+  padding-bottom: 2px;
+}
+
+.Compra button {
+  font-size: calc(12px + 2vmin);
+}
+
+.Compra-Ativa {
+  animation-name: compra-ativa;
+  animation-duration: 1s;
+  animation-iteration-count: infinite;
+}
+
+@keyframes compra-ativa {
+  50% {
+    filter: drop-shadow(0 0 4px #ffff);
+  }
+}
+
+/*deixar responsivo*/
+
+@media (max-width: 300px) {
+  #app {
+    flex-direction: column;
+  }
+  #app main {
+    margin-top: 30px;
+    margin-left: 0;
+  }
+  #app aside {
+    width: 100%;
+  }
+}
+
+@media (max-height: 500px) {
+  .App main {
+    flex-direction: row;
+    column-gap: calc(10px + 2vmin);
+    align-items: unset;
+  }
+  .Rodada {
+    order: 3;
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: 1.5fr 2fr;
+    row-gap: calc(5px + 2vmin);
+    width: calc(30px + 20vmin);
+  }
+  .Rodada-count {
+    width: calc(30px + 20vmin);
+    font-size: calc(44px + 5vmin);
+  }
+}

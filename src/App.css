@@ -1,0 +1,177 @@
+.app {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  user-select: none;
+}
+
+main {
+  display: flex;
+  flex-direction: row;
+  flex-grow: 1;
+}
+
+p {
+  font-family: ZagBold, sans-serif;
+  text-shadow: 1px 2px 6px rgba(0, 0, 0, .3);
+  line-height: 0;
+  padding-top: 1.2vmin;
+  padding-left: 1.2vmin;
+}
+
+.background-control {
+  width: 100vmin;
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+}
+
+.game,
+.deckBuilder {
+  max-width: 960px;
+  margin: 0 auto;
+  text-align: center;
+  color: white;
+  flex: 2 0 auto;
+}
+
+.corporation {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-shadow: 2px 3px 8px rgba(0, 0, 0, .8);
+  font-size: 2.4vmin;
+  font-weight: bold;
+  color: white;
+  /* padding-bottom: 2vmin;; */
+  padding-bottom: 5.5vmin;
+}
+
+.icon-img {
+  width: 5vmin !important;
+  height: 5vmin !important;
+}
+
+.editable {
+  cursor: pointer;
+}
+
+.text-title {
+  word-wrap: break-word;
+  text-align: center;
+  max-width: 41.5vmin;
+}
+
+.text-selected {
+  font-weight: bold;
+  color: var(--cor-thema);
+  text-shadow: 1px 0px var(--cor-thema);
+}
+
+.image-selected {
+  filter: var(--filter-tema);
+}
+
+.bt-back {
+  filter: var(--filter-tema);
+  position: absolute;
+  top: 1vmin;
+}
+
+.margin-top-1 {
+  margin-top: 1vmin !important;
+}
+
+.margin-top-2 {
+  margin-top: 3.55vmin !important;
+}
+
+.margin-top-3 {
+  margin-top: 5vmin !important;
+}
+
+
+.padding-top-3 {
+  padding-top: 3vmin !important;
+}
+
+.padding-bottom-1 {
+  padding-bottom: 1vmin !important;
+}
+
+.nav-tab {
+  display: flex;
+}
+
+.nav-tab button {
+  background-color: #00000087;
+  color: var(--cor-texto-tema);
+  /* box-shadow: none; */
+  width: -webkit-fill-available;
+  height: 5vmin;
+  font-size: 12pt;
+  /* border-radius: 1vmin;
+  margin: 0 1vmin; */
+}
+
+@keyframes zoomin7G {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.4);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+@keyframes zoomin {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.2) translate3d(4vw, 2vh, 0px);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+@keyframes breath {
+  0% {
+    /* background-position: right; */
+    background-size: cover;
+  }
+  50% {
+    /* background-position: top; */
+    background-size: 170vmax;
+  }
+  100% {
+    /* background-position: right; */
+    background-size: 100vmax;
+  }
+}
+
+/** dimensões máximas esperadas **/
+
+@media screen and (min-width: 500px) And (min-height: 891px) {
+  /* .background-control {
+    width: 40px;
+  } */
+  p {
+    padding-top: 6px;
+    padding-left: 6px;
+  }
+  
+  .corporation {
+    font-size: 12px;
+    padding-bottom: 23px;
+  }
+
+  .text-title{
+    /* max-width: 31vmin; */
+  }
+}

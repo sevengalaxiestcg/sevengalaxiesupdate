@@ -1,0 +1,109 @@
+.gameover {
+  width: 100%;
+  height: 100vh;
+  position: absolute;
+  /* filter: grayscale(100%); ;*/
+  top: 0;
+  left: 0;
+  z-index: 10;
+  background-color: rgba(0, 0, 0, 0.8);
+  /* background-image: linear-gradient( rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url(../background/Gaia_11.jpg); */
+  background-position: top;
+  background-repeat: no-repeat;
+  background-size: cover;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  animation: fadein 0.7s linear;
+  color: #fff;
+  backdrop-filter: grayscale(100%);
+}
+
+.gameover-container {
+  pointer-events: all;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  align-items: center;
+  width: 80vmin;
+  height: 60vmin;
+}
+
+.gameover-container p {
+  font-family: "AgencyFB", sans-serif;
+  line-height: normal;
+  font-size: 15vmin;
+  padding: 0 0 1.4vmin 0;
+}
+
+.gameover-container p:nth-child(1) {
+  animation: impact 1s linear;
+}
+
+.gameover-container p:nth-child(2) {
+  animation: impact 2s linear;
+}
+
+.gameover-button {
+  width: 72vmin;
+  margin-top: 7vmin;
+  padding: 3vmin;
+  font-size: 8.5vmin;
+  font-family: "AgencyFB", sans-serif;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  animation: impact 3.5s ease-out;
+}
+
+@media screen and (min-width: 300px) And (max-height: 890px) And (min-aspect-ratio: 9/16) {
+  .gameover-container {
+    width: 44.60vmax;
+    height: 33.45vmax;
+  }
+  .gameover-container p {
+    font-size: 8.36vmax;
+    padding: 0 0 0.78vmax 0;
+  }
+  .gameover-button {
+    width: 40.14vmax;
+    margin-top: 3.9vmax;
+    padding: 1.67vmax;
+    font-size: 4.74vmax;
+  }
+}
+
+@media screen and (min-width: 300px) And (max-height: 890px) And (min-aspect-ratio: 1/1) {
+  .gameover-container {
+    width: 44.60vmin;
+    height: 33.45vmin;
+  }
+  .gameover-container p {
+    font-size: 8.36vmin;
+    padding: 0 0 0.78vmin 0;
+  }
+  .gameover-button {
+    width: 40.14vmin;
+    margin-top: 3.9vmin;
+    padding: 1.67vmin;
+    font-size: 4.74vmin;
+  }
+}
+
+@media screen and (min-width: 500px) And (min-height: 891px) {
+  .gameover-container {
+    width: 400px;
+    height: 300px;
+  }
+  .gameover-container p {
+    font-size: 75px;
+    padding: 0 0 7px 0;
+  }
+  .gameover-button {
+    width: 360px;
+    margin-top: 35px;
+    padding: 15px;
+    font-size: 42.5px;
+  }
+}

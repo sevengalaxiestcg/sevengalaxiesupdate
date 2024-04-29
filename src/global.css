@@ -1,0 +1,52 @@
+* {
+  /*reset comportamento padrão do HTML*/
+  margin: 0;
+  padding: 0;
+  outline: 0;
+  box-sizing: border-box;
+}
+
+/*coloca 100% largura e altura da tela*/
+
+#root, body, html {
+  height: 100vh;
+  overflow: hidden;
+  /*esconde scroll*/
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+  /*retira o azulado do clique em smartphone*/
+}
+
+body {
+  background: #13101b;
+  /* background-image: linear-gradient( rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)), url('./images/treta-big.png');---- 
+     background-size: auto auto; */
+  background-position: top;
+  background-repeat: no-repeat;
+  background-size: cover;
+  /*deixa a font mais legivel em brower que utiliza webkit*/
+  -webkit-font-smoothing: antialiased;
+  /* transition: background-image 4s linear; */
+}
+
+/* body, input {
+  /* font-family: ZagW90-Bold, Zag, sans-serif;
+} */
+
+button {
+  cursor: pointer;
+}
+
+button, div {
+  font-family: 'Open Sans', sans-serif;
+  text-rendering: optimizeLegibility;
+}
+
+a {
+  color: #fff;
+  cursor: pointer;
+  text-decoration: unset;
+}
+
+img {
+  pointer-events: none;
+}

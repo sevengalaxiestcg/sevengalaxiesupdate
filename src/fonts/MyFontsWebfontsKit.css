@@ -1,0 +1,62 @@
+/**
+ * @license
+ * MyFonts Webfont Build ID 4001365, 2021-01-23T07:36:07-0500
+ * 
+ * The fonts listed in this notice are subject to the End User License
+ * Agreement(s) entered into by the website owner. All other parties are 
+ * explicitly restricted from using the Licensed Webfonts(s).
+ * 
+ * You may obtain a valid license at the URLs below.
+ * 
+ * Webfont: ZagBold by Fontfabric
+ * URL: https://www.myfonts.com/fonts/font-fabric/zag/bold/
+ * Copyright: Copyright (c) 2009 by &amp;#x00A9; 2009 Designed by Svetoslav Simov &amp;#x00A9; Fontfabric, Inc. All rights reserved.
+ * 
+ * 
+ * 
+ * © 2021 MyFonts Inc
+*/
+
+@font-face {
+  font-family: 'ZagBold';
+  font-display: block;
+  src: url('webFonts/ZagBold/font.woff2') format('woff2'), url('webFonts/ZagBold/font.woff') format('woff');
+}
+
+.ZagBold {
+  font-family: ZagBold;
+}
+
+@font-face {
+  font-family: 'AgencyFB';
+  font-display: block;
+  src: url('webFonts/Agency FB/font.woff2') format('woff2'), url('webFonts/Agency FB/font.woff') format('woff');
+}
+
+/*@import url('https://fonts.googleapis.com/css?family=Roboto:400,700&display=swap');
+@import url('https://db.onlinewebfonts.com/c/032f34bc3ead02aba003fa26a401505c?family=ZagW90-Bold');
+*/
+
+@import url('https://fonts.googleapis.com/css2?family=Teko:wght@300&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;600&display=swap');
+/* @font-face { */
+
+/* font-family: "ZagW90-Bold"; */
+
+/* src: url("https://db.onlinewebfonts.com/t/032f34bc3ead02aba003fa26a401505c.eot"); */
+
+/* IE9*/
+
+/* src: url("https://db.onlinewebfonts.com/t/032f34bc3ead02aba003fa26a401505c.eot?#iefix") format("embedded-opentype"), IE6-IE8 */
+
+/* url("https://db.onlinewebfonts.com/t/032f34bc3ead02aba003fa26a401505c.woff2") format("woff2"), chrome firefox */
+
+/* url("https://db.onlinewebfonts.com/t/032f34bc3ead02aba003fa26a401505c.woff") format("woff"), chrome firefox */
+
+/* url("https://db.onlinewebfonts.com/t/032f34bc3ead02aba003fa26a401505c.ttf") format("truetype"), chrome firefox opera Safari, Android, iOS 4.2+ */
+
+/* url("https://db.onlinewebfonts.com/t/032f34bc3ead02aba003fa26a401505c.svg#ZagW90-Bold") format("svg"); */
+
+/* iOS 4.1- */
+
+/* } */

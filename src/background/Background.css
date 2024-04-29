@@ -1,0 +1,158 @@
+.SevenG1 {
+  background-image: linear-gradient( rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)), url(./SevenG_01.jpg);
+  /* background-position: center; */
+}
+
+.SevenG2 {
+  background-image: linear-gradient( rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)), url(./SevenG_02.jpg);
+  /* transition: 3s; */
+}
+
+.SevenG3 {
+  background-image: linear-gradient( rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)), url(./SevenG_03.jpg);
+}
+
+.SevenG4 {
+  background-image: linear-gradient( rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)), url(./SevenG_04.jpg);
+}
+
+.SevenG5 {
+  background-image: linear-gradient( rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)), url(./SevenG_05.jpg);
+}
+
+.SevenG-menu {
+  background-image: linear-gradient( rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)), url(./SevenG_02.jpg);
+}
+
+.Gaia1 {
+  background-image: linear-gradient( rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)), url(./Gaia_01.jpg);
+}
+
+.Gaia2 {
+  background-image: linear-gradient( rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)), url(./Gaia_02.jpg);
+}
+
+.Gaia3 {
+  background-image: linear-gradient( rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)), url(./Gaia_03.jpg);
+}
+
+.Gaia4 {
+  background-image: linear-gradient( rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)), url(./Gaia_04.jpg);
+}
+
+.Gaia5 {
+  background-image: linear-gradient( rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)), url(./Gaia_05.jpg);
+}
+
+.Gaia6 {
+  background-image: linear-gradient( rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)), url(./Gaia_06.jpg);
+}
+
+.Gaia7 {
+  background-image: linear-gradient( rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)), url(./Gaia_07.jpg);
+}
+
+.Gaia8 {
+  background-image: linear-gradient( rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)), url(./Gaia_08.jpg);
+}
+
+.Gaia9 {
+  background-image: linear-gradient( rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)), url(./Gaia_09.jpg);
+}
+
+.Gaia10 {
+  background-image: linear-gradient( rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)), url(./Gaia_10.jpg);
+}
+
+.Gaia11 {
+  background-image: linear-gradient( rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)), url(./Gaia_11.jpg);
+}
+
+.Gaia12 {
+  background-image: linear-gradient( rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)), url(./Gaia_12.jpg);
+}
+
+.Gaia13 {
+  background-image: linear-gradient( rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)), url(./Gaia_13.jpg);
+  background-position: center;
+}
+
+.Gaia14 {
+  background-image: linear-gradient( rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)), url(./Gaia_14.jpg);
+}
+
+.Gaia15 {
+  background-image: linear-gradient( rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)), url(./Gaia_15.jpg);
+}
+
+.Gaia-menu {
+  background-image: linear-gradient( rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url(./Gaia_15.jpg);
+}
+
+.Stroj1 {
+  background-image: linear-gradient( rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)), url(./Stroj_01.jpg);
+}
+
+.Stroj2 {
+  background-image: linear-gradient( rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)), url(./Stroj_02.jpg);
+  /* background-position: center; */
+}
+
+.Stroj3 {
+  background-image: linear-gradient( rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)), url(./Stroj_03.jpg);
+}
+
+.Stroj4 {
+  background-image: linear-gradient( rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)), url(./Stroj_04.jpg);
+}
+
+.Stroj5 {
+  background-image: linear-gradient( rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)), url(./Stroj_05.jpg);
+}
+
+.Stroj6 {
+  background-image: linear-gradient( rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)), url(./Stroj_06.jpg);
+  /* filter: grayscale(100%); */
+  /* background-blend-mode: luminosity; */
+  /* backdrop-filter: grayscale(100%); */
+}
+
+.Stroj7 {
+  background-image: linear-gradient( rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)), url(./Stroj_07.jpg);
+}
+
+.Stroj8 {
+  background-image: linear-gradient( rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)), url(./Stroj_08.jpg);
+}
+
+.Stroj9 {
+  background-image: linear-gradient( rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)), url(./Stroj_09.jpg);
+}
+
+.Stroj10 {
+  background-image: linear-gradient( rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)), url(./Stroj_10.jpg);
+}
+
+.Stroj11 {
+  background-image: linear-gradient( rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)), url(./Stroj_11.jpg);
+}
+
+.Stroj12 {
+  background-image: linear-gradient( rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)), url(./Stroj_12.jpg);
+}
+
+.Stroj13 {
+  background-image: linear-gradient( rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)), url(./Stroj_13.jpg);
+}
+
+.Stroj14 {
+  background-image: linear-gradient( rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)), url(./Stroj_14.jpg);
+}
+
+.Stroj15 {
+  background-image: linear-gradient( rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)), url(./Stroj_15.jpg);
+}
+
+.Stroj-menu {
+  background-image: linear-gradient( rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url(./Stroj_15.jpg);
+}

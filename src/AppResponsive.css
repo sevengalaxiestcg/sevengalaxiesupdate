@@ -1,0 +1,302 @@
+@media screen and (min-width: 300px) And (max-height: 890px) And (min-aspect-ratio: 9/16) {
+  p {
+    padding-top: 0.67vmax;
+    padding-left: 0.67vmax;
+  }
+  .game,
+  .deckBuilder {
+    /* row-gap: 1vmax; */
+    row-gap: 0.56vmax;
+  }
+  .corporation {
+    /* font-size: 2.4vmax; 
+      padding-bottom: 5.5vmax;*/
+    font-size: 1.34vmax;
+    padding-bottom: 3.07vmax;
+  }
+  .rodada {
+    /*  width: 80vmax;
+        padding: 0 0 0 1vmax;*/
+    width: 44.6vmax;
+    padding: 0 0 0 0.56vmax;
+  }
+  .rodada-nova {
+    /* width: 35vmax;
+       padding: 2.3vmax 0 1.5vmax 0;*/
+    width: 19.51vmax;
+    padding: 1.28vmax 0 0.84vmax 0;
+  }
+  .rodada-num {
+    /* width: 26.3vmax;
+       height: 22.8vmin;
+      font-size: 14vmax;
+      padding: 3.7vmax 0 4vmax 0; 
+      margin-left: 3vmin; */
+    width: 14.66vmax;
+    height: 12.71vmax;
+    font-size: 7.81vmax;
+    /* padding: 2.06vmax 0 2.23vmax 0; */
+    margin-left: 1.67vmax;
+  }
+  .rodada-button p {
+    /* font-size: 11vmax; */
+    font-size: 6.13vmax;
+  }
+  .bt-first {
+    /* margin-right: 3vmin;; */
+    margin-right: 1.67vmax;
+  }
+  .rodada-button-new p {
+    /* font-size: 9vmax; */
+    font-size: 5.02vmax;
+  }
+  .rodada-button-new img {
+    /* width: 40vmax; */
+    width: 22.3vmax;
+  }
+  .nivel, .energia, .fortaleza {
+    /* width: 80vmax;
+    height: 44.8vmin;
+    padding-top: 3vmax; */
+    width: 44.6vmax;
+    height: 24.98vmax;
+    padding-top: 1.67vmax;
+  }
+  .fortaleza {
+    /*height: 48.4vmin; 
+    padding-top: 4.2vmax;
+    padding-bottom: 1vmax; */
+    height: 26.98vmax;
+    padding-top: 2.34vmax;
+    padding-bottom: 0.56vmax;
+  }
+  .reserva-movel-container {
+    /* height: 44.8vmin; */
+    width: 44.6vmax;
+  }
+  .reserva-movel {
+    /* font-size: 25vmax; 
+     padding-top: 1.2vmin;*/
+    font-size: 13.94vmax;
+    padding-top: 0.67vmax;
+  }
+  /* .reserva-movel#fortaleza { */
+  /* height: 26vmax; */
+  /* height: 14.5vmax; */
+  /* } */
+  .reserva-conquista {
+    /* width: 40.5vmin;
+    font-size: 11vmax; 
+    padding-bottom: 1vmin;*/
+    width: 22.58vmax;
+    font-size: 6.13vmax;
+    padding-bottom: 0.56vmax;
+  }
+  .reserva-conquista-bt {
+    /* width: 12.5vmin;
+    height: 11.5vmin; */
+    width: 6.97vmax;
+    height: 6.41vmax;
+  }
+  .reserva-conquista-bt img {
+    /* width: 12vmax; */
+    width: 6.69vmax;
+  }
+  .bt-movel img {
+    /* width: 13vmax; */
+    width: 7.25vmax;
+    height: 7.25vmax;
+  }
+  .compra {
+    /*width: 80vmin;
+      padding: 2vmin 0 3vmin 0; */
+    width: 44.66vmax;
+    padding: 0 0 1.67vmax 0;
+  }
+  .compra-aviso {
+    /* height: 5.4vmin;
+      padding: 0 5vmin 0 5vmin;
+      font-size: 4vmin; */
+    height: 3.01vmax;
+    padding: 0 2.79vmax 0 2.79vmax;
+    font-size: 2.23vmax;
+  }
+  .compra-divisa {
+    /* height: 5.4vmin;
+      padding: 0 5vmin 0 5vmin;
+      font-size: 4vmin; */
+    height: 3.01vmax;
+    padding: 0 2.79vmax 0 2.79vmax;
+    font-size: 2.23vmax;
+  }
+  .compra-linha {
+    /* height: 0.35vmin; */
+    height: 0.20vmax;
+  }
+  .compra-card {
+    /* font-size: 8vmax; */
+    font-size: 4.46vmax;
+  }
+  .marco-checked {
+    /* width: 6vmax; */
+    width: 3.35vmax;
+  }
+  .marco-checked img {
+    /* width: 6vmax; */
+    width: 3.35vmax;
+  }
+  .theme-container {
+    /* font-size: 5.5vmin; */
+    font-size: 3.07vmax;
+  }
+}
+
+@media screen and (min-width: 300px) And (max-height: 890px) And (min-aspect-ratio: 1/1) {
+  p {
+    padding-top: 0.67vmin;
+    padding-left: 0.67vmin;
+  }
+  .game,
+  .deckBuilder {
+    /* row-gap: 1vmin; */
+    row-gap: 0.56vmin;
+  }
+  .corporation {
+    /* font-size: 2.4vmin; 
+      padding-bottom: 5.5vmin;*/
+    font-size: 1.34vmin;
+    padding-bottom: 3.07vmin;
+  }
+  .rodada {
+    /*
+        width: 80vmin;
+        padding: 0 0 0 1vmin;*/
+    width: 44.6vmin;
+    padding: 0 0 0 0.56vmin;
+  }
+  .rodada-nova {
+    /* width: 35vmin;
+       padding: 2.3vmin 0 1.5vmin 0;*/
+    width: 19.51vmin;
+    padding: 1.28vmin 0 0.84vmin 0;
+  }
+  .rodada-num {
+    /* width: 26.3vmin;
+       height: 22.8vmin;
+      font-size: 14vmin;
+      padding: 3.7vmin 0 4vmin 0; 
+      margin-left: 3vmin;*/
+    width: 14.66vmin;
+    height: 12.71vmin;
+    font-size: 7.81vmin;
+    /* padding: 2.06vmin 0 2.23vmin 0; */
+    margin-left: 1.67vmin;
+  }
+  .rodada-button p {
+    /* font-size: 11vmin; */
+    font-size: 6.13vmin;
+  }
+  .bt-first {
+    /* margin-right: 3vmin;; */
+    margin-right: 1.67vmin;
+  }
+  .rodada-button-new p {
+    /* font-size: 9vmin; */
+    font-size: 5.02vmin;
+  }
+  .rodada-button-new img {
+    /* width: 40vmin; */
+    width: 22.3vmin;
+  }
+  .nivel, .energia, .fortaleza {
+    /* width: 80vmin;
+    height: 44.8vmin;
+    padding-top: 3vmin; */
+    width: 44.6vmin;
+    height: 24.98vmin;
+    padding-top: 1.67vmin;
+  }
+  .fortaleza {
+    /* height: 48.4vmin; 
+    padding-top: 4.2vmin;
+    padding-bottom: 1vmin; */
+    height: 26.98vmin;
+    padding-top: 2.34vmin;
+    padding-bottom: 0.56vmin;
+  }
+  .reserva-movel-container {
+    /* height: 44.8vmin; */
+    width: 44.6vmin;
+  }
+  .reserva-movel {
+    /* font-size: 25  vmin; 
+    padding-top: 1.2vmin;*/
+    font-size: 13.94vmin;
+    padding-top: 0.67vmin;
+  }
+  /* .reserva-movel#fortaleza { */
+  /* height: 26vmin; */
+  /* height: 14.5vmin; */
+  /* } */
+  .reserva-conquista {
+    /*width: 40.5vmin;
+    font-size: 11vmin;
+    padding-bottom: 1vmin; */
+    width: 22.58vmin;
+    font-size: 6.13vmin;
+    padding-bottom: 0.56vmin;
+  }
+  .reserva-conquista-bt {
+    /* width: 12.5vmin;
+    height: 11.5vmin; */
+    width: 6.97vmin;
+    height: 6.41vmin;
+  }
+  .reserva-conquista-bt img {
+    /* width: 12vmin; */
+    width: 6.69vmin;
+  }
+  .bt-movel img {
+    /* width: 13vmin; */
+    width: 7.25vmin;
+    height: 7.25vmin;
+  }
+  .compra {
+    /*width: 80vmin;
+      padding: 2vmin 0 3vmin 0; */
+    width: 44.66vmin;
+    padding: 0 0 1.67vmin 0;
+  }
+  .compra-aviso {
+    /* height: 5.4vmin;
+      padding: 0 5vmin 0 5vmin;
+      font-size: 4vmin; */
+    height: 3.01vmin;
+    padding: 0 2.79vmin 0 2.79vmin;
+    font-size: 2.23vmin;
+  }
+  .compra-divisa {
+    /* height: 5.4vmin;
+      padding: 0 5vmin 0 5vmin;
+      font-size: 4vmin; */
+    height: 3.01vmin;
+    padding: 0 2.79vmin 0 2.79vmin;
+    font-size: 2.23vmin;
+  }
+  .compra-linha {
+    /* height: 0.35vmin; */
+    height: 0.20vmin;
+  }
+  .compra-card {
+    /* font-size: 8vmin; */
+    font-size: 4.46vmin;
+  }
+  .marco-checked {
+    /* width: 6vmin; */
+    width: 3.35vmin;
+  }
+  .marco-checked img {
+    /* width: 6vmin; */
+    width: 3.35vmin;
+  }
+}
