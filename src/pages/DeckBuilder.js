@@ -20,10 +20,11 @@ import iconCardsList from '../images/menu/cards.png';
 import iconDecksList from '../images/menu/decks.png';
 
 import './DeckBuilder.css';
+import { cardsThumbs } from '../pseudoDatabases/images';
 
 const downloadPath = "/storage/emulated/0/Download";
 const appPath = process.env.PUBLIC_URL;
-let GaiaStrojCards = require('../pseudoDatabases/GaiaAndStrojCards.json')
+let CardsLibrary = require('../pseudoDatabases/SevenGalaxies_Cards_Todos.json');
 
 function DeckBuilder() {
 
@@ -122,6 +123,7 @@ function DeckBuilder() {
     let countNormals = 0;
     let countSpecials = 0;
     let countFortress = 0;
+    let countResources = 0;
     let countGaia = 0;
     let countStroj = 0;
     let countMajik = 0;
@@ -129,6 +131,7 @@ function DeckBuilder() {
     let levelCosts = [];
     let effectsCosts = [];
     let cardTypes = [];
+    let cardTypesSpecials = [];
 
     if (!isSetState) {
       cardsList.forEach(card => {
@@ -139,16 +142,31 @@ function DeckBuilder() {
         card.effects.forEach(eff => {
           eff.costs.forEach(effCost => {
             if (effectsCosts.filter(p => p.cost === effCost.costAmount).length === 0) {
-              effectsCosts.push({ cost: effCost.costAmount, amount: 0 });
+              var costAmount = effCost.costAmount;
+              if (effCost.costAmount == 99) {
+                costAmount = "X";
+              }
+              effectsCosts.push({ cost: costAmount, amount: 0 });
             }
           });
         });
 
-        card.cardTypes.forEach(type => {
-          if (cardTypes.filter(p => p.type === type).length === 0) {
-            cardTypes.push({ type: type, typeName: GetCardTypeName(type), amount: 0 });
+        if (!IsCardTypeOf('FORTALEZA', card.cardTypes) && !IsCardTypeOf('RECURSO', card.cardTypes)) {
+          if (card.specialCard) {
+            card.cardTypes.forEach(type => {
+              if (cardTypesSpecials.filter(p => p.type === type).length === 0) {
+                cardTypesSpecials.push({ type: type, typeName: GetCardTypeName(type), amount: 0 });
+              }
+            });
           }
-        });
+          else {
+            card.cardTypes.forEach(type => {
+              if (cardTypes.filter(p => p.type === type).length === 0) {
+                cardTypes.push({ type: type, typeName: GetCardTypeName(type), amount: 0 });
+              }
+            });
+          }
+        }
       });
 
       levelCosts = levelCosts.sort(function (a, b) {
@@ -162,56 +180,77 @@ function DeckBuilder() {
         if (strList[0] === a.typeName) { return -1; }
         else { return 1; }
       });
+      cardTypesSpecials = cardTypesSpecials.sort(function (a, b) {
+        let strList = [a.typeName, b.typeName].sort();
+        if (strList[0] === a.typeName) { return -1; }
+        else { return 1; }
+      });
     }
 
     cardsList.forEach(card => {
-      if (card.specialCard) {
-        countSpecials++;
+      if (card.specialCard && !IsCardTypeOf('FORTALEZA', card.cardTypes) && !IsCardTypeOf('RECURSO', card.cardTypes)) {
+        countSpecials += card.amount ?? 1;
       }
       else if (card.cardTypes.filter(p => p === CardType.Fortress).length > 0) {
-        countFortress++;
+        countFortress += card.amount ?? 1;
+      }
+      else if (card.cardTypes.filter(p => p === CardType.Resource).length > 0) {
+        countResources += card.amount ?? 1;
       }
       else {
-        countNormals++;
+        countNormals += card.amount ?? 1;
       }
 
-      if (card.galaxy === Galaxies.Gaia) {
-        countGaia++;
-      }
-      else if (card.galaxy === Galaxies.Stroj) {
-        countStroj++;
-      }
-      else if (card.galaxy === Galaxies.Majik) {
-        countMajik++;
-      }
-      else if (card.galaxy === Galaxies.Adroit) {
-        countAdroit++;
+      if (!card.specialCard) {
+        if (card.galaxy === Galaxies.Gaia) {
+          countGaia += card.amount ?? 1;
+        }
+        else if (card.galaxy === Galaxies.Stroj) {
+          countStroj += card.amount ?? 1;
+        }
+        else if (card.galaxy === Galaxies.Majik) {
+          countMajik += card.amount ?? 1;
+        }
+        else if (card.galaxy === Galaxies.Adroit) {
+          countAdroit += card.amount ?? 1;
+        }
       }
 
       if (!isSetState) {
-        levelCosts.forEach(levelCost => {
-          if (levelCost.cost === card.cost) {
-            levelCost.amount++;
-          }
-        });
-
-        card.effects.forEach(eff => {
-          eff.costs.forEach(effCost => {
-            effectsCosts.forEach(effectCost => {
-              if (effectCost.cost === effCost.costAmount) {
-                effectCost.amount++;
+        if (card.specialCard) {
+          card.cardTypes.forEach(type => {
+            cardTypesSpecials.forEach(cardType => {
+              if (type === cardType.type) {
+                cardType.amount += card.amount ?? 1;
               }
             });
           });
-        });
-
-        card.cardTypes.forEach(type => {
-          cardTypes.forEach(cardType => {
-            if (type === cardType.type) {
-              cardType.amount++;
+        }
+        else {
+          levelCosts.forEach(levelCost => {
+            if (levelCost.cost === card.cost) {
+              levelCost.amount += card.amount ?? 1;
             }
           });
-        });
+  
+          card.effects.forEach(eff => {
+            eff.costs.forEach(effCost => {
+              effectsCosts.forEach(effectCost => {
+                if (effectCost.cost === effCost.costAmount || (effectCost.cost === "X" && effCost.costAmount == 99)) {
+                  effectCost.amount += card.amount ?? 1;
+                }
+              });
+            });
+          });
+          
+          card.cardTypes.forEach(type => {
+            cardTypes.forEach(cardType => {
+              if (type === cardType.type) {
+                cardType.amount += card.amount ?? 1;
+              }
+            });
+          });
+        }
       }
     });
 
@@ -225,6 +264,7 @@ function DeckBuilder() {
       countNormals: countNormals,
       countSpecials: countSpecials,
       countFortress: countFortress,
+      countResources: countResources,
       countGaia: countGaia,
       countStroj: countStroj,
       countMajik: countMajik,
@@ -232,6 +272,7 @@ function DeckBuilder() {
       levelCosts:  levelCosts,
       effectsCosts: effectsCosts,
       cardTypes: cardTypes,
+      cardTypesSpecials: cardTypesSpecials,
     };
   }
 
@@ -346,6 +387,7 @@ function DeckBuilder() {
   const [isDeckEdit, setIsDeckEdit] = useState(false);
   const [currDeck, setCurrDeck] = useState();
   const [showMainDeck, setShowMainDeck] = useState(true);
+  const [showFortressDeck, setShowFortressDeck] = useState(false);
 
   function ChangeAmountOfCardInDeck (index, amount) {
     let cards = currDeck.cards;
@@ -355,7 +397,8 @@ function DeckBuilder() {
 
     if (!cards[index].amount) cards[index].amount = 0;
     if ((cards[index].amount === 2 && amount > 0) ||
-        (cards[index].amount === 1 && amount > 0 && IsCardTypeOf("RECURSO", cards[index].cardTypes))
+        (cards[index].amount === 1 && amount > 0 && IsCardTypeOf("RECURSO", cards[index].cardTypes)) ||
+        (cards[index].amount === 1 && amount > 0 && IsCardTypeOf("FORTALEZA", cards[index].cardTypes))
     ) {
       return;
     }
@@ -378,8 +421,22 @@ function DeckBuilder() {
   const [categoryFilters, setCategoryFilters] = useState([]);
   const [isShowModalOrderBy, setIsShowModalOrderBy] = useState(false);
 
-  function GetAllAvailableCards(){
-    return GaiaStrojCards.cards;
+  function GetAllAvailableCards () {
+    CardsLibrary.cards.forEach(card => {
+      if (!card.thumb || card.thumb === thumbPadrao) {
+        let cardCodeArr = card.code.split(" - ");
+        if (cardCodeArr.length < 2) {
+          cardCodeArr = card.code.split("-");
+        }
+        if (cardCodeArr[1].startsWith("0")) {
+          cardCodeArr[1] = cardCodeArr[1].substring(1);
+        }
+        const cardCode = cardCodeArr[0] + " - " + cardCodeArr[1];
+        const filtered = cardsThumbs().filter(p => p.key === cardCode);
+        card.thumb = filtered[0].image;
+      }
+    });
+    return CardsLibrary.cards;
   }
 
   function IsCardTypeOf(term, cardTypes) {
@@ -528,9 +585,9 @@ function DeckBuilder() {
       const filterNormals = categoryFilters.filter(p => p === 'normals').length > 0;
       const filterSpecials = categoryFilters.filter(p => p === 'specials').length > 0;
       const filterFortress = categoryFilters.filter(p => p === 'fortress').length > 0;
-      list = list.filter(p => (p.specialCard && filterSpecials) ||
-                              (IsCardTypeOf("FORTALEZA", p.cardTypes) && filterFortress) ||
-                              (!p.specialCard && !IsCardTypeOf("FORTALEZA", p.cardTypes) && filterNormals));
+      list = list.filter(p => (p.specialCard && filterSpecials && !IsCardTypeOf("FORTALEZA", p.cardTypes)) ||
+                              (filterFortress && IsCardTypeOf("FORTALEZA", p.cardTypes)) ||
+                              (!p.specialCard && filterNormals && !IsCardTypeOf("FORTALEZA", p.cardTypes)));
     }
 
     // finally, set the cards to be shown
@@ -698,6 +755,8 @@ function DeckBuilder() {
                     setShowBottomMenu={setShowBottomMenu}
                     DeckList={DeckList} SetDeckListInSession={SetDeckListInSession}
                     thumbPadrao={thumbPadrao}
+                    setShowMainDeck={setShowMainDeck}
+                    setShowFortressDeck={setShowFortressDeck}
                   />
                 : <></>
               }
@@ -726,6 +785,7 @@ function DeckBuilder() {
                     isDeckEdit={isDeckEdit}
                     ChangeAmountOfCardInDeck={ChangeAmountOfCardInDeck}
                     UpdateDeckListInSession={UpdateDeckListInSession}
+                    IsCardTypeOf={IsCardTypeOf}
                   />
                 : <></>
               }
@@ -746,6 +806,9 @@ function DeckBuilder() {
                     setCurrDeck={setCurrDeck}
                     setViewState={setViewState}
                     setShowBottomMenu={setShowBottomMenu}
+                    IsCardTypeOf={IsCardTypeOf}
+                    setShowMainDeck={setShowMainDeck}
+                    setShowFortressDeck={setShowFortressDeck}
                   />
                 : <></>
               }
@@ -757,6 +820,7 @@ function DeckBuilder() {
                     UpdateDeckListInSession={UpdateDeckListInSession}
                     IsCardTypeOf={IsCardTypeOf}
                     showMainDeck={showMainDeck} setShowMainDeck={setShowMainDeck}
+                    showFortressDeck={showFortressDeck} setShowFortressDeck={setShowFortressDeck}
                   />
                 : <></>
               }

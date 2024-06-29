@@ -8,6 +8,7 @@ export class Deck {
 
 export class Card {
   constructor() {
+    this.key = "";
     this.code = "";
     this.galaxy = Galaxies.Undefined;
     this.name = "";

@@ -204,7 +204,7 @@
   align-items: center;
   justify-content: space-evenly;
   height: 6.5vmin;
-  width: 5.5vmin;
+  min-width: 5.5vmin;
   margin-top: 0.5vmin;
 }
 

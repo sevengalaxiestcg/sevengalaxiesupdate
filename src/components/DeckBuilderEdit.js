@@ -28,12 +28,17 @@ export class DeckBuilderEditHeader extends React.Component {
   }
 
   ShowDeckInformations () {
-    var content = '<ul>' +
-      `<li><strong>Total de Cartas:</strong><span style='margin-left: 1em;'>${this.props.currDeck.cards?.length??0}</span></li>` +
-      "<li><hr></li><br>";
+    var content = '<ul>';
     const counters = this.props.SetCounts(this.props.currDeck.cards??[]);
 
-    content += "<li>Galáxias</li>";
+    // TODO : separar em Deck (máx. 40), Deck Especial (máx. 100) e Fortaleza (máx. 1)
+    content += "<li>TOTAL DE CARDS</li>";
+    content += `<li><strong>Deck:</strong><span style='margin-left: 1em;'>${counters.countNormals}/40</span></li>`;
+    content += `<li><strong>Deck Especial:</strong><span style='margin-left: 1em;'>${counters.countSpecials}/100</span></li>`;
+    content += `<li><strong>Fortaleza:</strong><span style='margin-left: 1em;'>${counters.countFortress}/1</span></li>`;
+
+    content += "<li style='margin-top: 1em;'></li>";
+    content += "<li>GALÁXIAS</li>";
     if (counters.countGaia > 0) {
       content += `<li><strong>Gaia:</strong><span style='margin-left: 1em;'>${counters.countGaia}</span></li>`;
     }
@@ -48,17 +53,7 @@ export class DeckBuilderEditHeader extends React.Component {
     }
 
     content += "<li style='margin-top: 1em;'></li>";
-    content += "<li>Tipos</li>";
-    if (counters.cardTypes.length > 0) {
-      counters.cardTypes.forEach(cardType => {
-        if (cardType.amount > 0) {
-          content += `<li><strong>${cardType.typeName}:</strong><span style='margin-left: 1em;'>${cardType.amount}</span></li>`;
-        }
-      });
-    }
-
-    content += "<li style='margin-top: 1em;'></li>";
-    content += "<li>Custos de Nível</li>";
+    content += "<li>NÍVEL DO DECK</li>";
     if (counters.levelCosts.length > 0) {
       counters.levelCosts.forEach(levelCost => {
         if (levelCost.amount > 0) {
@@ -68,12 +63,33 @@ export class DeckBuilderEditHeader extends React.Component {
     }
 
     content += "<li style='margin-top: 1em;'></li>";
-    content += "<li>Custos de Efeitos</li>";
+    content += "<li>ENERGIA DO DECK</li>";
     if (counters.effectsCosts.length > 0) {
       counters.effectsCosts.forEach(effectCost => {
         content += `<li><strong>E${effectCost.cost}:</strong><span style='margin-left: 1em;'>${effectCost.amount}</span></li>`;
       });
     }
+
+    content += "<li style='margin-top: 1em;'></li>";
+    content += "<li>CARDS DECK</li>";
+    if (counters.cardTypes.length > 0) {
+      counters.cardTypes.forEach(cardType => {
+        if (cardType.amount > 0) {
+          content += `<li><strong>${cardType.typeName}:</strong><span style='margin-left: 1em;'>${cardType.amount}</span></li>`;
+        }
+      });
+    }
+
+    content += "<li style='margin-top: 1em;'></li>";
+    content += "<li>CARDS DECK ESPECIAL</li>";
+    if (counters.cardTypesSpecials.length > 0) {
+      counters.cardTypesSpecials.forEach(cardType => {
+        if (cardType.amount > 0) {
+          content += `<li><strong>${cardType.typeName}:</strong><span style='margin-left: 1em;'>${cardType.amount}</span></li>`;
+        }
+      });
+    }
+    content += `<li><strong>Recurso:</strong><span style='margin-left: 1em;'>${counters.countResources}/1</span></li>`;
 
     content += "</ul>";
     this.props.setModalContent(content);
@@ -120,7 +136,8 @@ export class DeckBuilderEdit extends React.Component {
     if (index > -1) {
       this.props.ChangeAmountOfCardInDeck(index, amount);
       this.props.currDeck.mainCards = this.props.currDeck.cards.filter(card => !card.specialCard);
-      this.props.currDeck.specialCards = this.props.currDeck.cards.filter(card => card.specialCard);
+      this.props.currDeck.specialCards = this.props.currDeck.cards.filter(card => card.specialCard && !this.props.IsCardTypeOf("FORTALEZA", card.cardTypes));
+      this.props.currDeck.fortressCards = this.props.currDeck.cards.filter(card => !!this.props.IsCardTypeOf("FORTALEZA", card.cardTypes));
       this.props.UpdateDeckListInSession();
       this.forceUpdate();
     }
@@ -131,22 +148,30 @@ export class DeckBuilderEdit extends React.Component {
     this.forceUpdate();
   }
 
+  SetShowFortressDeck (value) {
+    this.props.setShowFortressDeck(value);
+    this.forceUpdate();
+  }
+
   render () {
     return (
       <>
         <div className='nav-tab'>
-          <button onClick={() => { this.SetShowMainDeck(true) }}
-            style={this.props.showMainDeck === true ? { backgroundColor: 'var(--cor-thema)' } : { color: 'var(--cor-thema)' }}>
+          <button onClick={() => { this.SetShowMainDeck(true); this.SetShowFortressDeck(false); }}
+            style={!!this.props.showMainDeck ? { backgroundColor: 'var(--cor-thema)' } : { color: 'var(--cor-thema)' }}>
             <strong>Principal</strong>
           </button>
-          <button onClick={() => { this.SetShowMainDeck(false) }}
-            style={this.props.showMainDeck === false ? { backgroundColor: 'var(--cor-thema)' } : { color: 'var(--cor-thema)' }}>
+          <button onClick={() => { this.SetShowMainDeck(false); this.SetShowFortressDeck(false); }}
+            style={!this.props.showMainDeck && !this.props.showFortressDeck ? { backgroundColor: 'var(--cor-thema)' } : { color: 'var(--cor-thema)' }}>
             <strong>Especial</strong>
           </button>
+          <button onClick={() => { this.SetShowMainDeck(false); this.SetShowFortressDeck(true); }}
+            style={!!this.props.showFortressDeck ? { backgroundColor: 'var(--cor-thema)' } : { color: 'var(--cor-thema)' }}>
+            <strong>Fortaleza</strong>
+          </button>
         </div>
-        {this.props.showMainDeck ?
+        {!!this.props.showMainDeck ?
           <div className='deckBuilder-edit-block'>
-            {/* <h4 className='padding-top-3 padding-bottom-1'>DECK PRINCIPAL</h4> */}
             <h4>DECK PRINCIPAL</h4>
             {this.props.currDeck.mainCards.length > 0 ? 
               this.props.currDeck.mainCards.map((card, i) =>
@@ -165,7 +190,7 @@ export class DeckBuilderEdit extends React.Component {
                       <img alt="Incrementar" className='icon-img' src={iconPlus}></img>
                     </div>
                     <div className='deckBuilder-span-cardAmount'>
-                      <span>{card.amount??0}/{this.props.IsCardTypeOf("RECURSO", card.cardTypes) ? '1' : '2'}</span>
+                      <span>{card.amount??0}/2</span>
                     </div>
                   </div>
                 </div>
@@ -175,11 +200,10 @@ export class DeckBuilderEdit extends React.Component {
           </div>
           : <></>
         }
-        {!this.props.showMainDeck ?
+        {!this.props.showMainDeck && !this.props.showFortressDeck ?
           <div className='deckBuilder-edit-block'>
-            {/* <h4 className='padding-top-3 padding-bottom-1'>DECK ESPECIAL</h4> */}
             <h4>DECK ESPECIAL</h4>
-            {this.props.currDeck.mainCards.length > 0 ?
+            {this.props.currDeck.specialCards.length > 0 ?
               this.props.currDeck.specialCards.map((card, i) =>
                 <div className='deckBuilder-item' key={card.key}>
                   <div>
@@ -197,6 +221,36 @@ export class DeckBuilderEdit extends React.Component {
                     </div>
                     <div className='deckBuilder-span-cardAmount'>
                       <span>{card.amount??0}/{this.props.IsCardTypeOf("RECURSO", card.cardTypes) ? '1' : '2'}</span>
+                    </div>
+                  </div>
+                </div>
+              ) :
+              <h5 className='padding-bottom-1'>Adicione cartas ao seu novo deck...</h5>
+            }
+          </div>
+          : <></>
+        }
+        {!!this.props.showFortressDeck ?
+          <div className='deckBuilder-edit-block'>
+            <h4>FORTALEZA</h4>
+            {this.props.currDeck.fortressCards.length > 0 ?
+              this.props.currDeck.fortressCards.map((card, i) =>
+                <div className='deckBuilder-item' key={card.key}>
+                  <div>
+                    <h4 className='text-title'>{card.name.split(" (")[0]}</h4>
+                    <img alt="Thumbnail" className='deckBuilder-item-thumb' src={card.thumb}></img>
+                  </div>
+                  <div className='deckBuilder-item-nameBox'>
+                    <div className='bt-deckBuilder bt-deck-editName' 
+                      onClick={() => { this.ChangeAmountOfCardInDeck(card.code, -1) }}>
+                      <img alt="Decrementar" className='icon-img' src={iconMinus}></img>
+                    </div>
+                    <div className='bt-deckBuilder bt-deck-editName'
+                      onClick={() => { this.ChangeAmountOfCardInDeck(card.code, 1) }}>
+                      <img alt="Incrementar" className='icon-img' src={iconPlus}></img>
+                    </div>
+                    <div className='deckBuilder-span-cardAmount'>
+                      <span>{card.amount??0}/1</span>
                     </div>
                   </div>
                 </div>

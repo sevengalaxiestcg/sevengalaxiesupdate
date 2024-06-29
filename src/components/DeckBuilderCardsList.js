@@ -146,7 +146,8 @@ export function DeckBuilderCardsList(props) {
       else { return 1; }
     });
     props.currDeck.mainCards = props.currDeck.cards.filter(card => !card.specialCard);
-    props.currDeck.specialCards = props.currDeck.cards.filter(card => card.specialCard);
+    props.currDeck.specialCards = props.currDeck.cards.filter(card => card.specialCard && !props.IsCardTypeOf("FORTALEZA", card.cardTypes));
+    props.currDeck.fortressCards = props.currDeck.cards.filter(card => !!props.IsCardTypeOf("FORTALEZA", card.cardTypes));
 
     props.setViewState(DeckBuilderViewStates.DeckEdit);
   }
