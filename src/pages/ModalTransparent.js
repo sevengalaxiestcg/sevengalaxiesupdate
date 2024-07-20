@@ -18,20 +18,23 @@ export function ModalOptionsTransparent(props) {
       onClick={() => { CloseModal() }}
     >
       <div className="modal-transparent-body">
-        {/* <div className="modal-transparent-pre"></div> */}
-        <div className="modal-transparent-header">
-          <div className="modal-transparent-title">
-            {props.modalTitle}
-          </div>
-        </div>
         <div className="modal-transparent-content">
-          <div className="modal-transparent-list">
-            {props.options.map((option, i) =>
-              <div className="modal-transparent-listItem" key={i} onClick={() => onOptionSelected(option)}>
-                {option.label}
-              </div>
-            )}
-          </div>
+          {props.options.map((option, i) =>
+            <span key={i}>
+              {!!option.isTitle
+                ? <div className="modal-transparent-title">
+                    {option.value}
+                  </div>
+                : <div className="modal-transparent-list">
+                    <span className="modal-transparent-listItem" onClick={() => onOptionSelected(option)}>
+                      <input type="radio"/>
+                      <span className="checkmark" style={ option.isSelected ? {padding: "0.1em", backgroundColor: "white"} : { } }></span>
+                      <span className="inputLabel" style={ option.isSelected ? {fontWeight: 700} : { } }>{option.label}</span>
+                    </span>
+                  </div>
+              }
+            </span>
+          )}
         </div>
       </div>
     </div>
@@ -49,14 +52,11 @@ export function ModalTransparent(props) {
       style={ props.isShowModal? { display: 'block' } : { display: 'none' } }
       onClick={() => { CloseModal() }}
     >
-      <div className="modal-transparent-body">
-        {/* <div className="modal-transparent-pre"></div> */}
-        <div className="modal-transparent-header">
+      <div className="modal-transparent-body floating">
+        <div className="modal-transparent-content floating">
           <div className="modal-transparent-title">
             {props.modalTitle}
           </div>
-        </div>
-        <div className="modal-transparent-content">
           <div className="modal-transparent-list" dangerouslySetInnerHTML={{__html: props.content}}></div>
         </div>
       </div>

@@ -12,7 +12,7 @@ import { DeckBuilderCardsAdvancedFilter, DeckBuilderCardsAdvancedFilterHeader } 
 
 import { DeckBuilderViewStates } from '../models/DeckBuilderViewStates';
 import { CardType, CostTypes, Galaxies } from '../models/CardsInfos';
-import { OrderingOptions, basicOrderingOptions } from '../models/OrderingOptions';
+import { OrderingDirections, OrderingOptions, basicOrderingOptions } from '../models/OrderingOptions';
 import { CardFilterOptions, currentFilterOptions } from '../models/CardFilterOptions';
 
 import thumbPadrao from '../background/SevenG_01.jpg';
@@ -67,7 +67,7 @@ function DeckBuilder() {
   const [showBodyInnerTopShadow, setShowBodyInnerTopShadow] = useState(true);
 
   const [orderingOptions, setOrderingOptions] = useState(basicOrderingOptions);
-  const [lastOrderingOptionSelected, setLastOrderingOptionSelected] = useState(OrderingOptions.Galaxy);
+  const [lastOrderingOption, setLastOrderingOption] = useState({ value: OrderingOptions.Code, direction: OrderingDirections.Ascending });
   const [galaxyFilters, setGalaxyFilters] = useState([]);
   const [advancedFilters, setAdvancedFilters] = useState([]);
   const [cardEffectsCosts, setCardEffectsCosts] = useState([]);
@@ -86,6 +86,7 @@ function DeckBuilder() {
     setAvailableCards(AvailableCards);
     setCardsToShow(AvailableCards);
     SetCounts(AvailableCards, true);
+    OrderCardsByOption();
   }, [AvailableCards]);
 
   useEffect(() => {
@@ -143,7 +144,7 @@ function DeckBuilder() {
           eff.costs.forEach(effCost => {
             if (effectsCosts.filter(p => p.cost === effCost.costAmount).length === 0) {
               var costAmount = effCost.costAmount;
-              if (effCost.costAmount == 99) {
+              if (effCost.costAmount === 99) {
                 costAmount = "X";
               }
               effectsCosts.push({ cost: costAmount, amount: 0 });
@@ -236,7 +237,7 @@ function DeckBuilder() {
           card.effects.forEach(eff => {
             eff.costs.forEach(effCost => {
               effectsCosts.forEach(effectCost => {
-                if (effectCost.cost === effCost.costAmount || (effectCost.cost === "X" && effCost.costAmount == 99)) {
+                if (effectCost.cost === effCost.costAmount || (effectCost.cost === "X" && effCost.costAmount === 99)) {
                   effectCost.amount += card.amount ?? 1;
                 }
               });
@@ -301,13 +302,6 @@ function DeckBuilder() {
     }
     
     SetDeckListInSession(DeckList);
-  }
-
-  function AddItemToDeckListInSession(newDeck) {
-    let deckList = GetDeckListFromSession();
-    deckList.push(newDeck);
-    SetDeckListInSession(deckList);
-    setDeckListToShow(deckList);
   }
 
   function onClickMenuBottomItem (viewState) {
@@ -595,7 +589,6 @@ function DeckBuilder() {
   }
 
   function ClearCardsFilters () {
-    setLastOrderingOptionSelected(OrderingOptions.Galaxy);
     setGalaxyFilters([]);
     setAdvancedFilters([]);
     setCardEffectsCosts([]);
@@ -618,16 +611,46 @@ function DeckBuilder() {
   }
 
   function OrderCardsByOption (orderingOption) {
-    if (orderingOption === undefined) orderingOption = lastOrderingOptionSelected;
-    setLastOrderingOptionSelected(orderingOption);
+    var lastOption = {...lastOrderingOption};
+    if (!!orderingOption && !!orderingOption.isOrdering) {
+      lastOption.value = orderingOption.value;
+    }
+    else if (!!orderingOption && !!orderingOption.isDirection) {
+      lastOption.direction = orderingOption.value;
+    }
+    setLastOrderingOption(lastOption);
 
+    if (!!orderingOption) {
+      // set the option as the selected one, while others as not selected
+      var _orderingOptions = [];
+      basicOrderingOptions.forEach(p => _orderingOptions.push({...p}));
+      _orderingOptions.map(p => p.isSelected = undefined);
+      _orderingOptions.filter(p => p.value === lastOption.value || p.value === lastOption.direction)
+                      .map(p => p.isSelected = true);
+      setOrderingOptions(_orderingOptions);
+    }
+
+    var collator = new Intl.Collator(undefined, {numeric: true, sensitivity: 'base'});
     var strList = [];
-    var cards = cardsToShow.sort(function (a, b) {
-      switch (orderingOption){
+    var cards = AvailableCards.sort(function (a, b) {
+      var ret = 0;
+      switch (lastOption.value) {
+        case OrderingOptions.Key:
+          strList = [a.key, b.key].sort(collator.compare);
+          if (strList[0] === a.key) { ret = -1; }
+          else { ret = 1; }
+          break;
+        case OrderingOptions.Name:
+          strList = [a.name, b.name].sort(collator.compare);
+          if (strList[0] === a.name) { ret = -1; }
+          else { ret = 1; }
+          break;
         case OrderingOptions.BaseCost:
-          return a.cost - b.cost;
+          ret = a.cost - b.cost;
+          break;
         case OrderingOptions.Galaxy:
-          return a.galaxy - b.galaxy;
+          ret = a.galaxy - b.galaxy;
+          break;
         case OrderingOptions.EffectCost:
           var aEffectsCost = 0;
           a.effects.forEach(e => {
@@ -641,39 +664,55 @@ function DeckBuilder() {
               bEffectsCost += c.costAmount;
             });
           });
-          return aEffectsCost - bEffectsCost;
+          ret = aEffectsCost - bEffectsCost;
+          break;
         case OrderingOptions.Rarity:
-          return b.rarity - a.rarity;
+          ret = a.rarity - b.rarity;
+          break;
         case OrderingOptions.IllustratorName:
-          strList = [a.illustrator, b.illustrator].sort();
-          if (strList[0] === a.illustrator) { return -1; }
-          else { return 1; }
+          strList = [a.illustrator, b.illustrator].sort(collator.compare);
+          if (strList[0] === a.illustrator) { ret = -1; }
+          else { ret = 1; }
+          break;
         case OrderingOptions.Attack:
-          return b.attack - a.attack;
+          ret = a.attack - b.attack;
+          break;
         case OrderingOptions.Shield:
-          return b.shield - a.shield;
+          ret = a.shield - b.shield;
+          break;
         case OrderingOptions.CounterDamage:
-          return b.counterDamage - a.counterDamage;
+          ret = a.counterDamage - b.counterDamage;
+          break;
         case OrderingOptions.DateLaunched:
-          strList = [a.dateLaunched, b.dateLaunched].sort();
-          if (strList[0] === a.dateLaunched) { return -1; }
-          else { return 1; }
+          strList = [a.dateLaunched, b.dateLaunched].sort(collator.compare);
+          if (strList[0] === a.dateLaunched) { ret = -1; }
+          else { ret = 1; }
+          break;
         case OrderingOptions.Subtype:
           var aSubtypeFirst = a.cardSubtypes.length > 0 ? a.cardSubtypes[0] : "";
           var bSubtypeFirst = b.cardSubtypes.length > 0 ? b.cardSubtypes[0] : "";
-          strList = [aSubtypeFirst, bSubtypeFirst].sort();
-          if (strList[0] === aSubtypeFirst) { return -1; }
-          else { return 1; }
+          strList = [aSubtypeFirst, bSubtypeFirst].sort(collator.compare);
+          if (strList[0] === aSubtypeFirst) { ret = -1; }
+          else { ret = 1; }
+          break;
         case OrderingOptions.LifePoints:
-          return b.lifePoints - a.lifePoints;
+          ret = a.lifePoints - b.lifePoints;
+          break;
         case OrderingOptions.Range:
-          return a.range - b.range;
+          ret = a.range - b.range;
+          break;
         case OrderingOptions.Code:
         default:
-          strList = [a.code, b.code].sort();
-          if (strList[0] === a.code) { return -1; }
-          else { return 1; }
+          strList = [a.code, b.code].sort(collator.compare);
+          if (strList[0] === a.code) { ret = -1; }
+          else { ret = 1; }
+          break;
       }
+
+      if (lastOption.direction === OrderingDirections.Descending) {
+        ret *= -1;
+      }
+      return ret;
     });
     setCardsToShow(cards);
   }
@@ -850,7 +889,8 @@ function DeckBuilder() {
           </div>
         </div>
 
-        <ModalOptionsTransparent modalTitle="Ordenar cartas por:"
+        {/* TODO : send a list with 2 titles and their options */}
+        <ModalOptionsTransparent modalTitle="CLASSIFICAR POR:"
           onOptionSelected={OrderCardsByOption} options={orderingOptions}
           isShowModal={isShowModalOrderBy} setIsShowModal={setIsShowModalOrderBy}
         />

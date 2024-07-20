@@ -13,50 +13,39 @@
 .modal-transparent-body {
   margin: auto;
   position: fixed;
-  width: 100%;
+  width: 15em;
   bottom: 0;
+  right: 0;
   display: flex;
   flex-direction: row;
 }
 
-.modal-transparent-header {
-  display: flex;
+.modal-transparent-body.floating {
+  top: 9vh;
+}
+
+.modal-transparent-content {
   position: relative;
-  top: 78vmin;
-  place-items: center;
-  background-color: #000000C0;
+  width: -webkit-fill-available;
+  max-height: 90vmin;
+  height: 90vmin;
+  font-size: 10.5pt;
+  padding: 0.6em 1.70em 0 1.70em;
   border-radius: 2vmin;
-  width: 93vmin;
-  max-height: 12vmin;
+  background-color: #000000e5;
+  overflow: auto;
+}
+
+.modal-transparent-content.floating {
+  max-height: 69vh;
+  height: auto;
 }
 
 .modal-transparent-title {
   display: block;
-  padding: 1em;
-  text-align: center;
+  padding: 0.75em 0em 0.35em 0em;
   color: white;
-  font-weight: 700;
   width: -webkit-fill-available;
-}
-
-.modal-transparent-pre,
-.modal-transparent-content {
-  position: relative;
-  width: -webkit-fill-available;
-  background-color: #000000C0;
-  max-height: 90vmin;
-}
-
-.modal-transparent-pre {
-  bottom: -9.5vmin;
-  height: 19vmin;
-  border-radius: 58vmin/11vmin;
-}
-
-.modal-transparent-content {
-  overflow: auto;
-  border-radius: 2vmin;
-  height: 90vmin;
 }
 
 .modal-transparent-list { 
@@ -66,17 +55,40 @@
 .modal-transparent-listItem {
   color: white;
   display: flex;
-  margin: 1em;
-  padding: 1em;
-  border: 1px solid;
   border-radius: 5px;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  cursor: pointer;
 }
 
-.modal-transparent-list ul {
-  padding: 1em;
+.modal-transparent-listItem input {
+  opacity: 0;
+  cursor: pointer;
+  height: 0;
+  width: 0;
+}
+
+.modal-transparent-listItem .checkmark {
+  display: flex;
+  background-color: transparent;
+  gap: 0.5em;
+  margin: 0.20em 0 0 0;
+  height: 1em;
+  width: 1em;
+  border: 1px solid white;
+  border-radius: 50%;
+}
+
+.modal-transparent-listItem .inputLabel {
+  margin: 0 0.5em;
+}
+
+.modal-transparent-listItem:hover input ~ .checkmark {
+  background-color: rgba(255,255,255,0.33);
 }
 
 .modal-transparent-list ul li {
   list-style: none;
-  padding: 0  1em;
 }

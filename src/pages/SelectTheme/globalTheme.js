@@ -2,8 +2,8 @@ import { createGlobalStyle } from "styled-components";
 
 // import img from './images/treta-big.png';
 
-let maxHeightContent = '129vmin';
-let maxHeightContentDeckList = '156vmin';
+let maxHeightContent = '75vh';
+let maxHeightContentDeckList = '90vh';
 if (window.innerWidth > window.innerHeight) {
   maxHeightContent = '56vmin';
   maxHeightContentDeckList = '83vmin';
