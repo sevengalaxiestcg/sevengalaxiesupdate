@@ -31,7 +31,6 @@ export class DeckBuilderEditHeader extends React.Component {
     var content = '<ul>';
     const counters = this.props.SetCounts(this.props.currDeck.cards??[]);
 
-    // TODO : separar em Deck (máx. 40), Deck Especial (máx. 100) e Fortaleza (máx. 1)
     content += "<li>TOTAL DE CARDS</li>";
     content += `<li><strong>Deck:</strong><span style='margin-left: 1em;'>${counters.countNormals}/40</span></li>`;
     content += `<li><strong>Deck Especial:</strong><span style='margin-left: 1em;'>${counters.countSpecials}/100</span></li>`;

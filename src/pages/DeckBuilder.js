@@ -889,7 +889,6 @@ function DeckBuilder() {
           </div>
         </div>
 
-        {/* TODO : send a list with 2 titles and their options */}
         <ModalOptionsTransparent modalTitle="CLASSIFICAR POR:"
           onOptionSelected={OrderCardsByOption} options={orderingOptions}
           isShowModal={isShowModalOrderBy} setIsShowModal={setIsShowModalOrderBy}
