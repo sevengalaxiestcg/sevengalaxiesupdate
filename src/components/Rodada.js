@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import AlertModal from '../pages/Modal';
 import ActiveAnimation from '../tools/ActiveAnimation';
+import { AlertModal } from './Modal';
 
 import menos from '../images/_.png';
 import mais from '../images/+.png';

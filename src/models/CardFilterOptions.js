@@ -18,4 +18,4 @@ export class CardFilterOptions {
 }
 
 export var currentFilterOptions = [CardFilterOptions.BaseCost, CardFilterOptions.EffectCost, CardFilterOptions.CardType,
-  CardFilterOptions.Ability, CardFilterOptions.EffectTrigger, CardFilterOptions.Rarity];
+  CardFilterOptions.Ability, CardFilterOptions.EffectTrigger, CardFilterOptions.Rarity, CardFilterOptions.Range, CardFilterOptions.Subtype];

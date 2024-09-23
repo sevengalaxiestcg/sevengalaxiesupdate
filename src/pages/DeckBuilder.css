@@ -1,4 +1,3 @@
-
 .deckBuilder {
   width: 100vw;
   max-width: 100vw;
@@ -36,6 +35,10 @@
   border-radius: 5vmin;
 }
 
+.deckBuilder-header-block .bt-option.bt-option-invert {
+  background-color: transparent;
+}
+
 .deckBuilder-header-block .bt-option:first-child {
   margin-right: 6vmin;
 }
@@ -45,6 +48,20 @@
   width: 4.5vmin;
   margin: 1.5vmin 1.5vmin;
   filter: var(--filter-icone-tema);
+}
+
+.deckBuilder-header-block .bt-option.bt-option-invert img {
+  height: 6vmin;
+  width: 6vmin;
+}
+
+.deckBuilder-header-block .deckBuilder-cards-results,
+.deckBuilder-header-block .deckBuilder-decks-results {
+  width: -webkit-fill-available;
+}
+
+.deckBuilder-header-block .deckBuilder-cards-results-info,
+.deckBuilder-header-block .deckBuilder-decks-results-info {
 }
 
 .deckBuilder-header .bt-deckBuilder-search {
@@ -121,8 +138,9 @@
 
 .bt-deckBuilder img {
   pointer-events: none;
-  width: 13vmin;
-  height: 13vmin;
+  width: 6vmin;
+  height: auto;
+  margin: 1.2vmin;
 }
 
 .deckBuilder-item {
@@ -132,6 +150,14 @@
 }
 
 .deckBuilder-item-thumb {
+  display: flex;
+  width: 38vmin;
+  height: 38vmin;
+  border-radius: 2vmin;
+  background-color: black;
+}
+
+.deckBuilder-card-thumb {
   display: flex;
   width: 40vmin;
   height: 56vmin;
@@ -155,6 +181,7 @@
   top: -2vmin;
   left: -0.25em;
 }
+
 
 .bt-deckBuilder-search input[type='text'] {
   height: 7.5vmin;
@@ -192,6 +219,10 @@
   margin: 0 1vmin;
 }
 
+.bt-filterOption {
+  height: 9vmin;
+}
+
 .bt-galaxy.galaxy-selected,
 .bt-filterOption.filter-selected {
   background-color: var(--cor-thema);
@@ -208,16 +239,23 @@
   margin-top: 0.5vmin;
 }
 
+.bt-filterOption img {
+  width: 6vmin;
+  height: auto;
+  margin: 1.5vmin 1.5vmin 0 0;
+}
+
+.img-raridade {
+  width: 4.5vmin !important;
+  margin: 1.75vmin 1.5vmin 0 0 !important;
+}
+
 .img-triangle {
   margin-top: 0 !important;
 }
 
-.deckBuilder-item-nameBox h4,
-.deckBuilder-item-nameBox img {
-  margin: auto;
-}
-
 .deckBuilder-item-nameBox h4 {
+  margin: auto;
   width: -webkit-fill-available;
   max-width: 21vmin;
   word-break: break-all;
@@ -235,6 +273,7 @@
 .bt-deck-editName {
   cursor: pointer;
   float: right;
+  margin: 0 1.75vmin !important;
 }
 
 .deckBuilder-span-cardAmount {
@@ -247,7 +286,7 @@
   bottom: 0;
   width: -webkit-fill-available;
   height: 15vmin;
-  box-shadow: inset 0px -51px 34px -19px black;
+  /* box-shadow: inset 0px -51px 34px -19px black; */
 }
 
 .deckBuilder-footer-item {
@@ -306,7 +345,7 @@
   }
 
   .bt-deck-editName {
-    position: relative !important;
+    /* position: relative !important; */
     height: 5vmin !important;
     top: 0.5vmin !important;
     /* right: 1vmin; */

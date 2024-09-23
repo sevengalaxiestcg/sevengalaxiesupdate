@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import Toolbar from '../components/Toolbar';
 import Rodada from '../components/Rodada';
 import Fortaleza from '../components/Fortaleza';
-import AlertModal from '../pages/Modal';
+import { AlertModal } from '../components/Modal';
 import ChangeBackground from '../tools/ChangeBackground';
 
 import './Game.css';

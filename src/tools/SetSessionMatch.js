@@ -31,11 +31,11 @@ function SetSessionMatch(rodada, fortaleza, restart) {
       sessionFortaleza = initialFortaleza;
     }
 
-    if (Object.keys(rodada).length > 0) {
+    if (rodada && Object.keys(rodada).length > 0) {
       sessionRodada = rodada;
     }
 
-    if (Object.keys(fortaleza).length > 0) {
+    if (fortaleza && Object.keys(fortaleza).length > 0) {
       sessionFortaleza = fortaleza;
     }
   }

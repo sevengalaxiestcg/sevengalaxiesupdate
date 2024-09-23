@@ -1,3 +1,13 @@
+export class GalaxiesOrderings {
+  static Stroj = 0;
+  static Gaia = 1;
+  static Adroit = 2;
+  static Majik = 3;
+  static _Blue = 4;
+  static _Red = 5;
+  static _Yellow = 6;
+}
+
 export class OrderingOptions {
   static BaseCost =  0;
   static Galaxy = 1;
@@ -9,6 +19,7 @@ export class OrderingOptions {
   static Shield = 7;
   static CounterDamage = 8;
   static DateLaunched = 9;
+  static DateCreated = 15;
   static Subtype = 10;
   static LifePoints = 11;
   static Range = 12;
@@ -21,7 +32,7 @@ export class OrderingDirections {
   static Descending = -2;
 }
 
-export var basicOrderingOptions = [
+export var basicOrderingCardsOptions = [
   {
     isTitle: true,
     label: "titleOrderOptions",
@@ -84,11 +95,6 @@ export var basicOrderingOptions = [
   //   isOrdering: true,
   // },
   // {
-  //   label: "Galáxia",
-  //   value: OrderingOptions.Galaxy,
-  //   isOrdering: true,
-  // },
-  // {
   //   label: "Subtipos",
   //   value: OrderingOptions.Subtype,
   //   isOrdering: true,
@@ -118,5 +124,45 @@ export var basicOrderingOptions = [
     label: "Decrescente",
     value: OrderingDirections.Descending,
     isDirection: true,
+  },
+];
+
+export var basicOrderingDecksOptions = [
+  {
+    isTitle: true,
+    label: "titleOrderOptions",
+    value: "CLASSIFICAR POR:",
+  },
+  {
+    label: "Nome",
+    value: OrderingOptions.Name,
+    isOrdering: true,
+  },
+ {
+    label: "Data de Criação",
+    value: OrderingOptions.DateCreated,
+    isOrdering: true,
+    isSelected: true,
+  },
+  {
+    label: "Galáxia",
+    value: OrderingOptions.Galaxy,
+    isOrdering: true,
+  },
+  {
+    isTitle: true,
+    label: "titleOrderDirection",
+    value: "ORDEM:",
+  },
+  {
+    label: "Crescente",
+    value: OrderingDirections.Ascending,
+    isDirection: true,
+  },
+  {
+    label: "Decrescente",
+    value: OrderingDirections.Descending,
+    isDirection: true,
+    isSelected: true,
   },
 ];

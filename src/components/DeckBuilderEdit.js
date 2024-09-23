@@ -1,15 +1,11 @@
 import React from 'react';
 import { DeckBuilderViewStates } from '../models/DeckBuilderViewStates';
 
-import iconBack from '../images/seta_.png';
+import iconSearch from '../images/lupa.png';
+import iconBack from '../images/voltar.png';
 import iconMinus from '../images/_.png';
 import iconPlus from '../images/+.png';
 import iconInfo from '../images/social/Sobre.png';
-
-const iconAccept = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQRpwZ27bEMuQAWmUz8t4886H6pgcFY2IZikQ&usqp=CAU";
-const iconSearch = "https://static-00.iconduck.com/assets.00/search-icon-2044x2048-psdrpqwp.png";
-const iconExport = "https://e7.pngegg.com/pngimages/382/1010/png-clipart-computer-icons-export-export-miscellaneous-cdr-thumbnail.png";
-const iconImport = "https://banner2.cleanpng.com/20180430/aqe/kisspng-computer-icons-import-export-download-imports-5ae7ad6fd4dff5.9747302515251326558719.jpg";
 
 export class DeckBuilderEditHeader extends React.Component {
 
@@ -23,7 +19,7 @@ export class DeckBuilderEditHeader extends React.Component {
 
   SendToSearchCard() {
     this.props.setIsDeckEdit(true);
-    this.props.setShowBottomMenu(false);
+    this.props.setShowBottomMenu(true);
     this.props.setViewState(DeckBuilderViewStates.CardsList);
   }
 
@@ -106,15 +102,12 @@ export class DeckBuilderEditHeader extends React.Component {
             {this.props.currDeck.name.toUpperCase()}
           </div>
           <div className='header-options'>
-            <div className='bt-deckBuilder bt-option' onClick={() => { this.ShowDeckInformations(); }}>
+            <div className='bt-deckBuilder bt-option bt-option-invert' onClick={() => { this.ShowDeckInformations(); }}>
               <img alt="Informações sobre o deck" src={iconInfo}></img>
             </div>
-            <div className='bt-deckBuilder bt-option' onClick={() => { this.SendToSearchCard(); }}>
+            <div className='bt-deckBuilder bt-option bt-option-invert' onClick={() => { this.SendToSearchCard(); }}>
               <img alt="Filtro" src={iconSearch}></img>
             </div>
-            {/* <div className='bt-deckBuilder bt-option' onClick={() => { this.SaveChanges(); }}>
-              <img alt="Salvar Alterações" src={iconAccept}></img>
-            </div> */}
           </div>
         </div>
       </>
@@ -122,7 +115,7 @@ export class DeckBuilderEditHeader extends React.Component {
   }
 }
 
-export class DeckBuilderEdit extends React.Component {
+export class DeckBuilderEditBody extends React.Component {
 
   ChangeAmountOfCardInDeck (cardCode, amount) {
     let index = -1;
@@ -152,44 +145,105 @@ export class DeckBuilderEdit extends React.Component {
     this.forceUpdate();
   }
 
+  IsCategoryFilterSelected(category) {
+    return (category === 'main' && !!this.props.showMainDeck) ||
+           (category === 'specials' && !this.props.showMainDeck && !this.props.showFortressDeck) ||
+           (category === 'fortress' && !!this.props.showFortressDeck);
+  }
+
+  GetCategoryClass(category) {
+    let cl = 'deckBuilder-cards-categories-item';
+    cl = `${cl} ${this.IsCategoryFilterSelected(category) ? ' category-selected' : ''}`;
+    if (category === 'normals') {
+      cl += ' bt-filterNormals';
+    }
+    else if (category === 'specials') {
+      cl += ' bt-filterSpecials';
+    }
+    else if (category === 'fortress') {
+      cl += ' bt-filterFortress';
+    }
+    return cl;
+  }
+
+  GetCardsCount(category) {
+    let count = 0;
+    if(category === 'main') this.props.currDeck.mainCards.forEach(p => count += p.amount);
+    if(category === 'specials') this.props.currDeck.specialCards.forEach(p => count += p.amount);
+    if(category === 'fortress') this.props.currDeck.fortressCards.forEach(p => count += p.amount);
+    return count;
+  }
+
+  ShowPreviousCard (card) {
+    const index = this.props.IndexOfCardInDeck(card);
+    if (index <= 0) return;
+    const prevCard = this.props.currDeck.cards[index-1];
+    this.props.setCarouselModalCard(prevCard);
+    this.forceUpdate();
+  }
+
+  ShowNextCard (card) {
+    const index = this.props.IndexOfCardInDeck(card);
+    if (index >= (this.props.currDeck.cards.length-1)) return;
+    const nextCard = this.props.currDeck.cards[index+1];
+    this.props.setCarouselModalCard(nextCard);
+    this.forceUpdate();
+  }
+
+  OnClickCard (card) {
+    const _this = this;
+    this.props.setCarouselBackAction({action: (card) => {_this.ShowPreviousCard(card)}});
+    this.props.setCarouselForwardAction({action: (card) => {_this.ShowNextCard(card)}});
+    this.props.setCarouselMinusAction({action: (card) => {_this.ChangeAmountOfCardInDeck(card.code, -1)}});
+    this.props.setCarouselPlusAction({action: (card) => {_this.ChangeAmountOfCardInDeck(card.code, 1)}});
+
+    this.props.setCarouselModalCard(card);
+    this.props.setIsShowCarouselModal(true);
+    this.forceUpdate();
+  }
+
   render () {
     return (
       <>
-        <div className='nav-tab'>
-          <button onClick={() => { this.SetShowMainDeck(true); this.SetShowFortressDeck(false); }}
-            style={!!this.props.showMainDeck ? { backgroundColor: 'var(--cor-thema)' } : { color: 'var(--cor-thema)' }}>
-            <strong>Principal</strong>
-          </button>
-          <button onClick={() => { this.SetShowMainDeck(false); this.SetShowFortressDeck(false); }}
-            style={!this.props.showMainDeck && !this.props.showFortressDeck ? { backgroundColor: 'var(--cor-thema)' } : { color: 'var(--cor-thema)' }}>
-            <strong>Especial</strong>
-          </button>
-          <button onClick={() => { this.SetShowMainDeck(false); this.SetShowFortressDeck(true); }}
-            style={!!this.props.showFortressDeck ? { backgroundColor: 'var(--cor-thema)' } : { color: 'var(--cor-thema)' }}>
-            <strong>Fortaleza</strong>
-          </button>
+        <div className='deckBuilder-cards-categories'>
+          <div className={ this.GetCategoryClass('main') }
+            onClick={() => { this.SetShowMainDeck(true); this.SetShowFortressDeck(false); }}>
+            <span className='count'>{ this.GetCardsCount('main') }</span>
+            <span className='title'> Principal</span>
+          </div>
+          <div className={ this.GetCategoryClass('specials') }
+            onClick={() => { this.SetShowMainDeck(false); this.SetShowFortressDeck(false); }}>
+            <span className='count'>{ this.GetCardsCount('specials') }</span>
+            <span className='title'> Especiais</span>
+          </div>
+          <div className={ this.GetCategoryClass('fortress') }
+            onClick={() => { this.SetShowMainDeck(false); this.SetShowFortressDeck(true); }}>
+            <span className='count'>{ this.GetCardsCount('fortress') }</span>
+            <span className='title'> Fortalezas</span>
+          </div>
         </div>
+        
         {!!this.props.showMainDeck ?
           <div className='deckBuilder-edit-block'>
             <h4>DECK PRINCIPAL</h4>
             {this.props.currDeck.mainCards.length > 0 ? 
               this.props.currDeck.mainCards.map((card, i) =>
                 <div className='deckBuilder-item' key={card.key}>
-                  <div>
+                  <div onClick={() => { this.OnClickCard(card); }}>
                     <h4 className='text-title'>{card.name}</h4>
-                    <img alt="Thumbnail" className='deckBuilder-item-thumb' src={card.thumb}></img>
+                    <img alt="Thumbnail" className='deckBuilder-card-thumb' src={card.thumb}></img>
                   </div>
                   <div className='deckBuilder-item-nameBox'>
                     <div className='bt-deckBuilder bt-deck-editName' 
                       onClick={() => { this.ChangeAmountOfCardInDeck(card.code, -1) }}>
                       <img alt="Decrementar" className='icon-img' src={iconMinus}></img>
                     </div>
+                    <div className='deckBuilder-span-cardAmount'>
+                      <span>{card.amount??0}/2</span>
+                    </div>
                     <div className='bt-deckBuilder bt-deck-editName'
                       onClick={() => { this.ChangeAmountOfCardInDeck(card.code, 1) }}>
                       <img alt="Incrementar" className='icon-img' src={iconPlus}></img>
-                    </div>
-                    <div className='deckBuilder-span-cardAmount'>
-                      <span>{card.amount??0}/2</span>
                     </div>
                   </div>
                 </div>
@@ -207,19 +261,19 @@ export class DeckBuilderEdit extends React.Component {
                 <div className='deckBuilder-item' key={card.key}>
                   <div>
                     <h4 className='text-title'>{card.name.split(" (")[0]}</h4>
-                    <img alt="Thumbnail" className='deckBuilder-item-thumb' src={card.thumb}></img>
+                    <img alt="Thumbnail" className='deckBuilder-card-thumb' src={card.thumb}></img>
                   </div>
                   <div className='deckBuilder-item-nameBox'>
                     <div className='bt-deckBuilder bt-deck-editName' 
                       onClick={() => { this.ChangeAmountOfCardInDeck(card.code, -1) }}>
                       <img alt="Decrementar" className='icon-img' src={iconMinus}></img>
                     </div>
+                    <div className='deckBuilder-span-cardAmount'>
+                      <span>{card.amount??0}/{this.props.IsCardTypeOf("RECURSO", card.cardTypes) ? '1' : '8'}</span>
+                    </div>
                     <div className='bt-deckBuilder bt-deck-editName'
                       onClick={() => { this.ChangeAmountOfCardInDeck(card.code, 1) }}>
                       <img alt="Incrementar" className='icon-img' src={iconPlus}></img>
-                    </div>
-                    <div className='deckBuilder-span-cardAmount'>
-                      <span>{card.amount??0}/{this.props.IsCardTypeOf("RECURSO", card.cardTypes) ? '1' : '2'}</span>
                     </div>
                   </div>
                 </div>
@@ -237,19 +291,19 @@ export class DeckBuilderEdit extends React.Component {
                 <div className='deckBuilder-item' key={card.key}>
                   <div>
                     <h4 className='text-title'>{card.name.split(" (")[0]}</h4>
-                    <img alt="Thumbnail" className='deckBuilder-item-thumb' src={card.thumb}></img>
+                    <img alt="Thumbnail" className='deckBuilder-card-thumb' src={card.thumb}></img>
                   </div>
                   <div className='deckBuilder-item-nameBox'>
                     <div className='bt-deckBuilder bt-deck-editName' 
                       onClick={() => { this.ChangeAmountOfCardInDeck(card.code, -1) }}>
                       <img alt="Decrementar" className='icon-img' src={iconMinus}></img>
                     </div>
+                    <div className='deckBuilder-span-cardAmount'>
+                      <span>{card.amount??0}/1</span>
+                    </div>
                     <div className='bt-deckBuilder bt-deck-editName'
                       onClick={() => { this.ChangeAmountOfCardInDeck(card.code, 1) }}>
                       <img alt="Incrementar" className='icon-img' src={iconPlus}></img>
-                    </div>
-                    <div className='deckBuilder-span-cardAmount'>
-                      <span>{card.amount??0}/1</span>
                     </div>
                   </div>
                 </div>

@@ -15,8 +15,13 @@ import './SelectTheme.css';
 
 
 function SelectTheme(props) {
-  const [theme, setTheme] = useState(window.localStorage.getItem("sevengalaxies@theme"));
+  const [theme, setTheme] = useState('');
 
+  useEffect(() => {
+    window.history.pushState("nohb", null, "");
+    setTheme(window.localStorage.getItem("sevengalaxies@theme"));
+  }, []);
+  
   function handleAction(tema) {
     window.localStorage.setItem("sevengalaxies@theme", tema);
 

@@ -1,12 +1,13 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 
 import Game from './pages/Game';
 import SelectTheme from './pages/SelectTheme/SelectTheme2';
 import DeckBuilder from './pages/DeckBuilder';
+import CardsLibrary from './pages/Cards';
 
 export default function Routes() {
-
+  
   useEffect(() => {
     window.history.pushState("nohb", null, "");
   }, []);
@@ -22,6 +23,9 @@ export default function Routes() {
         }} /> */}
 
         <Route path="/app/deckBuilder" exact component={DeckBuilder} />
+        {/**/}
+
+        <Route path="/app/cards" exact component={CardsLibrary} />
         {/**/}
         
         <Route path="/app"

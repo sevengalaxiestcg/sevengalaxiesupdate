@@ -1,28 +1,31 @@
-import React, { forwardRef, useImperativeHandle } from 'react';
+import React from 'react';
 import { DeckBuilderViewStates } from '../models/DeckBuilderViewStates';
 import { Deck, Galaxies } from '../models/CardsInfos';
 
 import iconSearch from '../images/lupa.png';
 import iconOrdenar from '../images/ordenar.png';
-import iconPlus from '../images/+.png';
-import iconMinus from '../images/_.png';
+import iconNovoDeck from '../images/novo deck.png';
+import iconCriarDeck from '../images/criar deck.png';
+import iconTrash from '../images/excluir.png';
+import iconRules from '../images/info regras deck.png';
+import iconImportarDeck from '../images/importar.png';
+import iconCopy from '../images/duplicar.png';
+import iconExportText from '../images/compartilhar.png';
+import iconExport from '../images/compartilhar.png';
+import iconOptions from '../images/options.png';
+import iconAccept from '../images/renomear.png';
 
 import iconGaia from '../images/pedras/Gaia.png';
 import iconStroj from '../images/pedras/Stroj.png';
 import iconMajik from '../images/pedras/Majik.png';
 import iconAdroit from '../images/pedras/Adroit.png';
-import icon3 from '../images/pedras/3-2.png';
-import icon2 from '../images/pedras/2-2.png';
-import icon1 from '../images/pedras/1-2.png';
-
-const iconAccept = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQRpwZ27bEMuQAWmUz8t4886H6pgcFY2IZikQ&usqp=CAU";
-const iconEdit = "data:image/png;base64,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";
-const iconExportText = "https://e1.pngegg.com/pngimages/814/110/png-clipart-ios-7-8-style-icons-for-textedit-file-extensions-txt-doc-thumbnail.png";
-const iconExport = "https://e7.pngegg.com/pngimages/382/1010/png-clipart-computer-icons-export-export-miscellaneous-cdr-thumbnail.png";
-const iconImport = "https://banner2.cleanpng.com/20180430/aqe/kisspng-computer-icons-import-export-download-imports-5ae7ad6fd4dff5.9747302515251326558719.jpg";
-const iconCopy = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR-EI3JDJhpTUz-vzmjZgUuDYz-HJy9GI7c0A&s";
+import icon3 from '../images/pedras/pedra 6 icon.png';
+import icon2 from '../images/pedras/pedra 5 icon.png';
+import icon1 from '../images/pedras/pedra 7 icon.png';
 
 export class DeckBuilderDecksListHeader extends React.Component {
+
+  timeoutSearch = undefined;
 
   SendToCreateNewDeck() {
     let newDeck = new Deck();
@@ -31,6 +34,7 @@ export class DeckBuilderDecksListHeader extends React.Component {
     newDeck.mainCards = [];
     newDeck.specialCards = [];
     newDeck.fortressCards = [];
+    newDeck.creationDate = new Date();
     this.props.setCurrDeck(newDeck);
 
     let deckList = this.props.DeckList;
@@ -40,7 +44,8 @@ export class DeckBuilderDecksListHeader extends React.Component {
     this.props.setShowMainDeck(true);
     this.props.setShowFortressDeck(false);
     this.props.setShowBottomMenu(false);
-    this.props.setViewState(DeckBuilderViewStates.DeckEdit);
+    this.props.setIsDeckEdit(true);
+    this.props.setViewState(DeckBuilderViewStates.CardsList);
   }
 
   SearchDeck() {
@@ -50,6 +55,18 @@ export class DeckBuilderDecksListHeader extends React.Component {
     }
     else {
       this.props.SearchDeck();
+    }
+  }
+
+  OnChangeSearchInput() {
+    const input = document.getElementById("search-deck-input");
+    if (input && input.value) {
+      if (this.timeoutSearch !== undefined) {
+        clearTimeout(this.timeoutSearch);
+      }
+      this.timeoutSearch = setTimeout(() => {
+        this.SearchDeck();
+      }, 1000);
     }
   }
 
@@ -92,6 +109,27 @@ export class DeckBuilderDecksListHeader extends React.Component {
     input.click();
   }
 
+  OpenButtonsModal() {
+    let buttons = [
+      {
+        alt: 'Criar Deck',
+        icon: iconCriarDeck,
+        onClick: () => { this.SendToCreateNewDeck() }
+      },
+      {
+        alt: 'Importar Deck (.json)',
+        icon: iconImportarDeck,
+        onClick: () => { this.ImportDeck() }
+      },
+    ];
+    this.props.setButtonsModalButtons(buttons);
+    this.props.setIsShowModalButtons(true);
+  }
+
+  OpenRulesModal() {
+    this.props.setIsShowRules(true);
+  }
+
   render () {
     return (
       <>
@@ -100,25 +138,23 @@ export class DeckBuilderDecksListHeader extends React.Component {
             MEUS DECKS
           </div>
           <div className='header-options'>
-            {/* <div className='bt-deckBuilder bt-option'>
-              <img alt="Ordenar" src={iconOrdenar}></img>
-            </div> */}
-            <div className='bt-deckBuilder bt-option' onClick={() => { this.SendToCreateNewDeck() }}>
-              <img alt="Adicionar deck" src={iconPlus}></img>
+            <div className='bt-deckBuilder bt-option bt-option-invert' onClick={() => { this.OpenRulesModal() }}>
+              <img alt="Regras de construção de Decks" src={iconRules}></img>
             </div>
-            <div className='bt-deckBuilder bt-option' onClick={() => { this.ImportDeck(); }}>
-              <img alt="Importar deck" src={iconImport}></img>
+            <div className='bt-deckBuilder bt-option bt-option-invert' onClick={() => { this.props.setIsShowModalOrderBy(true) }}>
+              <img alt="Ordenar" src={iconOrdenar}></img>
+            </div>
+            <div className='bt-deckBuilder bt-option bt-option-invert' onClick={() => { this.OpenButtonsModal() }}>
+              <img alt="Adicionar deck" src={iconNovoDeck}></img>
             </div>
           </div>
         </div>
+        {this.props.HasFilterApplied() === true
+          ? <div className='deckBuilder-decks-results'><span className='deckBuilder-decks-results-info'>{`${this.props.DeckListToShow.length} decks encontrados`}</span></div>
+          : <></>}
         <div className='bt-deckBuilder bt-deckBuilder-search' onClick={() => { this.SearchDeck() }}>
-          <input type="text" id="search-deck-input" placeholder='Pesquisar...'></input>
+          <input type="text" id="search-deck-input" placeholder='Pesquisar...' onChange={() => { this.OnChangeSearchInput() }}></input>
           <img alt="Pesquisar Deck" src={iconSearch}></img>
-          {/* <div className={"burger-menu open"} onClick={() => ResetInputSearch()} >
-            <div className="bar1" key="b1" />
-            <div className="bar2" key="b2" />
-            <div className="bar3" key="b3" />
-          </div> */}
         </div>
         <div className='deckBuilder-galaxiesContainer'>
           <div className={ this.props.GetGalaxyClass(Galaxies.Gaia) }
@@ -152,7 +188,7 @@ export class DeckBuilderDecksListHeader extends React.Component {
   }
 }
 
-export class DeckBuilderDecksList extends React.Component {
+export class DeckBuilderDecksListBody extends React.Component {
 
   ToogleSetIsShowEditDeckName(index) {
     this.props.setIsShowEditDeckName(index);
@@ -183,6 +219,8 @@ export class DeckBuilderDecksList extends React.Component {
 
   SendToEditDeck(index) {
     const deck = this.props.DeckList[index];
+    if (!deck.creationDate) deck.creationDate = new Date();
+
     deck.cards = deck.cards.sort(function (a, b){
       let strList = [a.name, b.name].sort();
       if (strList[0] === a.name) { return -1; }
@@ -199,11 +237,34 @@ export class DeckBuilderDecksList extends React.Component {
     this.props.setViewState(DeckBuilderViewStates.DeckEdit);
   }
 
-  DeleteDeck (index) {
-    this.props.DeckList.splice(index, 1);
-    let deckList = this.props.DeckList;
-    this.props.SetDeckListInSession(deckList);
-    this.forceUpdate();
+  DeleteDeck (params) {
+    if (!params || params.index === undefined) return;
+    if (!params.origin) params.origin = this;
+
+    params.origin.props.DeckList.splice(params.index, 1);
+    let deckList = params.origin.props.DeckList;
+    params.origin.props.SetDeckListInSession(deckList);
+
+    params.origin.props.setIsShowAlertModal(false);
+    params.origin.forceUpdate();
+  }
+
+  CloseAlertModal(params) {
+    if (!params) return;
+    if (!params.origin) params.origin = this;
+    params.origin.props.setIsShowAlertModal(false);
+  }
+
+  ConfirmDeleteDeck(index) {
+    const $this = this;
+    this.props.setMessageAlertModal("Tem certeza que deseja excluir o deck?");
+    this.props.setAcceptButtonNameAlertModal("Sim");
+    this.props.setOnActionAlertModal(() => { return this.DeleteDeck });
+    this.props.setActionParamsAlertModal({ index: index, origin: $this});
+    this.props.setOnCloseAlertModal(() => { return this.CloseAlertModal });
+    this.props.setCloseParamsAlertModal({ origin: $this});
+    this.props.setIsCancelButtonVisibleAlertModal(true);
+    this.props.setIsShowAlertModal(true);
   }
 
   ExportDeck (index) {
@@ -253,6 +314,60 @@ export class DeckBuilderDecksList extends React.Component {
     URL.revokeObjectURL(link.href);
   }
 
+  TryExportDeck (index, exportType) {
+    const deck = this.props.DeckList[index];
+
+    const mainDeckCards = deck.cards.filter(p => !p.specialCard);
+    let mainDeckCardsAmount = 0;
+    mainDeckCards.forEach((card, i) => { mainDeckCardsAmount += card.amount });
+    const hasLessThanMinimumCards = mainDeckCardsAmount < 30;
+    const hasMoreThanMaximumCards = mainDeckCardsAmount > 40;
+
+    const fortressesAmount = deck.cards.filter(p => this.props.IsCardTypeOf('FORTALEZA', p.cardTypes)).length;
+    const hasMoreThanMaximumFortresses = fortressesAmount > 1;
+    const doesNotHaveFortress = fortressesAmount === 0;
+
+    const resourcesAmount = deck.cards.filter(p => this.props.IsCardTypeOf('RECURSO', p.cardTypes)).length;
+    const hasMoreThanMaximumResources = resourcesAmount > 1;
+    const doesNotHaveResource = resourcesAmount === 0;
+
+    let message = "";
+    if (hasLessThanMinimumCards) {
+      message = "O deck Principal não possui o mínimo de 30 cards.";
+    }
+    if (hasMoreThanMaximumCards) {
+      message = "O deck Principal possui mais que o máximo de 40 cards.";
+    }
+    if (hasMoreThanMaximumFortresses) {
+      message = "O deck possui mais do que uma Fortaleza.";
+    }
+    if (doesNotHaveFortress) {
+      message = "O deck não possui uma Fortaleza.";
+    }
+    if (hasMoreThanMaximumResources) {
+      message = "O deck possui mais do que um card de Recurso.";
+    }
+    if (doesNotHaveResource) {
+      message = "O deck não possui um card de Recurso.";
+    }
+
+    if (message !== "") {
+      const $this = this;
+      this.props.setMessageAlertModal(message);
+      this.props.setAcceptButtonNameAlertModal("Ok");
+      this.props.setOnActionAlertModal(() => { return this.CloseAlertModal });
+      this.props.setActionParamsAlertModal({ origin: $this});
+      this.props.setIsCancelButtonVisibleAlertModal(false);
+      this.props.setIsShowAlertModal(true);
+    }
+    else if (exportType === 'text') {
+      this.ExportDeckText(index);
+    }
+    else {
+      this.ExportDeck(index);
+    }
+  }
+
   CopyDeck(index) {
     const originDeck = this.props.DeckList[index];
 
@@ -275,6 +390,33 @@ export class DeckBuilderDecksList extends React.Component {
     this.props.setViewState(DeckBuilderViewStates.DeckEdit);
   }
 
+  OpenButtonsModal(index) {
+    let buttons = [
+      {
+        alt: 'Duplicar',
+        icon: iconCopy,
+        onClick: () => { this.CopyDeck(index) }
+      },
+      {
+        alt: 'Compartilhar (.json)',
+        icon: iconExport,
+        onClick: () => { this.TryExportDeck(index) }
+      },
+      {
+        alt: 'Compartilhar (.txt)',
+        icon: iconExportText,
+        onClick: () => { this.TryExportDeck(index, 'text') }
+      },
+      {
+        alt: 'Excluir',
+        icon: iconTrash,
+        onClick: () => { this.ConfirmDeleteDeck(index) }
+      },
+    ];
+    this.props.setButtonsModalButtons(buttons);
+    this.props.setIsShowModalButtons(true);
+  }
+
   render() {
     return (
       <>
@@ -283,7 +425,7 @@ export class DeckBuilderDecksList extends React.Component {
               <div className={this.props.isShowEditDeckName !== i ? "editable" : ""}
                 onClick={() => { if(this.props.isShowEditDeckName !== i) this.SendToEditDeck(i) }}
               >
-                <img alt="Thumbnail" className='deckBuilder-item-thumb' src={deck.thumb}></img>
+                <div className='deckBuilder-item-thumb'></div>
               </div>
               {this.props.isShowEditDeckName === i 
                 ? <div className='deckBuilder-item-nameBox editBox'>
@@ -295,20 +437,8 @@ export class DeckBuilderDecksList extends React.Component {
                 : 
                   <div className='deckBuilder-item-nameBox'>
                     <h4 onClick={() => { this.ToogleSetIsShowEditDeckName(i) }}>{deck.name}</h4>
-                    {/* <div className='bt-deckBuilder bt-deck-editName' onClick={() => { this.ToogleSetIsShowEditDeckName(i) }}>
-                      <img alt="Editar" className='icon-img' src={iconEdit}></img>
-                    </div> */}
-                    <div className='bt-deckBuilder bt-deck-editName' onClick={() => { this.ExportDeckText(i) }}>
-                      <img alt="Exportar deck" className='icon-img' src={iconExportText}></img>
-                    </div>
-                    <div className='bt-deckBuilder bt-deck-editName' onClick={() => { this.ExportDeck(i) }}>
-                      <img alt="Exportar deck" className='icon-img' src={iconExport}></img>
-                    </div>
-                    <div className='bt-deckBuilder bt-deck-editName' onClick={() => { this.CopyDeck(i) }}>
-                      <img alt="Exportar deck" className='icon-img' src={iconCopy}></img>
-                    </div>
-                    <div className='bt-deckBuilder bt-deck-editName' onClick={() => { this.DeleteDeck(i) }}>
-                      <img alt="Excluir deck" className='icon-img' src={iconMinus}></img>
+                    <div className='bt-deckBuilder bt-deck-editName' onClick={() => { this.OpenButtonsModal(i) }}>
+                      <img alt="Opções" className='icon-img icon-img-straight' src={iconOptions}></img>
                     </div>
                   </div>
               }

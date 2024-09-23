@@ -50,7 +50,7 @@ function Menu(props) {
           ALTERAR TEMA
         </div>
         <div className="menu-button b3" onClick={() => props.handleOption('deckBuilder')}>
-          DECK BUILDER
+          MEUS DECKS
         </div>
 
         <ReactGA.OutboundLink
@@ -62,14 +62,9 @@ function Menu(props) {
           MANUAL DE REGRAS
         </ReactGA.OutboundLink>
 
-        <ReactGA.OutboundLink
-          className="menu-button b5"
-          eventLabel="Cards"
-          to="https://sevengalaxiestcg.com/cards"
-          target="_blank"
-        >
+        <div className="menu-button b3" onClick={() => props.handleOption('cards')}>
           CARDS
-        </ReactGA.OutboundLink>
+        </div>
 
         <ReactGA.OutboundLink
           className="menu-button b6"

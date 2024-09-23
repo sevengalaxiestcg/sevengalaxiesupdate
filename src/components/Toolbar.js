@@ -11,7 +11,7 @@ import Menu from '../pages/Menu';
 
 
 function Toolbar(props) {
-  const [menuOpen, setMenuOpen] = useState(false);
+  const [menuOpen, setMenuOpen] = useState(props.menuOpen || false);
   const [escolheTheme, setEscolheTheme] = useState(false);
   const [about, setAbout] = useState(false);
   const history = useHistory();
@@ -25,6 +25,10 @@ function Toolbar(props) {
 
   // });
 
+  // useEffect(() => {
+  //   setMenuOpen(props.menuOpen);
+  // });
+
   useEffect(() => {
     //CONTROLANDO O BOTÃO VOLTAR
     if (history.action === 'POP') {
@@ -36,7 +40,6 @@ function Toolbar(props) {
       }
     }
   });
-
 
   function ToggleMenu() {
     menuOpen
@@ -74,6 +77,9 @@ function Toolbar(props) {
     }
     else if (escolha === 'deckBuilder') {
       window.location = '/app/deckBuilder';
+    }
+    else if (escolha === 'cards') {
+      window.location = '/app/cards';
     }
   }
 

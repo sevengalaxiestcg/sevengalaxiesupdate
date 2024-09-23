@@ -3,6 +3,7 @@ export class Deck {
     this.cards = [];
     this.name = "";
     this.thumb = "";
+    this.creationDate = undefined;
   }
 }
 
@@ -159,3 +160,59 @@ export class EffectBonusTypes {
   static DirectDamage = 14;
   static DirectPenetrationDamage = 15;
 }
+
+export const CreatureCardsSubtypes = [
+  // Races
+  "Animal",
+  "Árvore",
+  "Brownsly",
+  "Centauro",
+  "Dragão",
+  "Elfo",
+  "Glummun",
+  "Goblin",
+  "Greensly",
+  "Híbrido",
+  "Humano",
+  "Kal",
+  "Kroll",
+  "Lycan",
+  "Omni-Zen",
+  "Orc",
+  "Robô",
+  "Tetrion",
+  // Other subtypes
+  "Água",
+  "Amazona",
+  "Animóide",
+  "Arqueiro",
+  "Atirador",
+  "Ave",
+  "Comandante",
+  "Combatente",
+  "Defensor",
+  "Feiticeiro",
+  "Gelo",
+  "Goldron",
+  "Gosma",
+  "Guerreiro",
+  "Guerrilheiro",
+  "Ladino",
+  "Lutador",
+  "Mago",
+  "Manipulador",
+  "Mestre",
+  "Nattur",
+  "Operador",
+  "Pedra",
+  "Sentinela",
+  "Unicórnio",
+  "Verme",
+];
+
+export const SupportCardsSubtypes = [
+  "Armamento",
+  "Fonte",
+  "Mecanismo",
+  "Nave",
+];

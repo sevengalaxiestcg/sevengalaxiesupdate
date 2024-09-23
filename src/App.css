@@ -54,6 +54,12 @@ p {
   height: 5vmin !important;
 }
 
+.icon-img.icon-img-straight {
+  margin-top: 0.5vmin !important;
+  width: 1.1vmin !important;
+  height: auto !important;
+}
+
 .editable {
   cursor: pointer;
 }
@@ -80,6 +86,10 @@ p {
   top: 1vmin;
 }
 
+.text-underline {
+  text-decoration: underline;
+}
+
 .margin-top-1 {
   margin-top: 1vmin !important;
 }
@@ -92,13 +102,60 @@ p {
   margin-top: 5vmin !important;
 }
 
+.margin-top-minus-1 {
+  margin-top: -1vmin !important;
+}
+
+.margin-top-minus-2 {
+  margin-top: -3.75vmin !important;
+}
+
+.margin-top-minus-3 {
+  margin-top: -4.75vmin !important;
+}
+
+.margin-top-minus-4 {
+  margin-top: -6.6vmin !important;
+}
+
+.margin-bottom-1 {
+  margin-bottom: 1vmin !important;
+}
+
+.margin-bottom-2 {
+  margin-bottom: 3.55vmin !important;
+}
+
+.margin-bottom-3 {
+  margin-bottom: 5vmin !important;
+}
+
+.padding-top-2 {
+  padding-top: 3.55vmin !important;
+}
 
 .padding-top-3 {
-  padding-top: 3vmin !important;
+  padding-top: 5vmin !important;
 }
 
 .padding-bottom-1 {
   padding-bottom: 1vmin !important;
+}
+
+.padding-bottom-2 {
+  padding-bottom: 3.55vmin !important;
+}
+
+.padding-bottom-3 {
+  padding-bottom: 5vmin !important;
+}
+
+.padding-left-1 {
+  padding-left: 1vmin !important;
+}
+
+.padding-right-1 {
+  padding-right: 1vmin !important;
 }
 
 .nav-tab {
