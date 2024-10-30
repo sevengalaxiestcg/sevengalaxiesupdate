@@ -22,7 +22,7 @@ function App() {
     // window.localStorage.setItem("theme", '');
     // window.location.assign('#play');
     // SetLocalMatch({}, "App");
-    document.addEventListener('contextmenu', event => event.preventDefault());
+    // document.addEventListener('contextmenu', event => event.preventDefault());--> RECOLOCAR ISSO PARA RETIRAR O CLICK DO BOTÃO DA DIREITA DO MOUSE
 
     ReactGA.initialize(trackingId, {
       gaOptions: {

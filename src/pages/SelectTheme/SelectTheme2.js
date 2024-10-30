@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import ReactGA from 'react-ga';
 import { ThemeProvider } from "styled-components";
-import { SevenGalaxiesTheme, GaiaTheme, StrojTheme } from "./themes";
+import { SevenGalaxiesTheme, GaiaTheme, StrojTheme, AdroitTheme, MajikTheme } from "./themes";
 
 import GlobalTheme from "./globalTheme"
 import ChangeBackground from '../../tools/ChangeBackground';
@@ -10,18 +10,15 @@ import ChangeBackground from '../../tools/ChangeBackground';
 import simbolo_SevenG from './images/Simbolo_SevenG.png';
 import simbolo_Gaia from './images/Simbolo_Gaia.png';
 import simbolo_Stroj from './images/Simbolo_Stroj.png';
+import simbolo_Adroit from './images/Simbolo_Adroit.png';
+import simbolo_Majik from './images/Simbolo_Majik.png';
 //CSS imports 
 import './SelectTheme.css';
 
 
 function SelectTheme(props) {
-  const [theme, setTheme] = useState('');
+  const [theme, setTheme] = useState(window.localStorage.getItem("sevengalaxies@theme"));
 
-  useEffect(() => {
-    window.history.pushState("nohb", null, "");
-    setTheme(window.localStorage.getItem("sevengalaxies@theme"));
-  }, []);
-  
   function handleAction(tema) {
     window.localStorage.setItem("sevengalaxies@theme", tema);
 
@@ -45,20 +42,23 @@ function SelectTheme(props) {
 
   return (
     <>
-      <ThemeProvider theme={theme === "Stroj" ? StrojTheme : (theme === "Gaia" ? GaiaTheme : SevenGalaxiesTheme)}>
+      <ThemeProvider theme={theme === "Stroj" ? StrojTheme : (theme === "Gaia" ? GaiaTheme : (theme === "Adroit" ? AdroitTheme : (theme === "Majik" ? MajikTheme : SevenGalaxiesTheme)))}>
         <GlobalTheme />
       </ThemeProvider>
 
       {props.escolheTheme
         ? <div className="theme">
           <div className="theme-container">
-            <Link className="theme-block" onClick={() => handleAction('SevenG')} to={props.modal? window.location.pathname : '/app/game'} replace={props.modal ? true : false}>
+            <Link className="theme-block" onClick={() => handleAction('SevenG')} to={props.modal ? window.location.pathname : '/app/inicio'} replace={props.modal ? true : false}>
               <div className="theme-background bg-sevenG"></div>
               <div className="theme-itens" id="sevenG">
                 <div className="theme-itens-flex">
                   {!props.modal
-                    ? <div className="theme-top">
-                      <p>ESCOLHA SEU TEMA</p>
+                    ? <div class="theme-top-container">
+                      <div className="theme-top-shadow"> </div>
+                      <div className="theme-top">
+                        <p>ESCOLHA SEU TEMA</p>
+                      </div>
                     </div>
                     : <div className="theme-top-null" />
                   }
@@ -74,7 +74,7 @@ function SelectTheme(props) {
               </div>
 
             </Link>
-            <Link className="theme-block" onClick={() => handleAction('Stroj')} to={props.modal? window.location.pathname : '/app/game'} replace={props.modal ? true : false}>
+            <Link className="theme-block" onClick={() => handleAction('Stroj')} to={props.modal ? window.location.pathname : '/app/inicio'} replace={props.modal ? true : false}>
               <div className="theme-background bg-stroj"></div>
               <div className="theme-itens" id="stroj">
                 <div className="theme-itens-flex">
@@ -88,7 +88,7 @@ function SelectTheme(props) {
               </div>
 
             </Link>
-            <Link className="theme-block" onClick={() => handleAction('Gaia')} to={props.modal? window.location.pathname : '/app/game'} replace={props.modal ? true : false} >
+            <Link className="theme-block" onClick={() => handleAction('Gaia')} to={props.modal ? window.location.pathname : '/app/inicio'} replace={props.modal ? true : false} >
               <div className="theme-background bg-gaia"></div>
               <div className="theme-itens" id="gaia">
                 <div className="theme-itens-flex">
@@ -97,6 +97,32 @@ function SelectTheme(props) {
                   </div>
                   <div className="theme-title">
                     <p> {"GALÁXIA GAIA"}</p>
+                  </div>
+                </div>
+              </div>
+            </Link>
+            <Link className="theme-block" onClick={() => handleAction('Adroit')} to={props.modal ? window.location.pathname : '/app/inicio'} replace={props.modal ? true : false} >
+              <div className="theme-background bg-adroit"></div>
+              <div className="theme-itens" id="adroit">
+                <div className="theme-itens-flex">
+                  <div className="theme-simbolo">
+                    <img src={simbolo_Adroit} alt="Adroit" />
+                  </div>
+                  <div className="theme-title">
+                    <p> {"GALÁXIA ADROIT"}</p>
+                  </div>
+                </div>
+              </div>
+            </Link>
+            <Link className="theme-block" onClick={() => handleAction('Majik')} to={props.modal ? window.location.pathname : '/app/inicio'} replace={props.modal ? true : false} >
+              <div className="theme-background bg-majik"></div>
+              <div className="theme-itens" id="majik">
+                <div className="theme-itens-flex">
+                  <div className="theme-simbolo">
+                    <img src={simbolo_Majik} alt="Majik" />
+                  </div>
+                  <div className="theme-title">
+                    <p> {"GALÁXIA MAJIK"}</p>
                   </div>
                 </div>
               </div>

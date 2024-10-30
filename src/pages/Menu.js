@@ -43,9 +43,15 @@ function Menu(props) {
           NOVA COLEÇÃO
         </ReactGA.OutboundLink>
 
-        <div className="menu-button b2" onClick={() => props.handleOption('novo')}>
-          NOVA BATALHA
-        </div>
+        {props.inicio
+          ? <div className="menu-button b2" onClick={() => props.handleOption('batalha')}>
+            BATALHA
+          </div>
+          : <div className="menu-button b2" onClick={() => props.handleOption('novaBatalha')}>
+            NOVA BATALHA
+          </div>
+        }
+
         <div className="menu-button b3" onClick={() => props.handleOption('tema')}>
           ALTERAR TEMA
         </div>
@@ -53,6 +59,9 @@ function Menu(props) {
           MEUS DECKS
         </div>
 
+        <div className="menu-button b3" onClick={() => props.handleOption('cards')}>
+          CARDS
+        </div>
         <ReactGA.OutboundLink
           className="menu-button b4"
           eventLabel="Manual de Regras"
@@ -61,10 +70,6 @@ function Menu(props) {
         >
           MANUAL DE REGRAS
         </ReactGA.OutboundLink>
-
-        <div className="menu-button b3" onClick={() => props.handleOption('cards')}>
-          CARDS
-        </div>
 
         <ReactGA.OutboundLink
           className="menu-button b6"

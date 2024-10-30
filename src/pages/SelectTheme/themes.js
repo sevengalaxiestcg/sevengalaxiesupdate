@@ -37,3 +37,26 @@ export const StrojTheme = {
   // background_image: "linear-gradient( rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)), url(" + Stroj + ")"
 }
 
+export const AdroitTheme = {
+  primary: "rgba(9, 158, 34)",
+  background_color: "rgba(9, 158, 34, .8)",
+  background_color_transp: "rgba(9, 158, 34, .1)",
+  text_color: "white",
+  box_shadow_insent: "rgba(0, 223, 39, .8)",
+  border: "rgb(2, 228, 23)",
+  filter: "invert(15%) sepia(57%) saturate(2659%) hue-rotate(139deg) brightness(110%) contrast(98%)",
+  filterIcone: "",
+  // background_image: "linear-gradient( rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)), url(" + Stroj + ")"
+}
+
+export const MajikTheme = {
+  primary: "rgba(110, 0, 213)",
+  background_color: "rgba(110, 0, 213, .8)",
+  background_color_transp: "rgba(110, 0, 213, .1)",
+  text_color: "white",
+  box_shadow_insent: "rgba(166, 70, 253, .8)",
+  border: "rgb(178, 67, 255)",
+  // filter: "invert(15%) sepia(57%) saturate(2659%) hue-rotate(139deg) brightness(110%) contrast(98%)",
+  filterIcone: "",
+  // background_image: "linear-gradient( rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)), url(" + Stroj + ")"
+}

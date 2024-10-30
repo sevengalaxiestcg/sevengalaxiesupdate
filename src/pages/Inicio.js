@@ -1,17 +1,17 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
-import ReactGA from 'react-ga';
+// import ReactGA from 'react-ga';
 // import { FiMenu } from 'react-icons/fi';
-import './Toolbar.css';
+import '../components/Toolbar.css';
 
 import SetSessionMatch from '../tools/SetSessionMatch';
-import SelectTheme from '../pages/SelectTheme/SelectTheme2';
-import About from '../pages/About';
-import Menu from '../pages/Menu';
+import SelectTheme from './SelectTheme/SelectTheme2';
+import About from './About';
+import Menu from './Menu';
 
 
 function Toolbar(props) {
-  const [menuOpen, setMenuOpen] = useState(props.menuOpen || false);
+  const [menuOpen, setMenuOpen] = useState(props.menuOpen || true);
   const [escolheTheme, setEscolheTheme] = useState(false);
   const [about, setAbout] = useState(false);
   const history = useHistory();
@@ -29,24 +29,24 @@ function Toolbar(props) {
   //   setMenuOpen(props.menuOpen);
   // });
 
-  useEffect(() => {
-    //CONTROLANDO O BOTÃO VOLTAR
-    if (history.action === 'POP') {
-      return () => {
-        if (window.location.hash !== '#menu') {
-          setMenuOpen(false);
-          setAbout(false);
-        }
-      }
-    }
-  });
+  // useEffect(() => {
+  //   //CONTROLANDO O BOTÃO VOLTAR
+  //   if (history.action === 'POP') {
+  //     return () => {
+  //       if (window.location.hash !== '#menu') {
+  //         setMenuOpen(false);
+  //         setAbout(false);
+  //       }
+  //     }
+  //   }
+  // });
 
   function ToggleMenu() {
-    menuOpen
-      ? window.history.back()
-      : window.location.assign('#menu');
+    // menuOpen
+    //   ? window.history.back()
+    //   : window.location.assign('#menu');
 
-    setMenuOpen(!menuOpen);
+    setMenuOpen(true);
     setAbout(false);
   }
 
@@ -54,19 +54,20 @@ function Toolbar(props) {
 
     if (escolha === 'tema') {
       setEscolheTheme(true);
-      ToggleMenu();
+      // ToggleMenu();
+      // window.location = '/app/inicio'
+    }
+    else if (escolha === 'batalha') {
+      // ToggleMenu();
+
+      if (window.location.pathname !== '/app/game') {
+        window.location = '/app/game';
+      }
     }
     else if (escolha === 'novaBatalha') {
-      ReactGA.modalview('NovaBatalha');
-      ReactGA.event({
-        category: 'Navegação',
-        action: 'NovaBatalha',
-        label: 'Escolheu Nova Batalha'
-      });
 
       SetSessionMatch({}, {}, true);
-      props.refresh();
-      ToggleMenu();
+      // ToggleMenu();
 
       if (window.location.pathname !== '/app/game') {
         window.location = '/app/game';
@@ -86,26 +87,25 @@ function Toolbar(props) {
   return (
     <div className="toolbar" >
       <div className="content-toolbar">
-        {/* <FiMenu
-          className="menu"
-          onClick={() => ToggleMenu()} /> */}
 
-        <div className={menuOpen ? "burger-menu open" : "burger-menu"}
-          onClick={() => ToggleMenu()} >
-          <div className="bar1" key="b1" />
-          <div className="bar2" key="b2" />
-          <div className="bar3" key="b3" />
-        </div>
         {menuOpen
-          ? <Menu handleOption={HandleOption} />
+          ? <Menu handleOption={HandleOption} inicio={true} />
           : null}
 
         {about
-          ? <About />
+          ? <>
+            <div className={menuOpen ? "burger-menu open" : "burger-menu"}
+              onClick={() => ToggleMenu()} >
+              <div className="bar1" key="b1" />
+              <div className="bar2" key="b2" />
+              <div className="bar3" key="b3" />
+            </div>
+            <About> </About>
+          </>
           : null}
 
         <SelectTheme
-          onClose={() => { setEscolheTheme(false); setMenuOpen(false); }}
+          onClose={() => { setEscolheTheme(false); setMenuOpen(true); }}
           escolheTheme={escolheTheme}
           modal={true} />
       </div>

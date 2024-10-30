@@ -19,7 +19,19 @@ function ChangeBackground(value) {
       background_old = parseInt(window.localStorage.getItem("sevengalaxies@bg_Stroj") || 1);
       background_max = 15;
       break;
+    case 'Adroit':
+      background_old = parseInt(window.localStorage.getItem("sevengalaxies@bg_Adroit") || 1);
+      background_max = 17;
+      break;
+    case 'Majik':
+      background_old = parseInt(window.localStorage.getItem("sevengalaxies@bg_Majik") || 1);
+      background_max = 20;
+      break;
     default:
+  }
+
+  if (!background_old) {
+    background_old = 0;
   }
 
   const background_new =
@@ -28,7 +40,6 @@ function ChangeBackground(value) {
       : (background_old + value > background_max
         ? 1
         : background_old + value));
-
 
   window.localStorage.setItem("sevengalaxies@bg_" + localTheme, background_new);
 
