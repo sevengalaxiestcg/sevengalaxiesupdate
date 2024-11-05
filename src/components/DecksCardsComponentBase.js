@@ -12,7 +12,7 @@ export class DecksCardsComponentBase {
     setShowBodyInnerTopShadow, isDeckEdit, viewState, setRefresh, galaxyFilters, setGalaxyFilters, orderingDecksOptions, orderingCardsOptions, setDecksSearchTerm,
     setDeckListToShow, lastOrderingDecksOption, setLastOrderingDecksOption, setOrderingDecksOptions, setCurrDeck, AvailableCards, advancedFilters, categoryFilters,
     setAdvancedFilters, setCategoryFilters, cardsToShow, setCardsToShow, lastOrderingCardsOption, setLastOrderingCardsOption, DecksSearchTerm, DeckListToShow, 
-    setOrderingCardsOptions) {
+    setOrderingCardsOptions, setModalTransparentContent, setIsShowModalDeckInfos) {
       this.setCountNormals = setCountNormals;
       this.setCountSpecials = setCountSpecials;
       this.setCountFortress = setCountFortress;
@@ -48,6 +48,8 @@ export class DecksCardsComponentBase {
       this.DecksSearchTerm = DecksSearchTerm;
       this.DeckListToShow = DeckListToShow; 
       this.setOrderingCardsOptions = setOrderingCardsOptions;
+      this.setModalTransparentContent = setModalTransparentContent;
+      this.setIsShowModalDeckInfos = setIsShowModalDeckInfos;
   }
 
   //#region Globals
@@ -489,6 +491,74 @@ export class DecksCardsComponentBase {
     let deck = this.currDeck;
     deck.cards = cards;
     this.setCurrDeck(deck);
+  }
+
+  ShowDeckInformations () {
+    var content = '<ul>';
+    const counters = this.SetCounts(this.currDeck.cards??[]);
+
+    content += "<li>TOTAL DE CARDS</li>";
+    content += `<li><strong>Deck:</strong><span style='margin-left: 1em;'>${counters.countNormals}/40</span></li>`;
+    content += `<li><strong>Deck Especial:</strong><span style='margin-left: 1em;'>${counters.countSpecials}/100</span></li>`;
+    content += `<li><strong>Fortaleza:</strong><span style='margin-left: 1em;'>${counters.countFortress}/1</span></li>`;
+
+    content += "<li style='margin-top: 1em;'></li>";
+    content += "<li>GALÁXIAS</li>";
+    if (counters.countGaia > 0) {
+      content += `<li><strong>Gaia:</strong><span style='margin-left: 1em;'>${counters.countGaia}</span></li>`;
+    }
+    if (counters.countStroj > 0) {
+      content += `<li><strong>Stroj:</strong><span style='margin-left: 1em;'>${counters.countStroj}</span></li>`;
+    }
+    if (counters.countMajik > 0) {
+      content += `<li><strong>Majik:</strong><span style='margin-left: 1em;'>${counters.countMajik}</span></li>`;
+    }
+    if (counters.countAdroit > 0) {
+      content += `<li><strong>Adroit:</strong><span style='margin-left: 1em;'>${counters.countAdroit}</span></li>`;
+    }
+
+    content += "<li style='margin-top: 1em;'></li>";
+    content += "<li>NÍVEL DO DECK</li>";
+    if (counters.levelCosts.length > 0) {
+      counters.levelCosts.forEach(levelCost => {
+        if (levelCost.amount > 0) {
+          content += `<li><strong>N${levelCost.cost}:</strong><span style='margin-left: 1em;'>${levelCost.amount}</span></li>`;
+        }
+      });
+    }
+
+    content += "<li style='margin-top: 1em;'></li>";
+    content += "<li>ENERGIA DO DECK</li>";
+    if (counters.effectsCosts.length > 0) {
+      counters.effectsCosts.forEach(effectCost => {
+        content += `<li><strong>E${effectCost.cost}:</strong><span style='margin-left: 1em;'>${effectCost.amount}</span></li>`;
+      });
+    }
+
+    content += "<li style='margin-top: 1em;'></li>";
+    content += "<li>CARDS DECK</li>";
+    if (counters.cardTypes.length > 0) {
+      counters.cardTypes.forEach(cardType => {
+        if (cardType.amount > 0) {
+          content += `<li><strong>${cardType.typeName}:</strong><span style='margin-left: 1em;'>${cardType.amount}</span></li>`;
+        }
+      });
+    }
+
+    content += "<li style='margin-top: 1em;'></li>";
+    content += "<li>CARDS DECK ESPECIAL</li>";
+    if (counters.cardTypesSpecials.length > 0) {
+      counters.cardTypesSpecials.forEach(cardType => {
+        if (cardType.amount > 0) {
+          content += `<li><strong>${cardType.typeName}:</strong><span style='margin-left: 1em;'>${cardType.amount}</span></li>`;
+        }
+      });
+    }
+    content += `<li><strong>Recurso:</strong><span style='margin-left: 1em;'>${counters.countResources}/1</span></li>`;
+
+    content += "</ul>";
+    this.setModalTransparentContent(content);
+    this.setIsShowModalDeckInfos(true);
   }
 
   //#endregion

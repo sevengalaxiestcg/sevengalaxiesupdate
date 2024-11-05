@@ -250,6 +250,10 @@ export class DeckBuilderCardsAdvancedFilter extends React.Component {
             onClick={() => { this.ToggleFilter(CardFilterOptions.BaseCost, 4) }}>
             <span>4</span>
           </div>
+          <div className={ this.props.GetFilterClass(CardFilterOptions.BaseCost, 5) }
+            onClick={() => { this.ToggleFilter(CardFilterOptions.BaseCost, 5) }}>
+            <span>5</span>
+          </div>
         </div>
   
         <div className='deckBuilder-filterContainer margin-top-2'>
@@ -383,12 +387,12 @@ export class DeckBuilderCardsAdvancedFilter extends React.Component {
           <div className={ this.props.GetFilterClass(CardFilterOptions.Range, 2) }
             onClick={() => { this.ToggleFilter(CardFilterOptions.Range, 2) }}>
             <img alt='Alcance 3' src={iconAlcance2}></img>
-            <span className='margin-top-minus-4'>Alcance 3</span>
+            <span className='margin-top-minus-4'>Alcance 2</span>
           </div>
           <div className={ this.props.GetFilterClass(CardFilterOptions.Range, 3) }
             onClick={() => { this.ToggleFilter(CardFilterOptions.Range, 3) }}>
             <img alt='Alcance 2' src={iconAlcance3}></img>
-            <span className='margin-top-minus-4'>Alcance 2</span>
+            <span className='margin-top-minus-4'>Alcance 3</span>
           </div>
         </div>
 

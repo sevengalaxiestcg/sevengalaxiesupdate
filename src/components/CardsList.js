@@ -10,6 +10,7 @@ import iconFiltro from '../images/filtro.png';
 import iconBack from '../images/voltar.png';
 import iconMinus from '../images/_.png';
 import iconPlus from '../images/+.png';
+import iconInfo from '../images/social/Sobre.png';
 
 import iconGaia from '../images/pedras/Gaia.png';
 import iconStroj from '../images/pedras/Stroj.png';
@@ -99,7 +100,7 @@ export class CardsListHeader extends React.Component {
       return this.GetCardsCountByCategory();
     }
   }
-
+  
   render () {
     return (
       <>
@@ -131,6 +132,14 @@ export class CardsListHeader extends React.Component {
                     <img alt="Visualização" src={iconGrid3}></img>
                   </div>
                 </>
+            }
+            {this.props.isDeckEdit
+            ? <>
+                  <div className='bt-deckBuilder bt-option bt-option-invert' onClick={() => { this.props.ShowDeckInformations(); }}>
+                  <img alt="Informações sobre o deck" src={iconInfo}></img>
+                </div>
+              </>
+            : <></>
             }
           </div>
         </div>

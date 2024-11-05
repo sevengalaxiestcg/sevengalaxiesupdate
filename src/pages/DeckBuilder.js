@@ -182,7 +182,7 @@ export default function DeckBuilder() {
     setShowBodyInnerTopShadow, isDeckEdit, viewState, setRefresh, galaxyFilters, setGalaxyFilters, orderingDecksOptions, orderingCardsOptions, setDecksSearchTerm,
     setDeckListToShow, lastOrderingDecksOption, setLastOrderingDecksOption, setOrderingDecksOptions, setCurrDeck, AvailableCards, advancedFilters, categoryFilters,
     setAdvancedFilters, setCategoryFilters, cardsToShow, setCardsToShow, lastOrderingCardsOption, setLastOrderingCardsOption, DecksSearchTerm, DeckListToShow, 
-    setOrderingCardsOptions);
+    setOrderingCardsOptions, setModalTransparentContent, setIsShowModalDeckInfos);
 
   function Refresh() {
     return Base.Refresh();
@@ -304,6 +304,10 @@ export default function DeckBuilder() {
     (CarouselPlusAction.action)(card);
   }
 
+  function ShowDeckInformations(){
+    return Base.ShowDeckInformations();
+  }
+
   //#endregion
 
   return (
@@ -333,6 +337,7 @@ export default function DeckBuilder() {
                     countFortress={countFortress}
                     setIsShowModalOrderBy={setIsShowModalOrderBy}
                     isDeckEdit={isDeckEdit}
+                    ShowDeckInformations={ShowDeckInformations}
                   />
                 : <></>
               }
@@ -380,9 +385,8 @@ export default function DeckBuilder() {
                     setIsDeckEdit={setIsDeckEdit}
                     setShowBottomMenu={setShowBottomMenu}
                     ClearCardsFilters={ClearCardsFilters}
-                    setIsShowModal={setIsShowModalDeckInfos}
-                    setModalContent={setModalTransparentContent}
-                    SetCounts={SetCounts}
+                    ShowDeckInformations={ShowDeckInformations}
+                    setIsShowModalOrderBy={setIsShowModalOrderBy}
                   />
                 : <></>
               }

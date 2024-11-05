@@ -207,11 +207,11 @@ export class DeckBuilderDecksListBody extends React.Component {
 
   AcceptEditDeckName(index) {
     const input = document.getElementById("inputEditDeckName_" + index);
-    if (input) {
-      const deck = this.props.DeckList[index];
-      const name = input.value;
-      deck.name = name;
-    }
+    if (!input || !input.value || input.value === "") return;
+
+    const deck = this.props.DeckList[index];
+    const name = input.value;
+    deck.name = name;
     this.props.setIsShowEditDeckName(-1);
     this.props.SetDeckListInSession(this.props.DeckList);
     this.forceUpdate();
