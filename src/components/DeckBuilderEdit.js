@@ -60,6 +60,11 @@ export class DeckBuilderEditBody extends React.Component {
         index = i;
       }
     });
+    this.props.currDeck.cards = this.props.currDeck.cards.sort(function (a, b){
+      let strList = [a.name, b.name].sort();
+      if (strList[0] === a.name) { return -1; }
+      else { return 1; }
+    });
     
     if (index > -1) {
       this.props.ChangeAmountOfCardInDeck(index, amount);
