@@ -203,11 +203,7 @@ export class CardsListHeader extends React.Component {
 export class CardsListBody extends React.Component {
 
   UpdateCurrDeck () {
-    this.props.currDeck.cards = this.props.currDeck.cards.sort(function (a, b){
-      let strList = [a.name, b.name].sort();
-      if (strList[0] === a.name) { return -1; }
-      else { return 1; }
-    });
+    this.props.currDeck.cards = this.props.OrderDeckCards(this.props.currDeck.cards);
     this.props.currDeck.mainCards = this.props.currDeck.cards.filter(card => !card.specialCard);
     this.props.currDeck.specialCards = this.props.currDeck.cards.filter(card => card.specialCard && !this.props.IsCardTypeOf("FORTALEZA", card.cardTypes));
     this.props.currDeck.fortressCards = this.props.currDeck.cards.filter(card => !!this.props.IsCardTypeOf("FORTALEZA", card.cardTypes));

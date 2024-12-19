@@ -3,14 +3,14 @@ import { CardType, Galaxies } from '../models/CardsInfos';
 import { cardsThumbs } from '../pseudoDatabases/images';
 import { CardFilterOptions, currentFilterOptions } from '../models/CardFilterOptions';
 import { DeckBuilderViewStates } from '../models/DeckBuilderViewStates';
-import { basicOrderingCardsOptions, basicOrderingDecksOptions, GalaxiesOrderings, OrderingDirections, OrderingOptions } from '../models/OrderingOptions';
+import { basicOrderingCardsOptions, basicOrderingDecksOptions, GalaxiesOrderings, OrderingDirections, OrderingOptions, OrderingPriorities } from '../models/OrderingOptions';
 let CardsLibrary = require('../pseudoDatabases/SevenGalaxies_Cards_Todos.json');
 
 export class DecksCardsComponentBase {
 
   constructor(setCountNormals, setCountSpecials, setCountFortress, DeckList, setDeckList, currDeck, setViewState, setIsDeckEdit, setShowBottomMenu,
     setShowBodyInnerTopShadow, isDeckEdit, viewState, setRefresh, galaxyFilters, setGalaxyFilters, orderingDecksOptions, orderingCardsOptions, setDecksSearchTerm,
-    setDeckListToShow, lastOrderingDecksOption, setLastOrderingDecksOption, setOrderingDecksOptions, setCurrDeck, AvailableCards, advancedFilters, categoryFilters,
+    setDeckListToShow, lastOrderingDecksOption, setLastOrderingDecksOption, setOrderingDecksOptions, setCurrDeck, AvailableCards, setAvailableCards, advancedFilters, categoryFilters,
     setAdvancedFilters, setCategoryFilters, cardsToShow, setCardsToShow, lastOrderingCardsOption, setLastOrderingCardsOption, DecksSearchTerm, DeckListToShow, 
     setOrderingCardsOptions, setModalTransparentContent, setIsShowModalDeckInfos) {
       this.setCountNormals = setCountNormals;
@@ -37,6 +37,7 @@ export class DecksCardsComponentBase {
       this.setOrderingDecksOptions = setOrderingDecksOptions;
       this.setCurrDeck = setCurrDeck;
       this.AvailableCards = AvailableCards;
+      this.setAvailableCards = setAvailableCards;
       this.advancedFilters = advancedFilters;
       this.categoryFilters = categoryFilters;
       this.setAdvancedFilters = setAdvancedFilters;
@@ -763,8 +764,95 @@ export class DecksCardsComponentBase {
     this.categoryFilters.splice(index, 1);
   }
 
+  OrderCards (a, b, option) {
+    var collator = new Intl.Collator(undefined, {numeric: true, sensitivity: 'base'});
+    var strList = [];
+
+    var ret = 0;
+    switch (option.value) {
+      case OrderingOptions.Key:
+        strList = [a.key, b.key].sort(collator.compare);
+        if (strList[0] === a.key) { ret = -1; }
+        else { ret = 1; }
+        break;
+      case OrderingOptions.Name:
+        strList = [a.name, b.name].sort(collator.compare);
+        if (strList[0] === a.name) { ret = -1; }
+        else { ret = 1; }
+        break;
+      case OrderingOptions.BaseCost:
+        ret = a.cost - b.cost;
+        break;
+      case OrderingOptions.Galaxy:
+        ret = a.galaxy - b.galaxy;
+        break;
+      case OrderingOptions.EffectCost:
+        var aEffectsCost = 0;
+        a.effects.forEach(e => {
+          e.costs.forEach(c => {
+            aEffectsCost += c.costAmount;
+          });
+        });
+        var bEffectsCost = 0;
+        b.effects.forEach(e => {
+          e.costs.forEach(c => {
+            bEffectsCost += c.costAmount;
+          });
+        });
+        ret = aEffectsCost - bEffectsCost;
+        break;
+      case OrderingOptions.Rarity:
+        ret = a.rarity - b.rarity;
+        break;
+      case OrderingOptions.IllustratorName:
+        strList = [a.illustrator, b.illustrator].sort(collator.compare);
+        if (strList[0] === a.illustrator) { ret = -1; }
+        else { ret = 1; }
+        break;
+      case OrderingOptions.Attack:
+        ret = a.attack - b.attack;
+        break;
+      case OrderingOptions.Shield:
+        ret = a.shield - b.shield;
+        break;
+      case OrderingOptions.CounterDamage:
+        ret = a.counterDamage - b.counterDamage;
+        break;
+      case OrderingOptions.DateLaunched:
+        strList = [a.dateLaunched, b.dateLaunched].sort(collator.compare);
+        if (strList[0] === a.dateLaunched) { ret = -1; }
+        else { ret = 1; }
+        break;
+      case OrderingOptions.Subtype:
+        var aSubtypeFirst = a.cardSubtypes.length > 0 ? a.cardSubtypes[0] : "";
+        var bSubtypeFirst = b.cardSubtypes.length > 0 ? b.cardSubtypes[0] : "";
+        strList = [aSubtypeFirst, bSubtypeFirst].sort(collator.compare);
+        if (strList[0] === aSubtypeFirst) { ret = -1; }
+        else { ret = 1; }
+        break;
+      case OrderingOptions.LifePoints:
+        ret = a.lifePoints - b.lifePoints;
+        break;
+      case OrderingOptions.Range:
+        ret = a.range - b.range;
+        break;
+      case OrderingOptions.Code:
+      default:
+        strList = [a.code, b.code].sort(collator.compare);
+        if (strList[0] === a.code) { ret = -1; }
+        else { ret = 1; }
+        break;
+    }
+
+    if (option.direction === OrderingDirections.Descending) {
+      ret *= -1;
+    }
+
+    return ret;
+  }
+
   OrderCardsByOption (orderingOption) {
-    var lastOption = {...this.lastOrderingCardsOption};
+    let lastOption = {...this.lastOrderingCardsOption};
     if (!!orderingOption && !!orderingOption.isOrdering) {
       lastOption.value = orderingOption.value;
     }
@@ -775,7 +863,7 @@ export class DecksCardsComponentBase {
 
     if (!!orderingOption) {
       // set the option as the selected one, while others as not selected
-      var _orderingOptions = [];
+      let _orderingOptions = [];
       basicOrderingCardsOptions.forEach(p => _orderingOptions.push({...p}));
       _orderingOptions.map(p => p.isSelected = undefined);
       _orderingOptions.filter(p => p.value === lastOption.value || p.value === lastOption.direction)
@@ -783,91 +871,124 @@ export class DecksCardsComponentBase {
                       this.setOrderingCardsOptions(_orderingOptions);
     }
 
-    var collator = new Intl.Collator(undefined, {numeric: true, sensitivity: 'base'});
-    var strList = [];
-    var cards = this.AvailableCards.sort((a, b) => {
-      var ret = 0;
-      switch (lastOption.value) {
-        case OrderingOptions.Key:
-          strList = [a.key, b.key].sort(collator.compare);
-          if (strList[0] === a.key) { ret = -1; }
-          else { ret = 1; }
-          break;
-        case OrderingOptions.Name:
-          strList = [a.name, b.name].sort(collator.compare);
-          if (strList[0] === a.name) { ret = -1; }
-          else { ret = 1; }
-          break;
-        case OrderingOptions.BaseCost:
-          ret = a.cost - b.cost;
-          break;
-        case OrderingOptions.Galaxy:
-          ret = a.galaxy - b.galaxy;
-          break;
-        case OrderingOptions.EffectCost:
-          var aEffectsCost = 0;
-          a.effects.forEach(e => {
-            e.costs.forEach(c => {
-              aEffectsCost += c.costAmount;
-            });
-          });
-          var bEffectsCost = 0;
-          b.effects.forEach(e => {
-            e.costs.forEach(c => {
-              bEffectsCost += c.costAmount;
-            });
-          });
-          ret = aEffectsCost - bEffectsCost;
-          break;
-        case OrderingOptions.Rarity:
-          ret = a.rarity - b.rarity;
-          break;
-        case OrderingOptions.IllustratorName:
-          strList = [a.illustrator, b.illustrator].sort(collator.compare);
-          if (strList[0] === a.illustrator) { ret = -1; }
-          else { ret = 1; }
-          break;
-        case OrderingOptions.Attack:
-          ret = a.attack - b.attack;
-          break;
-        case OrderingOptions.Shield:
-          ret = a.shield - b.shield;
-          break;
-        case OrderingOptions.CounterDamage:
-          ret = a.counterDamage - b.counterDamage;
-          break;
-        case OrderingOptions.DateLaunched:
-          strList = [a.dateLaunched, b.dateLaunched].sort(collator.compare);
-          if (strList[0] === a.dateLaunched) { ret = -1; }
-          else { ret = 1; }
-          break;
-        case OrderingOptions.Subtype:
-          var aSubtypeFirst = a.cardSubtypes.length > 0 ? a.cardSubtypes[0] : "";
-          var bSubtypeFirst = b.cardSubtypes.length > 0 ? b.cardSubtypes[0] : "";
-          strList = [aSubtypeFirst, bSubtypeFirst].sort(collator.compare);
-          if (strList[0] === aSubtypeFirst) { ret = -1; }
-          else { ret = 1; }
-          break;
-        case OrderingOptions.LifePoints:
-          ret = a.lifePoints - b.lifePoints;
-          break;
-        case OrderingOptions.Range:
-          ret = a.range - b.range;
-          break;
-        case OrderingOptions.Code:
-        default:
-          strList = [a.code, b.code].sort(collator.compare);
-          if (strList[0] === a.code) { ret = -1; }
-          else { ret = 1; }
-          break;
-      }
-
-      if (lastOption.direction === OrderingDirections.Descending) {
-        ret *= -1;
-      }
-      return ret;
+    let cards = this.cardsToShow.sort((a, b) => {
+      return this.OrderCards(a, b, lastOption);
     });
     this.setCardsToShow(cards);
+
+    let availableCards = this.AvailableCards.sort((a, b) => {
+      return this.OrderCards(a, b, lastOption);
+    });
+    this.setAvailableCards(availableCards);
+  }
+
+  OrderCardsList (cardsList) {
+    const orderedCards = cardsList.sort((a, b) => {
+      if (a.cost !== b.cost) {
+        return this.OrderCards(a, b, { value: OrderingOptions.BaseCost, direction: OrderingDirections.Ascending });
+      }
+      else {
+        let aTypeIndex = -1;
+        let bTypeIndex = -1;
+
+        //#region retrieve types
+
+        const aIsCreature = this.IsCardTypeOf("CRIATURA", a.cardTypes);
+        const aIsEquipent = this.IsCardTypeOf("EQUIPAMENTO", a.cardTypes);
+        const aIsSupport = this.IsCardTypeOf("SUPORTE", a.cardTypes);
+        const aIsStrategy = this.IsCardTypeOf("ESTRATÉGIA", a.cardTypes);
+        const aIsAction = this.IsCardTypeOf("AÇÃO", a.cardTypes);
+        const aIsEvent = this.IsCardTypeOf("EVENTO", a.cardTypes);
+        if (aIsCreature) {
+          aTypeIndex = OrderingPriorities.Creature;
+        }
+        else if (aIsEquipent) {
+          aTypeIndex = OrderingPriorities.Equipment;
+        }
+        else if (aIsSupport) {
+          aTypeIndex = OrderingPriorities.Support;
+        }
+        else if (aIsStrategy) {
+          aTypeIndex = OrderingPriorities.Strategy;
+        }
+        else if (aIsAction) {
+          aTypeIndex = OrderingPriorities.Action;
+        }
+        else if (aIsEvent) {
+          aTypeIndex = OrderingPriorities.Event;
+        }
+        
+        const bIsCreature = this.IsCardTypeOf("CRIATURA", b.cardTypes);
+        const bIsEquipent = this.IsCardTypeOf("EQUIPAMENTO", b.cardTypes);
+        const bIsSupport = this.IsCardTypeOf("SUPORTE", b.cardTypes);
+        const bIsStrategy = this.IsCardTypeOf("ESTRATÉGIA", b.cardTypes);
+        const bIsAction = this.IsCardTypeOf("AÇÃO", b.cardTypes);
+        const bIsEvent = this.IsCardTypeOf("EVENTO", b.cardTypes);
+        if (bIsCreature) {
+          bTypeIndex = OrderingPriorities.Creature;
+        }
+        else if (bIsEquipent) {
+          bTypeIndex = OrderingPriorities.Equipment;
+        }
+        else if (bIsSupport) {
+          bTypeIndex = OrderingPriorities.Support;
+        }
+        else if (bIsStrategy) {
+          bTypeIndex = OrderingPriorities.Strategy;
+        }
+        else if (bIsAction) {
+          bTypeIndex = OrderingPriorities.Action;
+        }
+        else if (bIsEvent) {
+          bTypeIndex = OrderingPriorities.Event;
+        }
+
+        //#endregion
+
+        if (aTypeIndex !== bTypeIndex &&
+          aTypeIndex > -1 && bTypeIndex > -1
+        ) {
+          return bTypeIndex > aTypeIndex ? 1 : -1;
+        }
+        else if (a.galaxy !== b.galaxy) {
+          return this.OrderCards(a, b, { value: OrderingOptions.Galaxy, direction: OrderingDirections.Ascending });
+        }
+        else {
+          return this.OrderCards(a, b, { value: OrderingOptions.Name, direction: OrderingDirections.Ascending });
+        }
+      }
+    });
+    return orderedCards;
+  }
+
+  OrderDeckCards (cardsList) {
+    const normals = cardsList.filter(card => !card.specialCard);
+    const normalsOrdered = this.OrderCardsList(normals);
+
+    const specials = cardsList.filter(card => card.specialCard && !this.IsCardTypeOf('FORTALEZA', card.cardTypes) && !this.IsCardTypeOf('RECURSO', card.cardTypes));
+    const specialsOrdered = this.OrderCardsList(specials);
+
+    const resources = cardsList.filter(card => !!this.IsCardTypeOf('RECURSO', card.cardTypes));
+    const resourcesOrdered = this.OrderCardsList(resources);
+
+    const fortresses = cardsList.filter(card => !!this.IsCardTypeOf('FORTALEZA', card.cardTypes));
+    const fortressesOrdered = this.OrderCardsList(fortresses);
+    
+    let orderedCards = [];
+    for (let i = 0; i < normalsOrdered.length; i++) {
+      orderedCards.push(normalsOrdered[i]);
+    }
+    for (let i = 0; i < specialsOrdered.length; i++) {
+      orderedCards.push(specialsOrdered[i]);
+    }
+    for (let i = 0; i < resourcesOrdered.length; i++) {
+      orderedCards.push(resourcesOrdered[i]);
+    }
+    for (let i = 0; i < fortressesOrdered.length; i++) {
+      orderedCards.push(fortressesOrdered[i]);
+    }
+    
+    return orderedCards;
   }
 
   ToggleFilter (filterType, value) {

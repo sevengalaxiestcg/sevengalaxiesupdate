@@ -32,6 +32,15 @@ export class OrderingDirections {
   static Descending = -2;
 }
 
+export class OrderingPriorities {
+  static Creature = 0;
+  static Equipment = 1;
+  static Support = 2;
+  static Strategy = 3;
+  static Action = 4;
+  static Event = 5;
+}
+
 export var basicOrderingCardsOptions = [
   {
     isTitle: true,

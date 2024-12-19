@@ -1,4 +1,6 @@
 import React from 'react';
+import { deepCopy } from './Utils';
+
 import { DeckBuilderViewStates } from '../models/DeckBuilderViewStates';
 import { Deck, Galaxies } from '../models/CardsInfos';
 
@@ -221,11 +223,7 @@ export class DeckBuilderDecksListBody extends React.Component {
     const deck = this.props.DeckList[index];
     if (!deck.creationDate) deck.creationDate = new Date();
 
-    deck.cards = deck.cards.sort(function (a, b){
-      let strList = [a.name, b.name].sort();
-      if (strList[0] === a.name) { return -1; }
-      else { return 1; }
-    });
+    deck.cards = this.props.OrderDeckCards(deck.cards);
     deck.mainCards = deck.cards.filter(card => !card.specialCard);
     deck.specialCards = deck.cards.filter(card => card.specialCard && !this.props.IsCardTypeOf('FORTALEZA', card.cardTypes));
     deck.fortressCards = deck.cards.filter(card => !!this.props.IsCardTypeOf('FORTALEZA', card.cardTypes));
@@ -371,13 +369,11 @@ export class DeckBuilderDecksListBody extends React.Component {
   CopyDeck(index) {
     const originDeck = this.props.DeckList[index];
 
-    let newDeck = new Deck();
+    let newDeck = deepCopy(originDeck);
     newDeck.name = "Cópia de " + originDeck.name;
-    newDeck.thumb = originDeck.thumb;
-    newDeck.cards = originDeck.cards;
-    newDeck.mainCards = originDeck.cards.filter(card => !card.specialCard);
-    newDeck.specialCards = originDeck.cards.filter(card => card.specialCard && !this.props.IsCardTypeOf('FORTALEZA', card.cardTypes));
-    newDeck.fortressCards = originDeck.cards.filter(card => !!this.props.IsCardTypeOf('FORTALEZA', card.cardTypes));
+    newDeck.mainCards = newDeck.cards.filter(card => !card.specialCard);
+    newDeck.specialCards = newDeck.cards.filter(card => card.specialCard && !this.props.IsCardTypeOf('FORTALEZA', card.cardTypes));
+    newDeck.fortressCards = newDeck.cards.filter(card => !!this.props.IsCardTypeOf('FORTALEZA', card.cardTypes));
     this.props.setCurrDeck(newDeck);
 
     let deckList = this.props.DeckList;

@@ -19,6 +19,9 @@ export class DeckBuilderEditHeader extends React.Component {
   }
 
   SendToSearchCard() {
+    if (!this.props.cardsToShow || !this.props.cardsToShow.length) {
+      this.props.setCardsToShow(this.props.AvailableCards);
+    }
     this.props.setIsDeckEdit(true);
     this.props.setShowBottomMenu(true);
     this.props.setViewState(DeckBuilderViewStates.CardsList);
@@ -59,11 +62,6 @@ export class DeckBuilderEditBody extends React.Component {
       if (card.code === cardCode) {
         index = i;
       }
-    });
-    this.props.currDeck.cards = this.props.currDeck.cards.sort(function (a, b){
-      let strList = [a.name, b.name].sort();
-      if (strList[0] === a.name) { return -1; }
-      else { return 1; }
     });
     
     if (index > -1) {

@@ -180,7 +180,7 @@ export default function DeckBuilder() {
 
   const Base = new DecksCardsComponentBase(setCountNormals, setCountSpecials, setCountFortress, DeckList, setDeckList, currDeck, setViewState, setIsDeckEdit, setShowBottomMenu,
     setShowBodyInnerTopShadow, isDeckEdit, viewState, setRefresh, galaxyFilters, setGalaxyFilters, orderingDecksOptions, orderingCardsOptions, setDecksSearchTerm,
-    setDeckListToShow, lastOrderingDecksOption, setLastOrderingDecksOption, setOrderingDecksOptions, setCurrDeck, AvailableCards, advancedFilters, categoryFilters,
+    setDeckListToShow, lastOrderingDecksOption, setLastOrderingDecksOption, setOrderingDecksOptions, setCurrDeck, AvailableCards, setAvailableCards, advancedFilters, categoryFilters,
     setAdvancedFilters, setCategoryFilters, cardsToShow, setCardsToShow, lastOrderingCardsOption, setLastOrderingCardsOption, DecksSearchTerm, DeckListToShow, 
     setOrderingCardsOptions, setModalTransparentContent, setIsShowModalDeckInfos);
 
@@ -244,16 +244,16 @@ export default function DeckBuilder() {
     return Base.ToggleGalaxyFilterSelected(galaxy);
   }
 
+  function ToggleFilter(filterType, value) {
+    return Base.ToggleFilter(filterType, value);
+  }
+
   function GetGalaxyClass(galaxy) {
     return Base.GetGalaxyClass(galaxy);
   }
 
   function GetFilterClass(filterType, value) {
     return Base.GetFilterClass(filterType, value);
-  }
-
-  function ToggleFilter(filterType, value) {
-    return Base.ToggleFilter(filterType, value);
   }
 
   function OrderCardsByOption(option) {
@@ -306,6 +306,10 @@ export default function DeckBuilder() {
 
   function ShowDeckInformations(){
     return Base.ShowDeckInformations();
+  }
+
+  function OrderDeckCards (cardsList) {
+    return Base.OrderDeckCards(cardsList);
   }
 
   //#endregion
@@ -387,6 +391,9 @@ export default function DeckBuilder() {
                     ClearCardsFilters={ClearCardsFilters}
                     ShowDeckInformations={ShowDeckInformations}
                     setIsShowModalOrderBy={setIsShowModalOrderBy}
+
+                    cardsToShow={cardsToShow} setCardsToShow={setCardsToShow}
+                    AvailableCards={AvailableCards}
                   />
                 : <></>
               }
@@ -424,6 +431,8 @@ export default function DeckBuilder() {
                     setCarouselForwardAction={setCarouselForwardAction}
                     setCarouselMinusAction={setCarouselMinusAction}
                     setCarouselPlusAction={setCarouselPlusAction}
+
+                    OrderDeckCards={OrderDeckCards}
                   />
                 : <></>
               }
@@ -466,6 +475,8 @@ export default function DeckBuilder() {
                     setAcceptButtonNameAlertModal={setAcceptButtonNameAlertModal}
                     setCancelButtonNameAlertModal={setCancelButtonNameAlertModal}
                     setIsCancelButtonVisibleAlertModal={setIsCancelButtonVisibleAlertModal}
+
+                    OrderDeckCards={OrderDeckCards}
                   />
                 : <></>
               }
