@@ -76,6 +76,14 @@ p {
   text-shadow: 1px 0px var(--cor-thema);
 }
 
+.text-danger {
+  color: red !important;
+}
+
+img.text-danger {
+  filter: sepia(1) saturate(10000%) hue-rotate(290deg) saturate(700%) !important;
+}
+
 .image-selected {
   filter: var(--filter-tema);
 }
@@ -84,6 +92,10 @@ p {
   filter: var(--filter-tema);
   position: absolute;
   top: 1vmin;
+}
+
+.bg-danger {
+  background-color: red !important;
 }
 
 .text-underline {

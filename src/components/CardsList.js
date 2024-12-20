@@ -136,7 +136,7 @@ export class CardsListHeader extends React.Component {
             {this.props.isDeckEdit
             ? <>
                   <div className='bt-deckBuilder bt-option bt-option-invert' onClick={() => { this.props.ShowDeckInformations(); }}>
-                  <img alt="Informações sobre o deck" src={iconInfo}></img>
+                  <img alt="Informações sobre o deck" src={iconInfo} className={ (this.props.deckErrorMessages && this.props.deckErrorMessages.length ? ' text-danger' : '') }></img>
                 </div>
               </>
             : <></>
@@ -233,6 +233,9 @@ export class CardsListBody extends React.Component {
     if (index === -1) {
       card.amount = 1;
       _this.props.currDeck.cards.push(card);
+      
+      const messages = _this.props.TestDeck(_this.props.currDeck);
+      _this.props.setDeckErrorMessages(messages);
     }
     else {
       _this.props.ChangeAmountOfCardInDeck(index, 1);

@@ -43,6 +43,7 @@ export class DeckBuilderDecksListHeader extends React.Component {
     deckList.push(newDeck);
     this.props.SetDeckListInSession(deckList);
 
+    this.props.setCardsToShow(this.props.AvailableCards);
     this.props.setShowMainDeck(true);
     this.props.setShowFortressDeck(false);
     this.props.setShowBottomMenu(false);
@@ -228,9 +229,12 @@ export class DeckBuilderDecksListBody extends React.Component {
     deck.specialCards = deck.cards.filter(card => card.specialCard && !this.props.IsCardTypeOf('FORTALEZA', card.cardTypes));
     deck.fortressCards = deck.cards.filter(card => !!this.props.IsCardTypeOf('FORTALEZA', card.cardTypes));
 
+    const errorMessages = this.props.TestDeck(deck);
+    
     this.props.setShowMainDeck(true);
     this.props.setShowFortressDeck(false);
     this.props.setCurrDeck(deck);
+    this.props.setDeckErrorMessages(errorMessages);    
     this.props.setShowBottomMenu(false);
     this.props.setViewState(DeckBuilderViewStates.DeckEdit);
   }
@@ -313,41 +317,9 @@ export class DeckBuilderDecksListBody extends React.Component {
   }
 
   TryExportDeck (index, exportType) {
-    const deck = this.props.DeckList[index];
-
-    const mainDeckCards = deck.cards.filter(p => !p.specialCard);
-    let mainDeckCardsAmount = 0;
-    mainDeckCards.forEach((card, i) => { mainDeckCardsAmount += card.amount });
-    const hasLessThanMinimumCards = mainDeckCardsAmount < 30;
-    const hasMoreThanMaximumCards = mainDeckCardsAmount > 40;
-
-    const fortressesAmount = deck.cards.filter(p => this.props.IsCardTypeOf('FORTALEZA', p.cardTypes)).length;
-    const hasMoreThanMaximumFortresses = fortressesAmount > 1;
-    const doesNotHaveFortress = fortressesAmount === 0;
-
-    const resourcesAmount = deck.cards.filter(p => this.props.IsCardTypeOf('RECURSO', p.cardTypes)).length;
-    const hasMoreThanMaximumResources = resourcesAmount > 1;
-    const doesNotHaveResource = resourcesAmount === 0;
-
+    const messages = this.props.TestDeck(this.props.DeckList[index]);
     let message = "";
-    if (hasLessThanMinimumCards) {
-      message = "O deck Principal não possui o mínimo de 30 cards.";
-    }
-    if (hasMoreThanMaximumCards) {
-      message = "O deck Principal possui mais que o máximo de 40 cards.";
-    }
-    if (hasMoreThanMaximumFortresses) {
-      message = "O deck possui mais do que uma Fortaleza.";
-    }
-    if (doesNotHaveFortress) {
-      message = "O deck não possui uma Fortaleza.";
-    }
-    if (hasMoreThanMaximumResources) {
-      message = "O deck possui mais do que um card de Recurso.";
-    }
-    if (doesNotHaveResource) {
-      message = "O deck não possui um card de Recurso.";
-    }
+    if (messages.length) message = messages[0];
 
     if (message !== "") {
       const $this = this;

@@ -12,7 +12,7 @@ export class DecksCardsComponentBase {
     setShowBodyInnerTopShadow, isDeckEdit, viewState, setRefresh, galaxyFilters, setGalaxyFilters, orderingDecksOptions, orderingCardsOptions, setDecksSearchTerm,
     setDeckListToShow, lastOrderingDecksOption, setLastOrderingDecksOption, setOrderingDecksOptions, setCurrDeck, AvailableCards, setAvailableCards, advancedFilters, categoryFilters,
     setAdvancedFilters, setCategoryFilters, cardsToShow, setCardsToShow, lastOrderingCardsOption, setLastOrderingCardsOption, DecksSearchTerm, DeckListToShow, 
-    setOrderingCardsOptions, setModalTransparentContent, setIsShowModalDeckInfos) {
+    setOrderingCardsOptions, setModalTransparentContent, setIsShowModalDeckInfos, deckErrorMessages, setDeckErrorMessages) {
       this.setCountNormals = setCountNormals;
       this.setCountSpecials = setCountSpecials;
       this.setCountFortress = setCountFortress;
@@ -51,6 +51,8 @@ export class DecksCardsComponentBase {
       this.setOrderingCardsOptions = setOrderingCardsOptions;
       this.setModalTransparentContent = setModalTransparentContent;
       this.setIsShowModalDeckInfos = setIsShowModalDeckInfos;
+      this.deckErrorMessages = deckErrorMessages;
+      this.setDeckErrorMessages = setDeckErrorMessages;
   }
 
   //#region Globals
@@ -492,13 +494,16 @@ export class DecksCardsComponentBase {
     let deck = this.currDeck;
     deck.cards = cards;
     this.setCurrDeck(deck);
+
+    const errorMessages = this.TestDeck(deck);
+    this.setDeckErrorMessages(errorMessages);
   }
 
   ShowDeckInformations () {
     var content = '<ul>';
     const counters = this.SetCounts(this.currDeck.cards??[]);
 
-    content += "<li>TOTAL DE CARDS</li>";
+    content += "<br/><li>TOTAL DE CARDS</li>";
     content += `<li><strong>Deck:</strong><span style='margin-left: 1em;'>${counters.countNormals}/40</span></li>`;
     content += `<li><strong>Deck Especial:</strong><span style='margin-left: 1em;'>${counters.countSpecials}/100</span></li>`;
     content += `<li><strong>Fortaleza:</strong><span style='margin-left: 1em;'>${counters.countFortress}/1</span></li>`;
@@ -557,10 +562,114 @@ export class DecksCardsComponentBase {
     }
     content += `<li><strong>Recurso:</strong><span style='margin-left: 1em;'>${counters.countResources}/1</span></li>`;
 
+    if (this.deckErrorMessages && this.deckErrorMessages.length) {
+      content += `<br/><li class='text-danger'><strong>Erros:</strong></li>`;
+      for (let i = 0; i < this.deckErrorMessages.length; i++) {
+        const message = this.deckErrorMessages[i];
+        content += `<li class='text-danger'><span>${message}</span></li>`;
+      }
+    }
+
     content += "</ul>";
     this.setModalTransparentContent(content);
     this.setIsShowModalDeckInfos(true);
   }
+
+  TestDeck (deck) {
+    const mainDeckCards = deck.cards.filter(p => !p.specialCard);
+    let mainDeckCardsAmount = 0;
+    mainDeckCards.forEach((card, i) => { mainDeckCardsAmount += card.amount });
+    const hasLessThanMinimumCards = mainDeckCardsAmount < 30;
+    const hasMoreThanMaximumCards = mainDeckCardsAmount > 40;
+
+    const fortressesCards = deck.cards.filter(p => this.IsCardTypeOf('FORTALEZA', p.cardTypes));
+    const fortressesAmount = fortressesCards.length;
+    const hasMoreThanMaximumFortresses = fortressesAmount > 1;
+    const doesNotHaveFortress = fortressesAmount === 0;
+
+    const resourcesAmount = deck.cards.filter(p => this.IsCardTypeOf('RECURSO', p.cardTypes)).length;
+    const hasMoreThanMaximumResources = resourcesAmount > 1;
+    const doesNotHaveResource = resourcesAmount === 0;
+
+    const eventCards = deck.cards.filter(p => this.IsCardTypeOf('EVENTO', p.cardTypes));
+    let hasEventWithGalaxyOtherThanFortresses = false;
+    if (!doesNotHaveFortress) {
+      let eventGalaxies = [];
+      eventCards.forEach(card => { eventGalaxies.push(card.galaxy); });
+      let fortressesGalaxies = [];
+      fortressesCards.forEach(card => { fortressesGalaxies.push(card.galaxy); });
+
+      hasEventWithGalaxyOtherThanFortresses = !!(eventGalaxies.filter(p => !fortressesGalaxies.includes(p)).length);
+    }
+
+    let has3OrMoreGalaxiesWithDiffAmounts = false;
+    let hasFortressNotOfGalaxiesInDeck = false;
+    let deckGalaxies = [];
+    if (!doesNotHaveFortress) {
+      let deckGalaxiesAmounts = [];
+      for (var i = 0; i < mainDeckCards.length; i++) {
+        const card = mainDeckCards[i];
+        const arrGalaxy = deckGalaxiesAmounts.filter(p => p.galaxy === card.galaxy);
+        if (arrGalaxy.length) {
+          const galaxy = arrGalaxy[0];
+          galaxy.amount += card.amount;
+        }
+        else {
+          deckGalaxiesAmounts.push({ galaxy: card.galaxy, amount: card.amount });
+        }
+      }
+
+      deckGalaxiesAmounts.forEach(p => { deckGalaxies.push(p.galaxy); });
+      let fortressesGalaxies = [];
+      fortressesCards.forEach(card => { fortressesGalaxies.push(card.galaxy); });
+
+      hasFortressNotOfGalaxiesInDeck = !!(fortressesGalaxies.filter(p => !deckGalaxies.includes(p)).length);
+
+      for (var k = 0; k < deckGalaxiesAmounts.length - 1; k++) {
+        if (has3OrMoreGalaxiesWithDiffAmounts) break;
+        has3OrMoreGalaxiesWithDiffAmounts = deckGalaxiesAmounts[k].amount !== deckGalaxiesAmounts[k + 1].amount;
+      }
+    }
+
+    let messages = [];
+
+    if (hasLessThanMinimumCards) {
+      messages.push("O deck Principal não possui o mínimo de 30 cards.");
+    }
+    if (hasMoreThanMaximumCards) {
+      messages.push("O deck Principal possui mais que o máximo de 40 cards.");
+    }
+    if (hasMoreThanMaximumFortresses) {
+      messages.push("O deck possui mais do que uma Fortaleza.");
+    }
+    if (doesNotHaveFortress) {
+      messages.push("O deck não possui uma Fortaleza.");
+    }
+    if (hasMoreThanMaximumResources) {
+      messages.push("O deck possui mais do que um card de Recurso.");
+    }
+    if (doesNotHaveResource) {
+      messages.push("O deck não possui um card de Recurso.");
+    }
+    if (hasEventWithGalaxyOtherThanFortresses) {
+      messages.push("O deck deve conter apenas Eventos da mesma Galáxia de sua Fortaleza.");
+    }
+    if (deckGalaxies.length > 2 &&
+      (has3OrMoreGalaxiesWithDiffAmounts || hasFortressNotOfGalaxiesInDeck)
+    ) {
+      messages.push("Aliança Universal: para jogar com 3 ou mais Galáxias é preciso ter a mesma quantidade de cards de cada Galáxia, e a Fortaleza deve pertencer a uma delas.");
+    }
+    else if (deckGalaxies.length > 1 && hasFortressNotOfGalaxiesInDeck)
+    {
+      messages.push("A Fortaleza deve ser de uma das Galáxias no deck.");
+    }
+    else if (hasFortressNotOfGalaxiesInDeck)
+    {
+      messages.push("A Fortaleza deve ser da mesma Galáxia do deck.");
+    }
+    
+    return messages;
+}
 
   //#endregion
 
@@ -622,7 +731,7 @@ export class DecksCardsComponentBase {
       default:
         break;
     }
-
+    
     return typeName;
   }
 

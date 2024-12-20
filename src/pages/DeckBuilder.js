@@ -88,6 +88,8 @@ export default function DeckBuilder() {
   const [CarouselMinusAction, setCarouselMinusAction] = useState({ action: () => {} });
   const [CarouselPlusAction, setCarouselPlusAction] = useState({ action: () => {} });
 
+  const [deckErrorMessages, setDeckErrorMessages] = useState([]);
+
   //#endregion
 
   //#region App Init
@@ -182,7 +184,7 @@ export default function DeckBuilder() {
     setShowBodyInnerTopShadow, isDeckEdit, viewState, setRefresh, galaxyFilters, setGalaxyFilters, orderingDecksOptions, orderingCardsOptions, setDecksSearchTerm,
     setDeckListToShow, lastOrderingDecksOption, setLastOrderingDecksOption, setOrderingDecksOptions, setCurrDeck, AvailableCards, setAvailableCards, advancedFilters, categoryFilters,
     setAdvancedFilters, setCategoryFilters, cardsToShow, setCardsToShow, lastOrderingCardsOption, setLastOrderingCardsOption, DecksSearchTerm, DeckListToShow, 
-    setOrderingCardsOptions, setModalTransparentContent, setIsShowModalDeckInfos);
+    setOrderingCardsOptions, setModalTransparentContent, setIsShowModalDeckInfos, deckErrorMessages, setDeckErrorMessages);
 
   function Refresh() {
     return Base.Refresh();
@@ -312,6 +314,10 @@ export default function DeckBuilder() {
     return Base.OrderDeckCards(cardsList);
   }
 
+  function TestDeck (deck) {
+    return Base.TestDeck(deck);
+  }
+
   //#endregion
 
   return (
@@ -341,7 +347,9 @@ export default function DeckBuilder() {
                     countFortress={countFortress}
                     setIsShowModalOrderBy={setIsShowModalOrderBy}
                     isDeckEdit={isDeckEdit}
+
                     ShowDeckInformations={ShowDeckInformations}
+                    deckErrorMessages={deckErrorMessages}
                   />
                 : <></>
               }
@@ -379,6 +387,9 @@ export default function DeckBuilder() {
                     setIsShowRules={setIsShowRules}
                     setIsShowModalOrderBy={setIsShowModalOrderBy}
                     setIsDeckEdit={setIsDeckEdit}
+
+                    AvailableCards={AvailableCards}
+                    setCardsToShow={setCardsToShow}
                   />
                 : <></>
               }
@@ -394,6 +405,8 @@ export default function DeckBuilder() {
 
                     cardsToShow={cardsToShow} setCardsToShow={setCardsToShow}
                     AvailableCards={AvailableCards}
+
+                    deckErrorMessages={deckErrorMessages}
                   />
                 : <></>
               }
@@ -433,6 +446,9 @@ export default function DeckBuilder() {
                     setCarouselPlusAction={setCarouselPlusAction}
 
                     OrderDeckCards={OrderDeckCards}
+
+                    TestDeck={TestDeck}
+                    setDeckErrorMessages={setDeckErrorMessages}
                   />
                 : <></>
               }
@@ -477,6 +493,8 @@ export default function DeckBuilder() {
                     setIsCancelButtonVisibleAlertModal={setIsCancelButtonVisibleAlertModal}
 
                     OrderDeckCards={OrderDeckCards}
+                    TestDeck={TestDeck}
+                    setDeckErrorMessages={setDeckErrorMessages}
                   />
                 : <></>
               }
@@ -497,6 +515,9 @@ export default function DeckBuilder() {
                     setCarouselForwardAction={setCarouselForwardAction}
                     setCarouselMinusAction={setCarouselMinusAction}
                     setCarouselPlusAction={setCarouselPlusAction}
+
+                    setDeckErrorMessages={setDeckErrorMessages}
+                    TestDeck={TestDeck}
                   />
                 : <></>
               }

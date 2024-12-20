@@ -41,8 +41,8 @@ export class DeckBuilderEditHeader extends React.Component {
             {/* <div className='bt-deckBuilder bt-option bt-option-invert' onClick={() => { this.props.setIsShowModalOrderBy(true) }}>
               <img alt="Ordenação" src={iconOrdenar}></img>
             </div> */}
-            <div className='bt-deckBuilder bt-option bt-option-invert' onClick={() => { this.props.ShowDeckInformations(); }}>
-              <img alt="Informações sobre o deck" src={iconInfo}></img>
+            <div className={ 'bt-deckBuilder bt-option bt-option-invert' } onClick={() => { this.props.ShowDeckInformations(); }}>
+              <img alt="Informações sobre o deck" src={iconInfo} className={ (this.props.deckErrorMessages && this.props.deckErrorMessages.length ? ' text-danger' : '') }></img>
             </div>
             <div className='bt-deckBuilder bt-option bt-option-invert' onClick={() => { this.SendToSearchCard(); }}>
               <img alt="Filtro" src={iconSearch}></img>
@@ -158,7 +158,7 @@ export class DeckBuilderEditBody extends React.Component {
           <div className={ this.GetCategoryClass('fortress') }
             onClick={() => { this.SetShowMainDeck(false); this.SetShowFortressDeck(true); }}>
             <span className='count'>{ this.GetCardsCount('fortress') }</span>
-            <span className='title'> Fortalezas</span>
+            <span className='title'> Fortaleza</span>
           </div>
         </div>
         
@@ -187,7 +187,8 @@ export class DeckBuilderEditBody extends React.Component {
                   </div>
                 </div>
               ) : 
-              <h5 className='padding-bottom-1'>Adicione cartas ao seu novo deck...</h5>
+              // <h5 className='padding-bottom-1'>Adicione cartas ao seu novo deck...</h5>
+              <></>
             }
           </div>
           : <></>
@@ -217,7 +218,8 @@ export class DeckBuilderEditBody extends React.Component {
                   </div>
                 </div>
               ) :
-              <h5 className='padding-bottom-1'>Adicione cartas ao seu novo deck...</h5>
+              // <h5 className='padding-bottom-1'>Adicione cartas ao seu novo deck...</h5>
+              <></>
             }
           </div>
           : <></>
@@ -247,7 +249,8 @@ export class DeckBuilderEditBody extends React.Component {
                   </div>
                 </div>
               ) :
-              <h5 className='padding-bottom-1'>Adicione cartas ao seu novo deck...</h5>
+              // <h5 className='padding-bottom-1'>Adicione cartas ao seu novo deck...</h5>
+              <></>
             }
           </div>
           : <></>
