@@ -390,6 +390,8 @@ export default function DeckBuilder() {
 
                     AvailableCards={AvailableCards}
                     setCardsToShow={setCardsToShow}
+
+                    IsCardTypeOf={IsCardTypeOf}
                   />
                 : <></>
               }

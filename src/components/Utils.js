@@ -8,7 +8,7 @@ function isArray (origin) {
 
 export function deepCopy (origin) {
     let destination = null;
-    if (!origin || origin === null || typeof origin !== "object") return destination;
+    if (!origin || origin === null) return destination;
     
     if (Array.isArray(origin)) {
         destination = [];
@@ -19,7 +19,7 @@ export function deepCopy (origin) {
             destination.push(temp);
         }
     }
-    else {
+    else if (typeof origin === "object") {
         destination = {};
         for (const key in origin) {
             const temp = origin[key];
@@ -27,9 +27,20 @@ export function deepCopy (origin) {
                 const copy = deepCopy(temp);
                 destination[key] = copy;
             }
+            else if (typeof temp !== "string" && !isNaN(parseInt(`${temp}`))) {
+                destination[key] = parseInt(`${temp}`);
+            }
             else {
                 destination[key] = temp;
             }
+        }
+    }
+    else {
+        if (typeof temp !== "string" && !isNaN(parseInt(`${origin}`))) {
+            destination = parseInt(`${origin}`);
+        }
+        else {
+            destination = origin;
         }
     }
 

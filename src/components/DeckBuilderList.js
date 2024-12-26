@@ -91,13 +91,30 @@ export class DeckBuilderDecksListHeader extends React.Component {
       const reader = new FileReader();
   
       reader.onloadend = (data) => {
+        let deckList = this.props.DeckList;
+
         const base64 = data.target.result.split("base64,")[1];
         const jsonString = atob(base64);
-        let newDeck = JSON.parse(jsonString);
-        newDeck.mainCards = newDeck.cards.filter(card => !card.specialCard);
-        newDeck.specialCards = newDeck.cards.filter(card => card.specialCard);
+        const deckToImport = JSON.parse(jsonString);
 
-        let deckList = this.props.DeckList;
+        let newDeck = new Deck();
+        newDeck.creationDate = new Date();
+        newDeck.name = "Deck Importado";
+        const countWithName = deckList.filter(p => p.name.includes("Deck Importado")).length;
+        if (countWithName > 0) newDeck.name = `${newDeck.name} (${countWithName + 1})`;
+
+        deckToImport.cards.forEach(card => {
+          const filteredCards = this.props.AvailableCards.filter(p => p.key === card.key && p.code === card.code);
+          if (!!filteredCards.length) {
+            let copy = deepCopy(filteredCards[0]);
+            copy.amount = card.amount;
+            newDeck.cards.push(copy);
+          }
+        });
+        
+        newDeck.mainCards = newDeck.cards.filter(card => !card.specialCard);
+        newDeck.specialCards = newDeck.cards.filter(card => card.specialCard && !this.props.IsCardTypeOf('FORTALEZA', card.cardTypes));
+        newDeck.fortressCards = newDeck.cards.filter(card => !!this.props.IsCardTypeOf('FORTALEZA', card.cardTypes));
         deckList.push(newDeck);
         this.props.SetDeckListInSession(deckList);
 
@@ -270,48 +287,59 @@ export class DeckBuilderDecksListBody extends React.Component {
   }
 
   ExportDeck (index) {
-    const deck = this.props.DeckList[index];
-    const link = document.createElement("a");
-    const file = new Blob([JSON.stringify(deck)], { type: 'text/plain' });
-    link.href = URL.createObjectURL(file);
+    const origin = this.props.DeckList[index];
+    const deck = {
+      cards: []
+    };
+    for (var i = 0; i < origin.cards.length; i++) {
+      const card = origin.cards[i];
+      deck.cards.push({ key: card.key, code: card.code, amount: card.amount });
+    }
+
     // file extension ".sgd" ("sgd" stands for "Seven Galaxies Deck")
-    link.download = `${deck.name.normalize("NFD").replace(/[\u0300-\u036f]/g, "").replaceAll(" ", "")}.sgd`;
+    const filename = `${origin.name.normalize("NFD").replace(/[\u0300-\u036f]/g, "").replaceAll(" ", "")}.sgd`;
+    const file = new File([JSON.stringify(deck)], filename, { type: 'text/json' });
+
+    const link = document.createElement("a");
+    link.href = URL.createObjectURL(file);
+    link.download = filename;
     link.click();
     URL.revokeObjectURL(link.href);
   }
 
   ExportDeckText (index) {
     const deck = this.props.DeckList[index];
-    const link = document.createElement("a");
-
+    
     const fortress = deck.cards.filter(p => !!this.props.IsCardTypeOf("FORTALEZA", p.cardTypes));
     var deckText = deck.name +
-                   "\n\nFORTALEZA\n" +
-                   (fortress ? "1 " : "0 ") + (fortress ? fortress[0].name : "Nenhuma") + " [cod" + (fortress ? fortress[0].key : "N/A") + "]";
-
+    "\n\nFORTALEZA\n" +
+    (fortress ? "1 " : "0 ") + (fortress ? fortress[0].name : "Nenhuma") + " [cod" + (fortress ? fortress[0].key : "N/A") + "]";
+    
     deckText += "\n\nDECK\n";
     const deckCards = deck.cards.filter(p => !p.specialCard && !this.props.IsCardTypeOf("FORTALEZA", p.cardTypes));
     deckCards.forEach(card => {
       deckText += card.amount + " " + card.name + " [cod" + card.key + "]\n"
     });
-
+    
     const specialCards = deck.cards.filter(p => !!p.specialCard &&
                                                 !this.props.IsCardTypeOf("FORTALEZA", p.cardTypes) &&
                                                 !this.props.IsCardTypeOf("RECURSO", p.cardTypes));
-    deckText += "\nDECK ESPECIAL\n";
-    specialCards.forEach(card => {
-      deckText += card.amount + " " + card.name + " [cod" + card.key + "]\n"
+                                                deckText += "\nDECK ESPECIAL\n";
+                                                specialCards.forEach(card => {
+                                                  deckText += card.amount + " " + card.name + " [cod" + card.key + "]\n"
+                                                });
+                                                
+                                                const resourceCards = deck.cards.filter(p => this.props.IsCardTypeOf("RECURSO", p.cardTypes));
+                                                resourceCards.forEach(card => {
+                                                  deckText += card.amount + " " + card.name + " [cod" + card.key + "]\n"
     });
     
-    const resourceCards = deck.cards.filter(p => this.props.IsCardTypeOf("RECURSO", p.cardTypes));
-    resourceCards.forEach(card => {
-      deckText += card.amount + " " + card.name + " [cod" + card.key + "]\n"
-    });
-
-    const file = new Blob([deckText], { type: 'text/plain' });
+    const filename = `${deck.name.normalize("NFD").replace(/[\u0300-\u036f]/g, "").replaceAll(" ", "")}.txt`;
+    const file = new File([deckText], filename, { type: 'text/plain' });
+    
+    const link = document.createElement("a");
     link.href = URL.createObjectURL(file);
-    // file extension ".sgd" ("sgd" stands for "Seven Galaxies Deck")
-    link.download = `${deck.name.normalize("NFD").replace(/[\u0300-\u036f]/g, "").replaceAll(" ", "")}.txt`;
+    link.download = filename;
     link.click();
     URL.revokeObjectURL(link.href);
   }
