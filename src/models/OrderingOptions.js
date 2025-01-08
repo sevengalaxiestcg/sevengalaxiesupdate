@@ -9,7 +9,7 @@ export class GalaxiesOrderings {
 }
 
 export class OrderingOptions {
-  static BaseCost =  0;
+  static BaseCost = 0;
   static Galaxy = 1;
   static EffectCost = 2;
   static Rarity = 3;
@@ -147,7 +147,7 @@ export var basicOrderingDecksOptions = [
     value: OrderingOptions.Name,
     isOrdering: true,
   },
- {
+  {
     label: "Data de Criação",
     value: OrderingOptions.DateCreated,
     isOrdering: true,

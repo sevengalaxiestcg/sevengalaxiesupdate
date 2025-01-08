@@ -7,6 +7,10 @@
   user-select: none;
 }
 
+.app:has(.deckBuilder) {
+  background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5));
+}
+
 main {
   display: flex;
   flex-direction: row;
@@ -28,8 +32,7 @@ p {
   flex-grow: 1;
 }
 
-.game,
-.deckBuilder {
+.game {
   max-width: 960px;
   margin: 0 auto;
   text-align: center;
@@ -54,9 +57,14 @@ p {
   height: 5vmin !important;
 }
 
+.icon-img.icon-img-renomear {
+  width: 4vmin !important;
+  height: 4vmin !important;
+}
+
 .icon-img.icon-img-straight {
   margin-top: 0.5vmin !important;
-  width: 1.1vmin !important;
+  width: 1vmin !important;
   height: auto !important;
 }
 
@@ -76,6 +84,10 @@ p {
   text-shadow: 1px 0px var(--cor-thema);
 }
 
+.image-selected {
+  filter: var(--filter-tema);
+}
+
 .text-danger {
   color: red !important;
 }
@@ -84,18 +96,12 @@ img.text-danger {
   filter: sepia(1) saturate(10000%) hue-rotate(290deg) saturate(700%) !important;
 }
 
-.image-selected {
-  filter: var(--filter-tema);
-}
-
-.bt-back {
-  filter: var(--filter-tema);
-  position: absolute;
-  top: 1vmin;
-}
-
 .bg-danger {
   background-color: red !important;
+}
+
+.bt-deck-editName {
+  filter: var(--filter-tema);
 }
 
 .text-underline {
@@ -106,9 +112,9 @@ img.text-danger {
   margin-top: 1vmin !important;
 }
 
-.margin-top-2 {
+/* .margin-top-2 {
   margin-top: 3.55vmin !important;
-}
+} */
 
 .margin-top-3 {
   margin-top: 5vmin !important;
@@ -189,9 +195,11 @@ img.text-danger {
   0% {
     transform: scale(1);
   }
+
   50% {
     transform: scale(1.4);
   }
+
   100% {
     transform: scale(1);
   }
@@ -201,9 +209,11 @@ img.text-danger {
   0% {
     transform: scale(1);
   }
+
   50% {
     transform: scale(1.2) translate3d(4vw, 2vh, 0px);
   }
+
   100% {
     transform: scale(1);
   }
@@ -214,10 +224,12 @@ img.text-danger {
     /* background-position: right; */
     background-size: cover;
   }
+
   50% {
     /* background-position: top; */
     background-size: 170vmax;
   }
+
   100% {
     /* background-position: right; */
     background-size: 100vmax;
@@ -227,6 +239,7 @@ img.text-danger {
 /** dimensões máximas esperadas **/
 
 @media screen and (min-width: 500px) And (min-height: 891px) {
+
   /* .background-control {
     width: 40px;
   } */
@@ -234,13 +247,12 @@ img.text-danger {
     padding-top: 6px;
     padding-left: 6px;
   }
-  
+
   .corporation {
     font-size: 12px;
     padding-bottom: 23px;
   }
 
-  .text-title{
-    /* max-width: 31vmin; */
-  }
+
+
 }

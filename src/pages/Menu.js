@@ -8,7 +8,8 @@ import instagram from '../images/social/Instagram.png';
 import facebook from '../images/social/Facebook.png';
 import twitter from '../images/social/Twitter.png';
 import youtube from '../images/social/Youtube.png';
-import discord from '../images/social/Discord.png';
+// import discord from '../images/social/Discord.png';
+import tiktok from '../images/social/Tik-Tok.png';
 import sobre from '../images/social/Sobre.png';
 
 function Menu(props) {
@@ -30,21 +31,8 @@ function Menu(props) {
 
         <p>Menu</p>
 
-        <ReactGA.OutboundLink
-          className="menu-button b1 bt-news"
-          eventLabel="Nova Coleção"
-          to="https://www.catarse.me/sevengalaxies"
-          target="_blank"
-        >
-          <span></span>
-          <span></span>
-          <span></span>
-          <span></span>
-          NOVA COLEÇÃO
-        </ReactGA.OutboundLink>
-
         {props.inicio
-          ? <div className="menu-button b2" onClick={() => props.handleOption('batalha')}>
+          ? <div className="menu-button b1" onClick={() => props.handleOption('batalha')}>
             BATALHA
           </div>
           : <div className="menu-button b2" onClick={() => props.handleOption('novaBatalha')}>
@@ -52,18 +40,20 @@ function Menu(props) {
           </div>
         }
 
-        <div className="menu-button b3" onClick={() => props.handleOption('tema')}>
-          ALTERAR TEMA
-        </div>
         <div className="menu-button b3" onClick={() => props.handleOption('deckBuilder')}>
           MEUS DECKS
         </div>
 
-        <div className="menu-button b3" onClick={() => props.handleOption('cards')}>
+        <div className="menu-button b4" onClick={() => props.handleOption('cards')}>
           CARDS
         </div>
+
+        <div className="menu-button b5" onClick={() => props.handleOption('tema')}>
+          ALTERAR TEMA
+        </div>
+
         <ReactGA.OutboundLink
-          className="menu-button b4"
+          className="menu-button b6"
           eventLabel="Manual de Regras"
           to="https://sevengalaxiestcg.com/manual"
           target={!IsMobile() || navigator.userAgent.match(/iP/i) ? "_blank" : undefined}
@@ -72,7 +62,7 @@ function Menu(props) {
         </ReactGA.OutboundLink>
 
         <ReactGA.OutboundLink
-          className="menu-button b6"
+          className="menu-button b7"
           eventLabel="Blog"
           to="https://sevengalaxiestcg.com/blog"
           target="_blank"
@@ -88,6 +78,21 @@ function Menu(props) {
         >
           LOJA VIRTUAL
         </ReactGA.OutboundLink>
+
+
+        <ReactGA.OutboundLink
+          className="menu-button b8 bt-news"
+          eventLabel="Nova Coleção"
+          to="https://loja.7guniverse.com/seven-galaxies-colecao-completa-majik-vs-adroit"
+          target="_blank"
+        >
+          <span></span>
+          <span></span>
+          <span></span>
+          <span></span>
+          NOVA COLEÇÃO
+        </ReactGA.OutboundLink>
+
         {/* <div className="menu-button b3" onClick={() => props.handleOption('tema')}>
           MANUAL DE REGRAS */}
 
@@ -123,12 +128,13 @@ function Menu(props) {
           <a target="_blank" href="https://www.twitter.com/7galaxiestcg" rel="noopener noreferrer">
             <img src={twitter} alt="Twitter" />
           </a>
+          <a target="_blank" href="https://www.tiktok.com/@7guniverse " rel="noopener noreferrer">
+            <img src={tiktok} alt="Tik Tok" />
+          </a>
           <a target="_blank" href="https://www.youtube.com/sevengalaxiestcg" rel="noopener noreferrer">
             <img src={youtube} alt="Youtube" />
           </a>
-          <a target="_blank" href="https://discord.gg/wyRJYB9" rel="noopener noreferrer">
-            <img src={discord} alt="Discord" />
-          </a>
+
         </div>
 
         <div className="menu-sobre" onClick={() => props.handleOption('sobre')}>

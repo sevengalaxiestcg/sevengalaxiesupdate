@@ -16,10 +16,6 @@
   background-image: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)), url(./SevenG_04.jpg);
 }
 
-.SevenG5 {
-  background-image: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)), url(./SevenG_05.jpg);
-}
-
 .SevenG-menu {
   background-image: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)), url(./SevenG_02.jpg);
 }
@@ -74,7 +70,6 @@
 
 .Gaia13 {
   background-image: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)), url(./Gaia_13.jpg);
-  background-position: center;
 }
 
 .Gaia14 {
@@ -85,8 +80,33 @@
   background-image: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)), url(./Gaia_15.jpg);
 }
 
+.Gaia16 {
+  background-image: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)), url(./Gaia_16.jpg);
+}
+
+.Gaia17 {
+  background-image: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)), url(./Gaia_17.jpg);
+}
+
+.Gaia18 {
+  background-image: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)), url(./Gaia_18.jpg);
+  background-position: center;
+}
+
+.Gaia19 {
+  background-image: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)), url(./Gaia_19.jpg);
+}
+
+.Gaia20 {
+  background-image: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)), url(./Gaia_20.jpg);
+}
+
+.Gaia21 {
+  background-image: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)), url(./Gaia_21.jpg);
+}
+
 .Gaia-menu {
-  background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url(./Gaia_15.jpg);
+  background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url(./Gaia_21.jpg);
 }
 
 .Stroj1 {
@@ -153,8 +173,33 @@
   background-image: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)), url(./Stroj_15.jpg);
 }
 
+.Stroj16 {
+  background-image: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)), url(./Stroj_16.jpg);
+}
+
+.Stroj17 {
+  background-image: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)), url(./Stroj_17.jpg);
+}
+
+.Stroj18 {
+  background-image: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)), url(./Stroj_18.jpg);
+}
+
+.Stroj19 {
+  background-image: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)), url(./Stroj_19.jpg);
+}
+
+.Stroj20 {
+  background-image: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)), url(./Stroj_20.jpg);
+}
+
+.Stroj21 {
+  background-image: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)), url(./Stroj_21.jpg);
+}
+
+
 .Stroj-menu {
-  background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url(./Stroj_15.jpg);
+  background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url(./Stroj_21.jpg);
 }
 
 .Adroit1 {
@@ -229,8 +274,24 @@
   background-image: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)), url(./Adroit_17.jpg);
 }
 
+.Adroit18 {
+  background-image: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)), url(./Adroit_18.jpg);
+}
+
+.Adroit19 {
+  background-image: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)), url(./Adroit_19.jpg);
+}
+
+.Adroit20 {
+  background-image: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)), url(./Adroit_20.jpg);
+}
+
+.Adroit21 {
+  background-image: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)), url(./Adroit_21.jpg);
+}
+
 .Adroit-menu {
-  background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url(./Adroit_17.jpg);
+  background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url(./Adroit_21.jpg);
 }
 
 .Majik1 {
@@ -317,6 +378,10 @@
   background-image: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)), url(./Majik_20.jpg);
 }
 
+.Majik21 {
+  background-image: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)), url(./Majik_21.jpg);
+}
+
 .Majik-menu {
-  background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url(./Majik_20.jpg);
+  background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url(./Majik_21.jpg);
 }

@@ -29,7 +29,8 @@ export default createGlobalStyle`
     --filter-tema: ${({ theme }) => theme.filter};
     --max-height-content: ${maxHeightContent};
     --max-height-content-deckList: ${maxHeightContentDeckList};
-    --filter-icone-tema: ${({ theme }) => theme.filterIcone}
+    --filter-icone-tema: ${({ theme }) => theme.filterIcone};
+    --background-option-modal: rgba(0, 0, 0, .85);
   }
 
   button, .rodada-button, .rodada-button-new, .menu-button, .gameover-button {

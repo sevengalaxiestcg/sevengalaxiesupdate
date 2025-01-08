@@ -9,23 +9,23 @@ function ChangeBackground(value) {
   switch (localTheme) {
     case 'SevenG':
       background_old = parseInt(window.localStorage.getItem("sevengalaxies@bg_SevenG") || 1);
-      background_max = 5;
+      background_max = 4;
       break;
     case 'Gaia':
       background_old = parseInt(window.localStorage.getItem("sevengalaxies@bg_Gaia") || 1);
-      background_max = 15;
+      background_max = 21;
       break;
     case 'Stroj':
       background_old = parseInt(window.localStorage.getItem("sevengalaxies@bg_Stroj") || 1);
-      background_max = 15;
+      background_max = 21;
       break;
     case 'Adroit':
       background_old = parseInt(window.localStorage.getItem("sevengalaxies@bg_Adroit") || 1);
-      background_max = 17;
+      background_max = 21;
       break;
     case 'Majik':
       background_old = parseInt(window.localStorage.getItem("sevengalaxies@bg_Majik") || 1);
-      background_max = 20;
+      background_max = 21;
       break;
     default:
   }

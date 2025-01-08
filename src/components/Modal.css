@@ -73,10 +73,12 @@
     width: 44.66vmax;
     height: 25.09vmax;
   }
+
   .message {
     width: 40.14vmax;
     font-size: 1.95vmax;
   }
+
   .options {
     width: 40.14vmax;
     height: 6.69vmax;
@@ -84,6 +86,7 @@
     margin-bottom: 1.95vmax;
     padding-top: 1.67vmax;
   }
+
   .options button {
     font-size: 1.95vmax;
     min-width: 12.27vmax;
@@ -96,10 +99,12 @@
     width: 44.66vmin;
     height: 25.09vmin;
   }
+
   .message {
     width: 40.14vmin;
     font-size: 1.95vmin;
   }
+
   .options {
     width: 40.14vmin;
     height: 6.69vmin;
@@ -107,6 +112,7 @@
     margin-bottom: 1.95vmin;
     padding-top: 1.67vmin;
   }
+
   .options button {
     font-size: 1.95vmin;
     min-width: 12.27vmin;
@@ -119,10 +125,12 @@
     width: 400px;
     height: 225px;
   }
+
   .message {
     width: 360px;
     font-size: 17.5px;
   }
+
   .options {
     width: 360px;
     height: 60px;
@@ -130,6 +138,7 @@
     margin-bottom: 17.5px;
     padding-top: 15px;
   }
+
   .options button {
     font-size: 17.5px;
     min-width: 110px;
@@ -151,12 +160,18 @@
   background-position: top;
   background-repeat: no-repeat;
   background-size: cover;
+
+}
+
+.modal-fullScreen-main {
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
   animation: fadein 0.1s linear;
   color: #fff;
   user-select: none;
+  overflow: auto;
 }
 
 .modal-fullScreen p {
@@ -172,7 +187,7 @@
   justify-content: space-evenly;
   align-items: center;
   animation: fadein 0.4s linear;
-  width: -webkit-fill-available;
+  width: 80vmin;
 }
 
 .modal-fullScreen-body {
@@ -191,7 +206,6 @@
   width: 100%;
   font-size: 4.5vmin;
   margin: 4vmin 0 3.5vmin 0;
-  text-align: center;
 }
 
 .modal-fullScreen-message {
@@ -210,26 +224,33 @@
 }
 
 @media screen and (min-width: 300px) And (max-height: 890px) And (min-aspect-ratio: 9/16) {
+
   /* VMAX */
   .modal-fullScreen p {
     padding-top: 0.89vmax;
   }
+
   .modal-fullScreen-container {
     width: 44.6vmax;
   }
+
   .modal-fullScreen-body {
     padding-top: 1.67vmax;
   }
+
   .modal-fullScreen-body img {
     width: 18.4vmax;
   }
+
   .modal-fullScreen-title {
     font-size: 2.51vmax;
     margin: 2.51vmax 0 1.95vmax 0;
   }
+
   .modal-fullScreen-message {
     font-size: 1.67vmax;
   }
+
   .modal-fullScreen-footer-message {
     padding-left: 1.12vmax;
     font-size: 1.12vmax;
@@ -237,26 +258,33 @@
 }
 
 @media screen and (min-width: 300px) And (max-height: 890px) And (min-aspect-ratio: 1/1) {
+
   /* VMIN */
   .modal-fullScreen p {
     padding-top: 0.89vmin;
   }
+
   .modal-fullScreen-container {
     width: 44.6vmin;
   }
+
   .modal-fullScreen-body {
     padding-top: 1.67vmin;
   }
+
   .modal-fullScreen-body img {
     width: 18.4vmin;
   }
+
   .modal-fullScreen-title {
     font-size: 2.51vmin;
     margin: 2.51vmin 0 1.95vmin 0;
   }
+
   .modal-fullScreen-message {
     font-size: 1.67vmin;
   }
+
   .modal-fullScreen-footer-message {
     padding-left: 1.12vmin;
     font-size: 1.12vmin;
@@ -267,22 +295,28 @@
   .modal-fullScreen p {
     padding-top: 8px;
   }
+
   .modal-fullScreen-container {
     width: 400px;
   }
+
   .modal-fullScreen-body {
     padding-top: 15px;
   }
+
   .modal-fullScreen-body img {
     width: 165px;
   }
+
   .modal-fullScreen-title {
     font-size: 22.5px;
     margin: 20px 0 17.5px 0;
   }
+
   .modal-fullScreen-message {
     font-size: 15px;
   }
+
   .modal-fullScreen-footer-message {
     padding-left: 10px;
     font-size: 10px;

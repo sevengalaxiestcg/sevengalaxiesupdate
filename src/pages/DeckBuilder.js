@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 
 import ChangeBackground from '../tools/ChangeBackground';
 import SetSessionMatch from '../tools/SetSessionMatch';
+import ActiveAnimation from '../tools/ActiveAnimation';
 
 import Toolbar from '../components/Toolbar';
 import { ModalTransparent, ModalOptionsTransparent, ModalTransparentButtons, ModalTransparentCarousel } from '../components/ModalTransparent';
@@ -53,7 +54,7 @@ export default function DeckBuilder() {
   const [countNormals, setCountNormals] = useState(0);
   const [countSpecials, setCountSpecials] = useState(0);
   const [countFortress, setCountFortress] = useState(0);
-  
+
   const [modalTransparentContent, setModalTransparentContent] = useState([]);
   const [buttonsModalButtons, setButtonsModalButtons] = useState([]);
   const [isShowModalButtons, setIsShowModalButtons] = useState(false);
@@ -66,7 +67,7 @@ export default function DeckBuilder() {
   const [acceptButtonNameAlertModal, setAcceptButtonNameAlertModal] = useState("Sim");
   const [cancelButtonNameAlertModal, setCancelButtonNameAlertModal] = useState("Não");
   const [isCancelButtonVisibleAlertModal, setIsCancelButtonVisibleAlertModal] = useState(true);
-  
+
   const [isShowRules, setIsShowRules] = useState(false);
   const [isShowModalDeckInfos, setIsShowModalDeckInfos] = useState(false);
   const [DeckListToShow, setDeckListToShow] = useState([]);
@@ -75,6 +76,7 @@ export default function DeckBuilder() {
   const [isDeckEdit, setIsDeckEdit] = useState(false);
   const [currDeck, setCurrDeck] = useState();
   const [showMainDeck, setShowMainDeck] = useState(true);
+  const [showSpecialDeck, setShowSpecialDeck] = useState(true);
   const [showFortressDeck, setShowFortressDeck] = useState(false);
 
   const [cardsToShow, setCardsToShow] = useState([]);
@@ -83,12 +85,12 @@ export default function DeckBuilder() {
 
   const [isShowCarouselModal, setIsShowCarouselModal] = useState(false);
   const [carouselModalCard, setCarouselModalCard] = useState({});
-  const [CarouselBackAction, setCarouselBackAction] = useState({ action: () => {} });
-  const [CarouselForwardAction, setCarouselForwardAction] = useState({ action: () => {} });
-  const [CarouselMinusAction, setCarouselMinusAction] = useState({ action: () => {} });
-  const [CarouselPlusAction, setCarouselPlusAction] = useState({ action: () => {} });
-
+  const [CarouselBackAction, setCarouselBackAction] = useState({ action: () => { } });
+  const [CarouselForwardAction, setCarouselForwardAction] = useState({ action: () => { } });
+  const [CarouselMinusAction, setCarouselMinusAction] = useState({ action: () => { } });
+  const [CarouselPlusAction, setCarouselPlusAction] = useState({ action: () => { } });
   const [deckErrorMessages, setDeckErrorMessages] = useState([]);
+  const [thumbWidth, setThumbWidth] = useState(window.localStorage.getItem("sevengalaxies@thumbWidth") ?? "small");
 
   //#endregion
 
@@ -107,6 +109,7 @@ export default function DeckBuilder() {
   useEffect(() => {
     if (session.rodada !== undefined && session.fortaleza !== undefined)
       SetSessionMatch(session.rodada, session.fortaleza);
+
   }, [session]);
 
   //#endregion
@@ -122,6 +125,7 @@ export default function DeckBuilder() {
     SetCounts(AvailableCards, true);
     OrderCardsByOption();
     setCarouselModalCard(AvailableCards[0]);
+
   }, [AvailableCards]);
 
   useEffect(() => {
@@ -133,7 +137,7 @@ export default function DeckBuilder() {
       if (!deck.cards) deck.cards = [];
       deck.cards.map((card, i) => {
         if (!card.name || card.name === "") card.name = "Card #" + i;
-        if (!card.thumb || card.thumb === "") card.thumb = thumbPadrao; 
+        if (!card.thumb || card.thumb === "") card.thumb = thumbPadrao;
       });
     });
     OrderDecksByOption(lastOrderingDecksOption);
@@ -150,15 +154,15 @@ export default function DeckBuilder() {
         });
       });
     });
-    cardEffectsCosts = cardEffectsCosts.sort((a, b) => { return a-b; });
+    cardEffectsCosts = cardEffectsCosts.sort((a, b) => { return a - b; });
     setCardEffectsCosts(cardEffectsCosts);
   }, [AvailableCards]);
 
   //#endregion
-  
+
   //#region Globals
 
-  function GetAllAvailableCards () {
+  function GetAllAvailableCards() {
     CardsLibrary.cards.forEach(card => {
       if (!card.thumb || card.thumb === thumbPadrao) {
         let cardCodeArr = card.code.split(" - ");
@@ -183,8 +187,8 @@ export default function DeckBuilder() {
   const Base = new DecksCardsComponentBase(setCountNormals, setCountSpecials, setCountFortress, DeckList, setDeckList, currDeck, setViewState, setIsDeckEdit, setShowBottomMenu,
     setShowBodyInnerTopShadow, isDeckEdit, viewState, setRefresh, galaxyFilters, setGalaxyFilters, orderingDecksOptions, orderingCardsOptions, setDecksSearchTerm,
     setDeckListToShow, lastOrderingDecksOption, setLastOrderingDecksOption, setOrderingDecksOptions, setCurrDeck, AvailableCards, setAvailableCards, advancedFilters, categoryFilters,
-    setAdvancedFilters, setCategoryFilters, cardsToShow, setCardsToShow, lastOrderingCardsOption, setLastOrderingCardsOption, DecksSearchTerm, DeckListToShow, 
-    setOrderingCardsOptions, setModalTransparentContent, setIsShowModalDeckInfos, deckErrorMessages, setDeckErrorMessages);
+    setAdvancedFilters, setCategoryFilters, cardsToShow, setCardsToShow, lastOrderingCardsOption, setLastOrderingCardsOption, DecksSearchTerm, DeckListToShow,
+    setOrderingCardsOptions, setModalTransparentContent, setIsShowModalDeckInfos, deckErrorMessages, setDeckErrorMessages, thumbWidth, setThumbWidth);
 
   function Refresh() {
     return Base.Refresh();
@@ -286,38 +290,37 @@ export default function DeckBuilder() {
     return Base.GetMaximumCardAmount(card);
   }
 
-  function IndexOfCardInDeck (card) {
+  function IndexOfCardInDeck(card) {
     return Base.IndexOfCardInDeck(card);
   }
 
-  function ExecuteCarouselBackAction (card) {
+  function ExecuteCarouselBackAction(card) {
     (CarouselBackAction.action)(card);
   }
 
-  function ExecuteCarouselForwardAction (card) {
+  function ExecuteCarouselForwardAction(card) {
     (CarouselForwardAction.action)(card);
   }
 
-  function ExecuteCarouselMinusAction (card) {
+  function ExecuteCarouselMinusAction(card) {
     (CarouselMinusAction.action)(card);
   }
 
-  function ExecuteCarouselPlusAction (card) {
+  function ExecuteCarouselPlusAction(card) {
     (CarouselPlusAction.action)(card);
   }
 
-  function ShowDeckInformations(){
+  function ShowDeckInformations() {
     return Base.ShowDeckInformations();
   }
 
-  function OrderDeckCards (cardsList) {
+  function OrderDeckCards(cardsList) {
     return Base.OrderDeckCards(cardsList);
   }
 
-  function TestDeck (deck) {
+  function TestDeck(deck) {
     return Base.TestDeck(deck);
   }
-
   //#endregion
 
   return (
@@ -332,84 +335,107 @@ export default function DeckBuilder() {
             <div className='deckBuilder-header'>
               {viewState === DeckBuilderViewStates.CardsList
                 ? <CardsListHeader setViewState={setViewState}
-                    setShowBottomMenu={setShowBottomMenu}
-                    cardsList={cardsToShow}
-                    SearchCard={SearchCard} 
-                    HasFilterApplied={HasFilterApplied}
-                    IsCategoryFilterSelected={IsCategoryFilterSelected}
-                    ToggleCategoryFilterSelected={ToggleCategoryFilterSelected}
-                    ToggleGalaxyFilterSelected={ToggleGalaxyFilterSelected}
-                    GetGalaxyClass={GetGalaxyClass}
-                    GetCategoryClass={GetCategoryClass}
-                    IsCardTypeOf={IsCardTypeOf}
-                    countNormals={countNormals}
-                    countSpecials={countSpecials}
-                    countFortress={countFortress}
-                    setIsShowModalOrderBy={setIsShowModalOrderBy}
-                    isDeckEdit={isDeckEdit}
-
-                    ShowDeckInformations={ShowDeckInformations}
-                    deckErrorMessages={deckErrorMessages}
-                  />
+                  setShowBottomMenu={setShowBottomMenu}
+                  cardsList={cardsToShow}
+                  SearchCard={SearchCard}
+                  HasFilterApplied={HasFilterApplied}
+                  IsCategoryFilterSelected={IsCategoryFilterSelected}
+                  ToggleCategoryFilterSelected={ToggleCategoryFilterSelected}
+                  ToggleGalaxyFilterSelected={ToggleGalaxyFilterSelected}
+                  GetGalaxyClass={GetGalaxyClass}
+                  GetCategoryClass={GetCategoryClass}
+                  IsCardTypeOf={IsCardTypeOf}
+                  GetCurrDeckCountNormals={GetCurrDeckCountNormals}
+                  countNormals={countNormals}
+                  countSpecials={countSpecials}
+                  countFortress={countFortress}
+                  setIsShowModalOrderBy={setIsShowModalOrderBy}
+                  isDeckEdit={isDeckEdit}
+                  ShowDeckInformations={ShowDeckInformations}
+                  deckErrorMessages={deckErrorMessages}
+                  thumbWidth={thumbWidth}
+                  setThumbWidth={setThumbWidth}
+                />
                 : <></>
               }
               {viewState === DeckBuilderViewStates.AdvancedSearchCard
                 ? <DeckBuilderCardsAdvancedFilterHeader setViewState={setViewState}
-                    setShowBottomMenu={setShowBottomMenu}
-                    isDeckEdit={isDeckEdit}
-                    SearchCard={SearchCard} 
-                    ToggleGalaxyFilterSelected={ToggleGalaxyFilterSelected}
-                    ToggleCategoryFilterSelected={ToggleCategoryFilterSelected}
-                    GetGalaxyClass={GetGalaxyClass}
-                    GetCategoryClass={GetCategoryClass}
-                    countNormals={countNormals}
-                    countSpecials={countSpecials}
-                    countFortress={countFortress}
-                  />
+                  setShowBottomMenu={setShowBottomMenu}
+                  isDeckEdit={isDeckEdit}
+                  SearchCard={SearchCard}
+                  IsCategoryFilterSelected={IsCategoryFilterSelected}
+                  ToggleGalaxyFilterSelected={ToggleGalaxyFilterSelected}
+                  ToggleCategoryFilterSelected={ToggleCategoryFilterSelected}
+                  GetGalaxyClass={GetGalaxyClass}
+                  GetCategoryClass={GetCategoryClass}
+                  countNormals={countNormals}
+                  countSpecials={countSpecials}
+                  countFortress={countFortress}
+                  thumbWidth={thumbWidth}
+                  setThumbWidth={setThumbWidth}
+                  ClearCardsFilters={ClearCardsFilters}
+                />
                 : <></>
               }
               {viewState === DeckBuilderViewStates.DecksList
                 ? <DeckBuilderDecksListHeader
-                    SearchDeck={SearchDeck}
-                    setCurrDeck={setCurrDeck}
-                    setViewState={setViewState}
-                    HasFilterApplied={HasFilterApplied}
-                    ToggleGalaxyFilterSelected={ToggleGalaxyFilterSelected}
-                    GetGalaxyClass={GetGalaxyClass}
-                    setShowBottomMenu={setShowBottomMenu}
-                    DeckList={DeckList} SetDeckListInSession={SetDeckListInSession}
-                    DeckListToShow={DeckListToShow}
-                    thumbPadrao={thumbPadrao}
-                    setShowMainDeck={setShowMainDeck}
-                    setShowFortressDeck={setShowFortressDeck}
-                    setIsShowModalButtons={setIsShowModalButtons}
-                    setButtonsModalButtons={setButtonsModalButtons}
-                    setIsShowRules={setIsShowRules}
-                    setIsShowModalOrderBy={setIsShowModalOrderBy}
-                    setIsDeckEdit={setIsDeckEdit}
-
-                    AvailableCards={AvailableCards}
-                    setCardsToShow={setCardsToShow}
-
-                    IsCardTypeOf={IsCardTypeOf}
-                  />
+                  SearchDeck={SearchDeck}
+                  setCurrDeck={setCurrDeck}
+                  setViewState={setViewState}
+                  HasFilterApplied={HasFilterApplied}
+                  ToggleGalaxyFilterSelected={ToggleGalaxyFilterSelected}
+                  GetGalaxyClass={GetGalaxyClass}
+                  setShowBottomMenu={setShowBottomMenu}
+                  DeckList={DeckList} SetDeckListInSession={SetDeckListInSession}
+                  DeckListToShow={DeckListToShow}
+                  thumbPadrao={thumbPadrao}
+                  setShowMainDeck={setShowMainDeck}
+                  setShowSpecialDeck={setShowSpecialDeck}
+                  setShowFortressDeck={setShowFortressDeck}
+                  setIsShowModalButtons={setIsShowModalButtons}
+                  setButtonsModalButtons={setButtonsModalButtons}
+                  setIsShowRules={setIsShowRules}
+                  setIsShowModalOrderBy={setIsShowModalOrderBy}
+                  setIsDeckEdit={setIsDeckEdit}
+                  AvailableCards={AvailableCards}
+                  setCardsToShow={setCardsToShow}
+                  thumbWidth={thumbWidth}
+                  setThumbWidth={setThumbWidth}
+                  IsCardTypeOf={IsCardTypeOf}
+                />
                 : <></>
               }
               {viewState === DeckBuilderViewStates.DeckEdit
-                ? <DeckBuilderEditHeader setViewState={setViewState}
-                    currDeck={currDeck} setCurrDeck={setCurrDeck}
-                    SearchCard={SearchCard}
-                    setIsDeckEdit={setIsDeckEdit}
-                    setShowBottomMenu={setShowBottomMenu}
-                    ClearCardsFilters={ClearCardsFilters}
-                    ShowDeckInformations={ShowDeckInformations}
-                    setIsShowModalOrderBy={setIsShowModalOrderBy}
+                ? <DeckBuilderEditHeader
+                  setViewState={setViewState}
+                  currDeck={currDeck}
+                  setCurrDeck={setCurrDeck}
+                  SearchCard={SearchCard}
+                  setIsDeckEdit={setIsDeckEdit}
+                  setShowBottomMenu={setShowBottomMenu}
+                  ClearCardsFilters={ClearCardsFilters}
+                  ShowDeckInformations={ShowDeckInformations}
+                  setIsShowModalOrderBy={setIsShowModalOrderBy}
+                  // setIsShowModal={setIsShowModalDeckInfos}
+                  // setModalContent={setModalTransparentContent}
+                  cardsToShow={cardsToShow} setCardsToShow={setCardsToShow}
+                  AvailableCards={AvailableCards}
+                  deckErrorMessages={deckErrorMessages}
+                  setShowMainDeck={setShowMainDeck}
+                  setShowSpecialDeck={setShowSpecialDeck}
+                  setShowFortressDeck={setShowFortressDeck}
+                  showMainDeck={showMainDeck}
+                  showSpecialDeck={showSpecialDeck}
+                  showFortressDeck={showFortressDeck}
+                  // SetCounts={SetCounts}
+                  thumbWidth={thumbWidth}
+                  setThumbWidth={setThumbWidth}
+                  ChangeAmountOfCardInDeck={ChangeAmountOfCardInDeck}
+                  UpdateDeckListInSession={UpdateDeckListInSession}
+                  IsCardTypeOf={IsCardTypeOf}
+                  IndexOfCardInDeck={IndexOfCardInDeck}
 
-                    cardsToShow={cardsToShow} setCardsToShow={setCardsToShow}
-                    AvailableCards={AvailableCards}
-
-                    deckErrorMessages={deckErrorMessages}
-                  />
+                />
                 : <></>
               }
             </div>
@@ -417,8 +443,10 @@ export default function DeckBuilder() {
             {/* BODY */}
             <div onScroll={onScrollBody}
               className={'deckBuilder-body' + (showBodyInnerTopShadow ? '' : ' has-shadow') + (viewState === DeckBuilderViewStates.DeckEdit ? ' deckList-body' : '')}>
+
               {viewState === DeckBuilderViewStates.CardsList
-                ? <CardsListBody setViewState={setViewState}
+                ? <div className={'deckBuilder-body-cards-container ' + (isDeckEdit && thumbWidth == 'mini' ? 'small' : thumbWidth)}>
+                  <CardsListBody setViewState={setViewState}
                     cardsList={cardsToShow}
                     currDeck={currDeck}
                     isDeckEdit={isDeckEdit}
@@ -446,16 +474,18 @@ export default function DeckBuilder() {
                     setCarouselForwardAction={setCarouselForwardAction}
                     setCarouselMinusAction={setCarouselMinusAction}
                     setCarouselPlusAction={setCarouselPlusAction}
-
                     OrderDeckCards={OrderDeckCards}
-
                     TestDeck={TestDeck}
                     setDeckErrorMessages={setDeckErrorMessages}
+                    thumbWidth={thumbWidth}
+                    setThumbWidth={setThumbWidth}
                   />
+                </div>
                 : <></>
               }
               {viewState === DeckBuilderViewStates.AdvancedSearchCard
-                ? <DeckBuilderCardsAdvancedFilter setViewState={setViewState}
+                ? <div className='deckBuilder-body-filters-container'>
+                  <DeckBuilderCardsAdvancedFilter setViewState={setViewState}
                     setShowBottomMenu={setShowBottomMenu}
                     isDeckEdit={isDeckEdit}
                     SearchCard={SearchCard}
@@ -468,59 +498,63 @@ export default function DeckBuilder() {
                     countSpecials={countSpecials}
                     countFortress={countFortress}
                   />
+                </div>
                 : <></>
               }
               {viewState === DeckBuilderViewStates.DecksList
                 ? <DeckBuilderDecksListBody
-                    DeckList={DeckListToShow}
-                    SetDeckListInSession={SetDeckListInSession}
-                    isShowEditDeckName={isShowEditDeckName} setIsShowEditDeckName={setIsShowEditDeckName}
-                    setCurrDeck={setCurrDeck}
-                    setViewState={setViewState}
-                    setShowBottomMenu={setShowBottomMenu}
-                    IsCardTypeOf={IsCardTypeOf}
-                    setShowMainDeck={setShowMainDeck}
-                    setShowFortressDeck={setShowFortressDeck}
-                    setIsShowModalButtons={setIsShowModalButtons}
-                    setButtonsModalButtons={setButtonsModalButtons}
+                  DeckList={DeckListToShow}
+                  SetDeckListInSession={SetDeckListInSession}
+                  isShowEditDeckName={isShowEditDeckName} setIsShowEditDeckName={setIsShowEditDeckName}
+                  setCurrDeck={setCurrDeck}
+                  setViewState={setViewState}
+                  setShowBottomMenu={setShowBottomMenu}
+                  IsCardTypeOf={IsCardTypeOf}
+                  setShowMainDeck={setShowMainDeck}
+                  setShowSpecialDeck={setShowSpecialDeck}
+                  setShowFortressDeck={setShowFortressDeck}
+                  setIsShowModalButtons={setIsShowModalButtons}
+                  setButtonsModalButtons={setButtonsModalButtons}
 
-                    setIsShowAlertModal={setIsShowAlertModal}
-                    setActionParamsAlertModal={setActionParamsAlertModal}
-                    setOnActionAlertModal={setOnActionAlertModal}
-                    setCloseParamsAlertModal={setCloseParamsAlertModal}
-                    setOnCloseAlertModal={setOnCloseAlertModal}
-                    setMessageAlertModal={setMessageAlertModal}
-                    setAcceptButtonNameAlertModal={setAcceptButtonNameAlertModal}
-                    setCancelButtonNameAlertModal={setCancelButtonNameAlertModal}
-                    setIsCancelButtonVisibleAlertModal={setIsCancelButtonVisibleAlertModal}
-
-                    OrderDeckCards={OrderDeckCards}
-                    TestDeck={TestDeck}
-                    setDeckErrorMessages={setDeckErrorMessages}
-                  />
+                  setIsShowAlertModal={setIsShowAlertModal}
+                  setActionParamsAlertModal={setActionParamsAlertModal}
+                  setOnActionAlertModal={setOnActionAlertModal}
+                  setCloseParamsAlertModal={setCloseParamsAlertModal}
+                  setOnCloseAlertModal={setOnCloseAlertModal}
+                  setMessageAlertModal={setMessageAlertModal}
+                  setAcceptButtonNameAlertModal={setAcceptButtonNameAlertModal}
+                  setCancelButtonNameAlertModal={setCancelButtonNameAlertModal}
+                  setIsCancelButtonVisibleAlertModal={setIsCancelButtonVisibleAlertModal}
+                  OrderDeckCards={OrderDeckCards}
+                  TestDeck={TestDeck}
+                  setDeckErrorMessages={setDeckErrorMessages}
+                />
                 : <></>
               }
               {viewState === DeckBuilderViewStates.DeckEdit
-                ? <DeckBuilderEditBody setViewState={setViewState}
-                    cardsList={cardsToShow}
-                    currDeck={currDeck} setCurrDeck={setCurrDeck}
-                    ChangeAmountOfCardInDeck={ChangeAmountOfCardInDeck}
-                    UpdateDeckListInSession={UpdateDeckListInSession}
-                    IsCardTypeOf={IsCardTypeOf}
-                    showMainDeck={showMainDeck} setShowMainDeck={setShowMainDeck}
-                    showFortressDeck={showFortressDeck} setShowFortressDeck={setShowFortressDeck}
-                    IndexOfCardInDeck={IndexOfCardInDeck}
+                ? <DeckBuilderEditBody
+                  setViewState={setViewState}
+                  cardsList={cardsToShow}
+                  currDeck={currDeck} setCurrDeck={setCurrDeck}
+                  ChangeAmountOfCardInDeck={ChangeAmountOfCardInDeck}
+                  UpdateDeckListInSession={UpdateDeckListInSession}
+                  IsCardTypeOf={IsCardTypeOf}
+                  showMainDeck={showMainDeck} setShowMainDeck={setShowMainDeck}
+                  showSpecialDeck={showSpecialDeck} setShowSpecialDeck={setShowSpecialDeck}
+                  showFortressDeck={showFortressDeck} setShowFortressDeck={setShowFortressDeck}
+                  IndexOfCardInDeck={IndexOfCardInDeck}
+                  thumbWidth={thumbWidth}
+                  setThumbWidth={setThumbWidth}
 
-                    setIsShowCarouselModal={setIsShowCarouselModal}
-                    setCarouselModalCard={setCarouselModalCard}
-                    setCarouselBackAction={setCarouselBackAction}
-                    setCarouselForwardAction={setCarouselForwardAction}
-                    setCarouselMinusAction={setCarouselMinusAction}
-                    setCarouselPlusAction={setCarouselPlusAction}
-
-                    setDeckErrorMessages={setDeckErrorMessages}
-                    TestDeck={TestDeck}
-                  />
+                  setIsShowCarouselModal={setIsShowCarouselModal}
+                  setCarouselModalCard={setCarouselModalCard}
+                  setCarouselBackAction={setCarouselBackAction}
+                  setCarouselForwardAction={setCarouselForwardAction}
+                  setCarouselMinusAction={setCarouselMinusAction}
+                  setCarouselPlusAction={setCarouselPlusAction}
+                  setDeckErrorMessages={setDeckErrorMessages}
+                  TestDeck={TestDeck}
+                />
                 : <></>
               }
             </div>
@@ -535,7 +569,7 @@ export default function DeckBuilder() {
           isShowModal={isShowModalOrderBy} setIsShowModal={setIsShowModalOrderBy}
         />
 
-        <ModalTransparent modalTitle={`${currDeck?.name??""}`}
+        <ModalTransparent modalTitle={`${currDeck?.name ?? ""}`}
           content={modalTransparentContent}
           isShowModal={isShowModalDeckInfos} setIsShowModal={setIsShowModalDeckInfos}
         />
@@ -546,7 +580,24 @@ export default function DeckBuilder() {
         />
 
         <FullScreenModal isShowModal={isShowRules} setIsShowModal={setIsShowRules}
-          title={'Regras de Montagem de Decks'} body={'<ol><li>teste</li></ol>'} footer={''}
+          title={'Regras de Construção de Decks'}
+          body={`
+            <p>Em todos os modos de jogo e formatos de deck, os decks devem conter de 30 a 40 cards, com no máximo duas cópias de cada card.</p>
+            <p>O deck especial não possui limite de cards ou de cópias e pode incluir cards de qualquer galáxia, independentemente do formato de deck. No aplicativo, entretanto, há um limite de 8 cópias para cada card especial.</p>
+            <p>Os cards de evento devem pertencer à mesma galáxia da sua fortaleza.</p>
+            <p></p>
+            <p>Existem três formatos de deck:</p>
+            <p>
+              <ul style="padding-inline-start: 4vmin;">
+                <li><b>Aliança Interplanetária:</b> A fortaleza e os cards do deck devem pertencer somente a uma galáxia.</li><p></p>
+                <li><b>Aliança Intergaláctica (padrão):</b> O deck pode conter cards de até duas galáxias, sendo obrigatório que a fortaleza pertença a uma delas.</li><p></p>
+                <li><b>Aliança Universal:</b> O deck pode conter cards de qualquer galáxia. No entanto, se incluir cards de três ou mais galáxias, é necessário que a quantidade de cards de cada galáxia seja igual. A fortaleza deve pertencer a uma das galáxias representadas no deck.</li>
+              </ul>
+            </p>
+            <p></p>
+            <p><b>Variante Realista:</b> Nesta variante é permitido apenas uma cópia de cada card no deck. Essa regra pode ser aplicada a qualquer modo de jogo ou formato de deck.</p>`
+          }
+          footer={''}
         />
 
         <ModalTransparentCarousel isShowModal={isShowCarouselModal} setIsShowModal={setIsShowCarouselModal}
@@ -556,18 +607,18 @@ export default function DeckBuilder() {
           backAction={ExecuteCarouselBackAction} forwardAction={ExecuteCarouselForwardAction}
           minusAction={ExecuteCarouselMinusAction} plusAction={ExecuteCarouselPlusAction}
         />
-        
+
         {isShowAlertModal
           ? <AlertModal
-              onAction={onActionAlertModal}
-              actionParams={actionParamsAlertModal}
-              onClose={onCloseAlertModal}
-              closeParams={closeParamsAlertModal}
-              message={messageAlertModal}
-              actionName={acceptButtonNameAlertModal}
-              cancelName={cancelButtonNameAlertModal}
-              cancelVisible={isCancelButtonVisibleAlertModal}
-            />
+            onAction={onActionAlertModal}
+            actionParams={actionParamsAlertModal}
+            onClose={onCloseAlertModal}
+            closeParams={closeParamsAlertModal}
+            message={messageAlertModal}
+            actionName={acceptButtonNameAlertModal}
+            cancelName={cancelButtonNameAlertModal}
+            cancelVisible={isCancelButtonVisibleAlertModal}
+          />
           : <></>
         }
 

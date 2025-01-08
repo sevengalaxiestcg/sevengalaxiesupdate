@@ -27,7 +27,7 @@ const downloadPath = "/storage/emulated/0/Download";
 const appPath = process.env.PUBLIC_URL;
 
 export default function CardsLibrary() {
-    
+
   //#region State Variables
 
   const [refresh, setRefresh] = useState(1);
@@ -53,7 +53,7 @@ export default function CardsLibrary() {
   const [countNormals, setCountNormals] = useState(0);
   const [countSpecials, setCountSpecials] = useState(0);
   const [countFortress, setCountFortress] = useState(0);
-  
+
   const [modalTransparentContent, setModalTransparentContent] = useState([]);
   const [buttonsModalButtons, setButtonsModalButtons] = useState([]);
   const [isShowModalButtons, setIsShowModalButtons] = useState(false);
@@ -66,7 +66,7 @@ export default function CardsLibrary() {
   const [acceptButtonNameAlertModal, setAcceptButtonNameAlertModal] = useState("Sim");
   const [cancelButtonNameAlertModal, setCancelButtonNameAlertModal] = useState("Não");
   const [isCancelButtonVisibleAlertModal, setIsCancelButtonVisibleAlertModal] = useState(true);
-  
+
   const [isShowRules, setIsShowRules] = useState(false);
   const [isShowModalDeckInfos, setIsShowModalDeckInfos] = useState(false);
   const [DeckListToShow, setDeckListToShow] = useState([]);
@@ -83,10 +83,11 @@ export default function CardsLibrary() {
 
   const [isShowCarouselModal, setIsShowCarouselModal] = useState(false);
   const [carouselModalCard, setCarouselModalCard] = useState({});
-  const [CarouselBackAction, setCarouselBackAction] = useState({ action: () => {} });
-  const [CarouselForwardAction, setCarouselForwardAction] = useState({ action: () => {} });
-  const [CarouselMinusAction, setCarouselMinusAction] = useState({ action: () => {} });
-  const [CarouselPlusAction, setCarouselPlusAction] = useState({ action: () => {} });
+  const [CarouselBackAction, setCarouselBackAction] = useState({ action: () => { } });
+  const [CarouselForwardAction, setCarouselForwardAction] = useState({ action: () => { } });
+  const [CarouselMinusAction, setCarouselMinusAction] = useState({ action: () => { } });
+  const [CarouselPlusAction, setCarouselPlusAction] = useState({ action: () => { } });
+  const [thumbWidth, setThumbWidth] = useState(window.localStorage.getItem("sevengalaxies@thumbWidth") ?? "small");
 
   //#endregion
 
@@ -100,6 +101,7 @@ export default function CardsLibrary() {
     const sessionRodada = JSON.parse(sessionStorage.getItem("sevengalaxies@rodada"));
     const sessionFortaleza = JSON.parse(sessionStorage.getItem("sevengalaxies@fortaleza"));
     setSession({ rodada: sessionRodada, fortaleza: sessionFortaleza });
+    setThumbWidth(window.localStorage.getItem("sevengalaxies@thumbWidth") ?? "small");
   }, []);
 
   useEffect(() => {
@@ -131,7 +133,7 @@ export default function CardsLibrary() {
       if (!deck.cards) deck.cards = [];
       deck.cards.map((card, i) => {
         if (!card.name || card.name === "") card.name = "Card #" + i;
-        if (!card.thumb || card.thumb === "") card.thumb = thumbPadrao; 
+        if (!card.thumb || card.thumb === "") card.thumb = thumbPadrao;
       });
     });
     OrderDecksByOption(lastOrderingDecksOption);
@@ -148,15 +150,15 @@ export default function CardsLibrary() {
         });
       });
     });
-    cardEffectsCosts = cardEffectsCosts.sort((a, b) => { return a-b; });
+    cardEffectsCosts = cardEffectsCosts.sort((a, b) => { return a - b; });
     setCardEffectsCosts(cardEffectsCosts);
   }, [AvailableCards]);
 
   //#endregion
-  
+
   //#region Globals
 
-  function GetAllAvailableCards () {
+  function GetAllAvailableCards() {
     cardsLibrary.cards.forEach(card => {
       if (!card.thumb || card.thumb === thumbPadrao) {
         let cardCodeArr = card.code.split(" - ");
@@ -181,8 +183,8 @@ export default function CardsLibrary() {
   const Base = new DecksCardsComponentBase(setCountNormals, setCountSpecials, setCountFortress, DeckList, setDeckList, currDeck, setViewState, setIsDeckEdit, setShowBottomMenu,
     setShowBodyInnerTopShadow, isDeckEdit, viewState, setRefresh, galaxyFilters, setGalaxyFilters, orderingDecksOptions, orderingCardsOptions, setDecksSearchTerm,
     setDeckListToShow, lastOrderingDecksOption, setLastOrderingDecksOption, setOrderingDecksOptions, setCurrDeck, AvailableCards, setAvailableCards, advancedFilters, categoryFilters,
-    setAdvancedFilters, setCategoryFilters, cardsToShow, setCardsToShow, lastOrderingCardsOption, setLastOrderingCardsOption, DecksSearchTerm, DeckListToShow, 
-    setOrderingCardsOptions);
+    setAdvancedFilters, setCategoryFilters, cardsToShow, setCardsToShow, lastOrderingCardsOption, setLastOrderingCardsOption, DecksSearchTerm, DeckListToShow,
+    setOrderingCardsOptions, thumbWidth, setThumbWidth);
 
   function Refresh() {
     return Base.Refresh();
@@ -260,6 +262,7 @@ export default function CardsLibrary() {
     return Base.GetFilterClass(filterType, value);
   }
 
+
   function OrderCardsByOption(option) {
     return Base.OrderCardsByOption(option);
   }
@@ -284,23 +287,23 @@ export default function CardsLibrary() {
     return Base.GetMaximumCardAmount(card);
   }
 
-  function IndexOfCardInDeck (card) {
+  function IndexOfCardInDeck(card) {
     return Base.IndexOfCardInDeck(card);
   }
 
-  function ExecuteCarouselBackAction (card) {
+  function ExecuteCarouselBackAction(card) {
     (CarouselBackAction.action)(card);
   }
 
-  function ExecuteCarouselForwardAction (card) {
+  function ExecuteCarouselForwardAction(card) {
     (CarouselForwardAction.action)(card);
   }
 
-  function ExecuteCarouselMinusAction (card) {
+  function ExecuteCarouselMinusAction(card) {
     (CarouselMinusAction.action)(card);
   }
 
-  function ExecuteCarouselPlusAction (card) {
+  function ExecuteCarouselPlusAction(card) {
     (CarouselPlusAction.action)(card);
   }
 
@@ -318,37 +321,43 @@ export default function CardsLibrary() {
             <div className='deckBuilder-header'>
               {viewState === DeckBuilderViewStates.CardsList
                 ? <CardsListHeader setViewState={setViewState}
-                    setShowBottomMenu={setShowBottomMenu}
-                    cardsList={cardsToShow}
-                    SearchCard={SearchCard} 
-                    HasFilterApplied={HasFilterApplied}
-                    IsCategoryFilterSelected={IsCategoryFilterSelected}
-                    ToggleCategoryFilterSelected={ToggleCategoryFilterSelected}
-                    ToggleGalaxyFilterSelected={ToggleGalaxyFilterSelected}
-                    GetGalaxyClass={GetGalaxyClass}
-                    GetCategoryClass={GetCategoryClass}
-                    IsCardTypeOf={IsCardTypeOf}
-                    countNormals={countNormals}
-                    countSpecials={countSpecials}
-                    countFortress={countFortress}
-                    setIsShowModalOrderBy={setIsShowModalOrderBy}
-                    isDeckEdit={isDeckEdit}
-                  />
+                  setShowBottomMenu={setShowBottomMenu}
+                  cardsList={cardsToShow}
+                  SearchCard={SearchCard}
+                  HasFilterApplied={HasFilterApplied}
+                  IsCategoryFilterSelected={IsCategoryFilterSelected}
+                  ToggleCategoryFilterSelected={ToggleCategoryFilterSelected}
+                  ToggleGalaxyFilterSelected={ToggleGalaxyFilterSelected}
+                  GetGalaxyClass={GetGalaxyClass}
+                  GetCategoryClass={GetCategoryClass}
+                  IsCardTypeOf={IsCardTypeOf}
+                  countNormals={countNormals}
+                  countSpecials={countSpecials}
+                  countFortress={countFortress}
+                  setIsShowModalOrderBy={setIsShowModalOrderBy}
+                  isDeckEdit={isDeckEdit}
+                  thumbWidth={thumbWidth}
+                  setThumbWidth={setThumbWidth}
+                />
                 : <></>
               }
               {viewState === DeckBuilderViewStates.AdvancedSearchCard
                 ? <DeckBuilderCardsAdvancedFilterHeader setViewState={setViewState}
                   setShowBottomMenu={setShowBottomMenu}
-                    isDeckEdit={isDeckEdit}
-                    SearchCard={SearchCard} 
-                    ToggleGalaxyFilterSelected={ToggleGalaxyFilterSelected}
-                    ToggleCategoryFilterSelected={ToggleCategoryFilterSelected}
-                    GetGalaxyClass={GetGalaxyClass}
-                    GetCategoryClass={GetCategoryClass}
-                    countNormals={countNormals}
-                    countSpecials={countSpecials}
-                    countFortress={countFortress}
-                  />
+                  isDeckEdit={isDeckEdit}
+                  SearchCard={SearchCard}
+                  IsCategoryFilterSelected={IsCategoryFilterSelected}
+                  ToggleGalaxyFilterSelected={ToggleGalaxyFilterSelected}
+                  ToggleCategoryFilterSelected={ToggleCategoryFilterSelected}
+                  GetGalaxyClass={GetGalaxyClass}
+                  GetCategoryClass={GetCategoryClass}
+                  countNormals={countNormals}
+                  countSpecials={countSpecials}
+                  countFortress={countFortress}
+                  thumbWidth={thumbWidth}
+                  setThumbWidth={setThumbWidth}
+                  ClearCardsFilters={ClearCardsFilters}
+                />
                 : <></>
               }
             </div>
@@ -356,8 +365,10 @@ export default function CardsLibrary() {
             {/* BODY */}
             <div onScroll={onScrollBody}
               className={'deckBuilder-body' + (showBodyInnerTopShadow ? '' : ' has-shadow') + (viewState === DeckBuilderViewStates.DeckEdit ? ' deckList-body' : '')}>
+
               {viewState === DeckBuilderViewStates.CardsList
-                ? <CardsListBody setViewState={setViewState}
+                ? <div className={'deckBuilder-body-cards-container ' + thumbWidth}>
+                  <CardsListBody setViewState={setViewState}
                     cardsList={cardsToShow}
                     currDeck={currDeck}
                     isDeckEdit={isDeckEdit}
@@ -383,11 +394,15 @@ export default function CardsLibrary() {
                     setCarouselForwardAction={setCarouselForwardAction}
                     setCarouselMinusAction={setCarouselMinusAction}
                     setCarouselPlusAction={setCarouselPlusAction}
+                    thumbWidth={thumbWidth}
+                    setThumbWidth={setThumbWidth}
                   />
+                </div>
                 : <></>
               }
               {viewState === DeckBuilderViewStates.AdvancedSearchCard
-                ? <DeckBuilderCardsAdvancedFilter setViewState={setViewState}
+                ? <div className='deckBuilder-body-filters-container'>
+                  <DeckBuilderCardsAdvancedFilter setViewState={setViewState}
                     setShowBottomMenu={setShowBottomMenu}
                     isDeckEdit={isDeckEdit}
                     SearchCard={SearchCard}
@@ -399,13 +414,16 @@ export default function CardsLibrary() {
                     countNormals={countNormals}
                     countSpecials={countSpecials}
                     countFortress={countFortress}
+                    thumbWidth={thumbWidth}
+                    setThumbWidth={setThumbWidth}
                   />
+                </div>
                 : <></>
               }
             </div>
 
             {/* FOOTER */}
-            
+
           </div>
         </div>
 
@@ -414,7 +432,7 @@ export default function CardsLibrary() {
           isShowModal={isShowModalOrderBy} setIsShowModal={setIsShowModalOrderBy}
         />
 
-        <ModalTransparent modalTitle={`${currDeck?.name??""}`}
+        <ModalTransparent modalTitle={`${currDeck?.name ?? ""}`}
           content={modalTransparentContent}
           isShowModal={isShowModalDeckInfos} setIsShowModal={setIsShowModalDeckInfos}
         />
@@ -435,18 +453,18 @@ export default function CardsLibrary() {
           backAction={ExecuteCarouselBackAction} forwardAction={ExecuteCarouselForwardAction}
           minusAction={ExecuteCarouselMinusAction} plusAction={ExecuteCarouselPlusAction}
         />
-        
+
         {isShowAlertModal
           ? <AlertModal
-              onAction={onActionAlertModal}
-              actionParams={actionParamsAlertModal}
-              onClose={onCloseAlertModal}
-              closeParams={closeParamsAlertModal}
-              message={messageAlertModal}
-              actionName={acceptButtonNameAlertModal}
-              cancelName={cancelButtonNameAlertModal}
-              cancelVisible={isCancelButtonVisibleAlertModal}
-            />
+            onAction={onActionAlertModal}
+            actionParams={actionParamsAlertModal}
+            onClose={onCloseAlertModal}
+            closeParams={closeParamsAlertModal}
+            message={messageAlertModal}
+            actionName={acceptButtonNameAlertModal}
+            cancelName={cancelButtonNameAlertModal}
+            cancelVisible={isCancelButtonVisibleAlertModal}
+          />
           : <></>
         }
 

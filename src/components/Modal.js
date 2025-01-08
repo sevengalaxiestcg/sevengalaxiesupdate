@@ -13,7 +13,7 @@ export function AlertModal(props) {
       return () => {
         if (props.cancelVisible && typeof props.onClose === 'function')
           props.onClose(props.closeParams);
-        else if(typeof props.onAction === 'function')
+        else if (typeof props.onAction === 'function')
           props.onAction(props.actionParams);
       }
     }
@@ -53,39 +53,36 @@ export function AlertModal(props) {
       </div>
 
     </div>
-
   )
-
-
-
 }
 
 export function FullScreenModal(props) {
-  
+
   function CloseModal() {
     props.setIsShowModal(false);
   }
-  
+
   return (
     <div className="modal-fullScreen"
-      style={ props.isShowModal? { display: 'block' } : { display: 'none' } }
+      style={props.isShowModal ? { display: 'block' } : { display: 'none' }}
       onClick={() => { CloseModal() }}>
-
-      <div className='toolbar'>
-        <div className='content-toolbar'>
-          <div class="burger-menu open"><div class="bar1"></div><div class="bar2"></div><div class="bar3"></div></div>
-        </div>
-      </div>
-      
-      <div className="modal-fullScreen-container">
-        <div className="modal-fullScreen-body">
-          <div className="modal-fullScreen-title">
-            {props.title}
+      <div className='modal-fullScreen-main'>
+        <div className='toolbar'>
+          <div className='content-toolbar'>
+            <div class="burger-menu open"><div class="bar1"></div><div class="bar2"></div><div class="bar3"></div></div>
           </div>
-          <div className="modal-fullScreen-message" dangerouslySetInnerHTML={{__html: props.body}}></div>
         </div>
-        <div className="modal-fullScreen-footer">
-          <div className="modal-fullScreen-footer-message" dangerouslySetInnerHTML={{__html: props.footer}}></div>
+
+        <div className="modal-fullScreen-container">
+          <div className="modal-fullScreen-body">
+            <div className="modal-fullScreen-title">
+              {props.title}
+            </div>
+            <div className="modal-fullScreen-message" dangerouslySetInnerHTML={{ __html: props.body }}></div>
+          </div>
+          <div className="modal-fullScreen-footer">
+            <div className="modal-fullScreen-footer-message" dangerouslySetInnerHTML={{ __html: props.footer }}></div>
+          </div>
         </div>
       </div>
     </div>

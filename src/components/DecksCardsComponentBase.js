@@ -11,48 +11,50 @@ export class DecksCardsComponentBase {
   constructor(setCountNormals, setCountSpecials, setCountFortress, DeckList, setDeckList, currDeck, setViewState, setIsDeckEdit, setShowBottomMenu,
     setShowBodyInnerTopShadow, isDeckEdit, viewState, setRefresh, galaxyFilters, setGalaxyFilters, orderingDecksOptions, orderingCardsOptions, setDecksSearchTerm,
     setDeckListToShow, lastOrderingDecksOption, setLastOrderingDecksOption, setOrderingDecksOptions, setCurrDeck, AvailableCards, setAvailableCards, advancedFilters, categoryFilters,
-    setAdvancedFilters, setCategoryFilters, cardsToShow, setCardsToShow, lastOrderingCardsOption, setLastOrderingCardsOption, DecksSearchTerm, DeckListToShow, 
-    setOrderingCardsOptions, setModalTransparentContent, setIsShowModalDeckInfos, deckErrorMessages, setDeckErrorMessages) {
-      this.setCountNormals = setCountNormals;
-      this.setCountSpecials = setCountSpecials;
-      this.setCountFortress = setCountFortress;
-      this.DeckList = DeckList;
-      this.setDeckList = setDeckList;
-      this.currDeck = currDeck;
-      this.setViewState = setViewState;
-      this.setIsDeckEdit = setIsDeckEdit;
-      this.setShowBottomMenu = setShowBottomMenu;
-      this.setShowBodyInnerTopShadow = setShowBodyInnerTopShadow;
-      this.isDeckEdit = isDeckEdit;
-      this.viewState = viewState;
-      this.setRefresh = setRefresh;
-      this.galaxyFilters = galaxyFilters;
-      this.setGalaxyFilters = setGalaxyFilters;
-      this.orderingDecksOptions = orderingDecksOptions;
-      this.orderingCardsOptions = orderingCardsOptions;
-      this.setDecksSearchTerm = setDecksSearchTerm;
-      this.setDeckListToShow = setDeckListToShow;
-      this.lastOrderingDecksOption = lastOrderingDecksOption;
-      this.setLastOrderingDecksOption = setLastOrderingDecksOption;
-      this.setOrderingDecksOptions = setOrderingDecksOptions;
-      this.setCurrDeck = setCurrDeck;
-      this.AvailableCards = AvailableCards;
-      this.setAvailableCards = setAvailableCards;
-      this.advancedFilters = advancedFilters;
-      this.categoryFilters = categoryFilters;
-      this.setAdvancedFilters = setAdvancedFilters;
-      this.setCategoryFilters = setCategoryFilters;
-      this.cardsToShow = cardsToShow;
-      this.setCardsToShow = setCardsToShow;
-      this.lastOrderingCardsOption = lastOrderingCardsOption;
-      this.setLastOrderingCardsOption = setLastOrderingCardsOption;
-      this.DecksSearchTerm = DecksSearchTerm;
-      this.DeckListToShow = DeckListToShow; 
-      this.setOrderingCardsOptions = setOrderingCardsOptions;
-      this.setModalTransparentContent = setModalTransparentContent;
-      this.setIsShowModalDeckInfos = setIsShowModalDeckInfos;
-      this.deckErrorMessages = deckErrorMessages;
-      this.setDeckErrorMessages = setDeckErrorMessages;
+    setAdvancedFilters, setCategoryFilters, cardsToShow, setCardsToShow, lastOrderingCardsOption, setLastOrderingCardsOption, DecksSearchTerm, DeckListToShow,
+    setOrderingCardsOptions, setModalTransparentContent, setIsShowModalDeckInfos, deckErrorMessages, setDeckErrorMessages, thumbWidth, setThumbWidth) {
+    this.setCountNormals = setCountNormals;
+    this.setCountSpecials = setCountSpecials;
+    this.setCountFortress = setCountFortress;
+    this.DeckList = DeckList;
+    this.setDeckList = setDeckList;
+    this.currDeck = currDeck;
+    this.setViewState = setViewState;
+    this.setIsDeckEdit = setIsDeckEdit;
+    this.setShowBottomMenu = setShowBottomMenu;
+    this.setShowBodyInnerTopShadow = setShowBodyInnerTopShadow;
+    this.isDeckEdit = isDeckEdit;
+    this.viewState = viewState;
+    this.setRefresh = setRefresh;
+    this.galaxyFilters = galaxyFilters;
+    this.setGalaxyFilters = setGalaxyFilters;
+    this.orderingDecksOptions = orderingDecksOptions;
+    this.orderingCardsOptions = orderingCardsOptions;
+    this.setDecksSearchTerm = setDecksSearchTerm;
+    this.setDeckListToShow = setDeckListToShow;
+    this.lastOrderingDecksOption = lastOrderingDecksOption;
+    this.setLastOrderingDecksOption = setLastOrderingDecksOption;
+    this.setOrderingDecksOptions = setOrderingDecksOptions;
+    this.setCurrDeck = setCurrDeck;
+    this.AvailableCards = AvailableCards;
+    this.setAvailableCards = setAvailableCards;
+    this.advancedFilters = advancedFilters;
+    this.categoryFilters = categoryFilters;
+    this.setAdvancedFilters = setAdvancedFilters;
+    this.setCategoryFilters = setCategoryFilters;
+    this.cardsToShow = cardsToShow;
+    this.setCardsToShow = setCardsToShow;
+    this.lastOrderingCardsOption = lastOrderingCardsOption;
+    this.setLastOrderingCardsOption = setLastOrderingCardsOption;
+    this.DecksSearchTerm = DecksSearchTerm;
+    this.DeckListToShow = DeckListToShow;
+    this.setOrderingCardsOptions = setOrderingCardsOptions;
+    this.setModalTransparentContent = setModalTransparentContent;
+    this.setIsShowModalDeckInfos = setIsShowModalDeckInfos;
+    this.deckErrorMessages = deckErrorMessages;
+    this.setDeckErrorMessages = setDeckErrorMessages;
+    this.thumbWidth = thumbWidth;
+    this.setThumbWidth = setThumbWidth;
   }
 
   //#region Globals
@@ -61,7 +63,7 @@ export class DecksCardsComponentBase {
     this.setRefresh(atual => atual + 1);
   }
 
-  GetAllAvailableCards () {
+  GetAllAvailableCards() {
     CardsLibrary.cards.forEach(card => {
       if (!card.thumb || card.thumb === thumbPadrao) {
         let cardCodeArr = card.code.split(" - ");
@@ -206,7 +208,7 @@ export class DecksCardsComponentBase {
               });
             });
           });
-          
+
           card.cardTypes.forEach(type => {
             cardTypes.forEach(cardType => {
               if (type === cardType.type) {
@@ -234,7 +236,7 @@ export class DecksCardsComponentBase {
       countStroj: countStroj,
       countMajik: countMajik,
       countAdroit: countAdroit,
-      levelCosts:  levelCosts,
+      levelCosts: levelCosts,
       effectsCosts: effectsCosts,
       cardTypes: cardTypes,
       cardTypesSpecials: cardTypesSpecials,
@@ -246,9 +248,9 @@ export class DecksCardsComponentBase {
     this.setDeckList(deckList);
   }
 
-  UpdateDeckListInSession () {
+  UpdateDeckListInSession() {
     var index = -1;
-    for (var i=0; i < this.DeckList.length; i++) {
+    for (var i = 0; i < this.DeckList.length; i++) {
       if (this.DeckList[i].name === this.currDeck.name) {
         index = i;
       }
@@ -260,18 +262,18 @@ export class DecksCardsComponentBase {
     else {
       this.DeckList[index] = this.currDeck;
     }
-    
+
     this.SetDeckListInSession(this.DeckList);
   }
 
-  onClickMenuBottomItem (viewState) {
+  onClickMenuBottomItem(viewState) {
     this.setViewState(viewState);
     this.ClearCardsFilters();
     this.setIsDeckEdit(false);
     this.setShowBottomMenu(true);
 
     var elems = document.getElementsByClassName("deckBuilder-body");
-    for (var i=0; i < elems.length; i++) {
+    for (var i = 0; i < elems.length; i++) {
       var element = elems[i];
       element.scrollTop = 0;
     }
@@ -316,16 +318,16 @@ export class DecksCardsComponentBase {
     return cl;
   }
 
-  OrderByOption (orderingOption) {
+  OrderByOption(orderingOption) {
     if (this.viewState === DeckBuilderViewStates.DecksList) {
-      this.OrderDecksByOption (orderingOption);
+      this.OrderDecksByOption(orderingOption);
     }
     else if (this.viewState === DeckBuilderViewStates.CardsList) {
       this.OrderCardsByOption(orderingOption);
     }
   }
 
-  GetOrderingOptions () {
+  GetOrderingOptions() {
     if (this.viewState === DeckBuilderViewStates.DecksList) {
       return this.orderingDecksOptions;
     }
@@ -335,14 +337,14 @@ export class DecksCardsComponentBase {
     return [];
   }
 
-  GetCurrDeckCountNormals () {
+  GetCurrDeckCountNormals() {
     const normalCards = this.currDeck.cards.filter(p => !p.specialCard);
     let count = 0;
     normalCards.map(p => count += p.amount)
     return count;
   }
 
-  GetCardAmountInDeck (card) {
+  GetCardAmountInDeck(card) {
     if (!this.currDeck) return 0;
     const cardsFiltered = this.currDeck.cards.filter(p => p.code === card.code);
     if (cardsFiltered && cardsFiltered.length) return cardsFiltered[0].amount;
@@ -359,10 +361,10 @@ export class DecksCardsComponentBase {
     return 2;
   }
 
-  IndexOfCardInDeck (card) {
+  IndexOfCardInDeck(card) {
     if (!this.currDeck.cards) this.currDeck.cards = [];
 
-    for (var i=0; i < this.currDeck.cards.length; i++) {
+    for (var i = 0; i < this.currDeck.cards.length; i++) {
       if (card.code === this.currDeck.cards[i].code) {
         return i;
       }
@@ -387,7 +389,7 @@ export class DecksCardsComponentBase {
     this.setDeckListToShow(filteredList);
   }
 
-  GetGalaxyOrdering (galaxy) {
+  GetGalaxyOrdering(galaxy) {
     switch (galaxy) {
       case Galaxies.Gaia:
         return GalaxiesOrderings.Gaia;
@@ -402,8 +404,8 @@ export class DecksCardsComponentBase {
     }
   }
 
-  OrderDecksByOption (orderingOption) {
-    var lastOption = {...this.lastOrderingDecksOption};
+  OrderDecksByOption(orderingOption) {
+    var lastOption = { ...this.lastOrderingDecksOption };
     if (!!orderingOption && !!orderingOption.isOrdering) {
       lastOption.value = orderingOption.value;
     }
@@ -415,14 +417,14 @@ export class DecksCardsComponentBase {
     if (!!orderingOption) {
       // set the option as the selected one, while others as not selected
       var _orderingOptions = [];
-      basicOrderingDecksOptions.forEach(p => _orderingOptions.push({...p}));
+      basicOrderingDecksOptions.forEach(p => _orderingOptions.push({ ...p }));
       _orderingOptions.map(p => p.isSelected = undefined);
       _orderingOptions.filter(p => p.value === lastOption.value || p.value === lastOption.direction)
-                      .map(p => p.isSelected = true);
-                      this.setOrderingDecksOptions(_orderingOptions);
+        .map(p => p.isSelected = true);
+      this.setOrderingDecksOptions(_orderingOptions);
     }
 
-    var collator = new Intl.Collator(undefined, {numeric: true, sensitivity: 'base'});
+    var collator = new Intl.Collator(undefined, { numeric: true, sensitivity: 'base' });
     var strList = [];
     var decks = this.DeckList.sort((a, b) => {
       var ret = 0;
@@ -433,7 +435,7 @@ export class DecksCardsComponentBase {
           else { ret = 1; }
           break;
         case OrderingOptions.DateCreated:
-          if (a.creationDate < b.creationDate) { ret = -1; } 
+          if (a.creationDate < b.creationDate) { ret = -1; }
           else { ret = 1; }
           break;
         case OrderingOptions.Galaxy:
@@ -471,7 +473,7 @@ export class DecksCardsComponentBase {
 
   //#region Deck Edit
 
-  ChangeAmountOfCardInDeck (index, amount) {
+  ChangeAmountOfCardInDeck(index, amount) {
     let cards = this.currDeck.cards;
     if (!cards) {
       return;
@@ -479,9 +481,9 @@ export class DecksCardsComponentBase {
 
     if (!cards[index].amount) cards[index].amount = 0;
     if ((cards[index].amount === 2 && amount > 0 && !cards[index].specialCard) ||
-        (cards[index].amount === 1 && amount > 0 && this.IsCardTypeOf("RECURSO", cards[index].cardTypes)) ||
-        (cards[index].amount === 1 && amount > 0 && this.IsCardTypeOf("FORTALEZA", cards[index].cardTypes)) ||
-        (cards[index].amount === 8 && amount > 0 && cards[index].specialCard)
+      (cards[index].amount === 1 && amount > 0 && this.IsCardTypeOf("RECURSO", cards[index].cardTypes)) ||
+      (cards[index].amount === 1 && amount > 0 && this.IsCardTypeOf("FORTALEZA", cards[index].cardTypes)) ||
+      (cards[index].amount === 8 && amount > 0 && cards[index].specialCard)
     ) {
       return;
     }
@@ -499,11 +501,11 @@ export class DecksCardsComponentBase {
     this.setDeckErrorMessages(errorMessages);
   }
 
-  ShowDeckInformations () {
+  ShowDeckInformations() {
     var content = '<ul>';
-    const counters = this.SetCounts(this.currDeck.cards??[]);
+    const counters = this.SetCounts(this.currDeck.cards ?? []);
 
-    content += "<br/><li>TOTAL DE CARDS</li>";
+    content += "<br><li>TOTAL DE CARDS</li>";
     content += `<li><strong>Deck:</strong><span style='margin-left: 1em;'>${counters.countNormals}/40</span></li>`;
     content += `<li><strong>Deck Especial:</strong><span style='margin-left: 1em;'>${counters.countSpecials}/100</span></li>`;
     content += `<li><strong>Fortaleza:</strong><span style='margin-left: 1em;'>${counters.countFortress}/1</span></li>`;
@@ -542,7 +544,7 @@ export class DecksCardsComponentBase {
     }
 
     content += "<li style='margin-top: 1em;'></li>";
-    content += "<li>CARDS DECK</li>";
+    content += "<li>CARDS DO DECK</li>";
     if (counters.cardTypes.length > 0) {
       counters.cardTypes.forEach(cardType => {
         if (cardType.amount > 0) {
@@ -552,7 +554,7 @@ export class DecksCardsComponentBase {
     }
 
     content += "<li style='margin-top: 1em;'></li>";
-    content += "<li>CARDS DECK ESPECIAL</li>";
+    content += "<li>CARDS DO DECK ESPECIAL</li>";
     if (counters.cardTypesSpecials.length > 0) {
       counters.cardTypesSpecials.forEach(cardType => {
         if (cardType.amount > 0) {
@@ -563,7 +565,8 @@ export class DecksCardsComponentBase {
     content += `<li><strong>Recurso:</strong><span style='margin-left: 1em;'>${counters.countResources}/1</span></li>`;
 
     if (this.deckErrorMessages && this.deckErrorMessages.length) {
-      content += `<br/><li class='text-danger'><strong>Erros:</strong></li>`;
+      content += `<br/><li class='text-danger'><strong>ERROS DO DECK</strong></li>`;
+      content += "<li style='margin-top: 1em;'></li>";
       for (let i = 0; i < this.deckErrorMessages.length; i++) {
         const message = this.deckErrorMessages[i];
         content += `<li class='text-danger'><span>${message}</span></li>`;
@@ -575,7 +578,7 @@ export class DecksCardsComponentBase {
     this.setIsShowModalDeckInfos(true);
   }
 
-  TestDeck (deck) {
+  TestDeck(deck) {
     const mainDeckCards = deck.cards.filter(p => !p.specialCard);
     let mainDeckCardsAmount = 0;
     mainDeckCards.forEach((card, i) => { mainDeckCardsAmount += card.amount });
@@ -659,17 +662,15 @@ export class DecksCardsComponentBase {
     ) {
       messages.push("Aliança Universal: para jogar com 3 ou mais Galáxias é preciso ter a mesma quantidade de cards de cada Galáxia, e a Fortaleza deve pertencer a uma delas.");
     }
-    else if (deckGalaxies.length > 1 && hasFortressNotOfGalaxiesInDeck)
-    {
+    else if (deckGalaxies.length > 1 && hasFortressNotOfGalaxiesInDeck) {
       messages.push("A Fortaleza deve ser de uma das Galáxias no deck.");
     }
-    else if (hasFortressNotOfGalaxiesInDeck)
-    {
+    else if (hasFortressNotOfGalaxiesInDeck) {
       messages.push("A Fortaleza deve ser da mesma Galáxia do deck.");
     }
-    
+
     return messages;
-}
+  }
 
   //#endregion
 
@@ -697,10 +698,10 @@ export class DecksCardsComponentBase {
     return false;
   }
 
-  GetCardTypeName (cardType) {
+  GetCardTypeName(cardType) {
     let typeName = "";
 
-    switch (cardType){
+    switch (cardType) {
       case CardType.Resource:
         typeName = "Recurso";
         break;
@@ -731,11 +732,11 @@ export class DecksCardsComponentBase {
       default:
         break;
     }
-    
+
     return typeName;
   }
 
-  IsCardSubtypeIncludedInList (cardSubtypes, subtypesList) {
+  IsCardSubtypeIncludedInList(cardSubtypes, subtypesList) {
     return cardSubtypes.filter(p => subtypesList.includes(p)).length;
   }
 
@@ -744,14 +745,14 @@ export class DecksCardsComponentBase {
     this.AvailableCards.forEach(card => {
       list.push({ ...card });
     });
-    
+
     // filter by search term
     if (term && term !== "") {
       list = list.filter(p => p.name.toUpperCase().includes(term.toUpperCase()) ||
-                              p.description.toUpperCase().includes(term.toUpperCase()) ||
-                              (p.effects && p.effects.filter(q => q.description.toUpperCase().includes(term.toUpperCase())).length > 0) ||
-                              this.IsCardTypeOf(term, p.cardTypes)
-                        );
+        p.description.toUpperCase().includes(term.toUpperCase()) ||
+        (p.effects && p.effects.filter(q => q.description.toUpperCase().includes(term.toUpperCase())).length > 0) ||
+        this.IsCardTypeOf(term, p.cardTypes)
+      );
     }
 
     // filter by galaxies
@@ -768,7 +769,7 @@ export class DecksCardsComponentBase {
             values.push(filter.value);
           }
         });
-        
+
         if (values.length) {
           switch (filterType) {
             case CardFilterOptions.BaseCost:
@@ -793,8 +794,8 @@ export class DecksCardsComponentBase {
               list = list.filter(p => values.includes(p.range));
               break;
             case CardFilterOptions.Subtype:
-              list = list.filter(p => ((this.IsCardTypeOf('CRIATURA', p.cardTypes) || this.IsCardTypeOf('SUPORTE', p.cardTypes)) 
-                                       && this.IsCardSubtypeIncludedInList(p.cardSubtypes, values)));
+              list = list.filter(p => ((this.IsCardTypeOf('CRIATURA', p.cardTypes) || this.IsCardTypeOf('SUPORTE', p.cardTypes))
+                && this.IsCardSubtypeIncludedInList(p.cardSubtypes, values)));
               break;
             default:
               break;
@@ -812,15 +813,15 @@ export class DecksCardsComponentBase {
       const filterSpecials = this.categoryFilters.filter(p => p === 'specials').length;
       const filterFortress = this.categoryFilters.filter(p => p === 'fortress').length;
       list = list.filter(p => (p.specialCard && filterSpecials && !this.IsCardTypeOf("FORTALEZA", p.cardTypes)) ||
-                              (filterFortress && this.IsCardTypeOf("FORTALEZA", p.cardTypes)) ||
-                              (!p.specialCard && filterNormals && !this.IsCardTypeOf("FORTALEZA", p.cardTypes)));
+        (filterFortress && this.IsCardTypeOf("FORTALEZA", p.cardTypes)) ||
+        (!p.specialCard && filterNormals && !this.IsCardTypeOf("FORTALEZA", p.cardTypes)));
     }
 
     // finally, set the cards to be shown
     this.setCardsToShow(list);
   }
 
-  ClearCardsFilters () {
+  ClearCardsFilters() {
     let filters = this.categoryFilters;
     while (filters.length) filters.splice(0, 1);
     this.setCategoryFilters(filters);
@@ -832,11 +833,11 @@ export class DecksCardsComponentBase {
     filters = this.galaxyFilters;
     while (filters.length) filters.splice(0, 1);
     this.setGalaxyFilters(filters);
-    
+
     this.SearchCard();
   }
 
-  HasFilterApplied (viewState) {
+  HasFilterApplied(viewState) {
     if (viewState === DeckBuilderViewStates.DecksList) {
       return this.DecksSearchTerm !== undefined || this.DeckListToShow.length < this.DeckList.length || this.galaxyFilters.length > 0;
     }
@@ -861,20 +862,20 @@ export class DecksCardsComponentBase {
     this.setCategoryFilters(this.categoryFilters);
   }
 
-  SelectCategoryFilter (category) {
+  SelectCategoryFilter(category) {
     if (!this.IsCategoryFilterSelected(category)) {
       this.categoryFilters.push(category);
     }
   }
 
-  UnselectCategoryFilter (category) {
+  UnselectCategoryFilter(category) {
     if (!this.IsCategoryFilterSelected(category)) return;
     let index = this.categoryFilters.indexOf(category);
     this.categoryFilters.splice(index, 1);
   }
 
-  OrderCards (a, b, option) {
-    var collator = new Intl.Collator(undefined, {numeric: true, sensitivity: 'base'});
+  OrderCards(a, b, option) {
+    var collator = new Intl.Collator(undefined, { numeric: true, sensitivity: 'base' });
     var strList = [];
 
     var ret = 0;
@@ -960,8 +961,8 @@ export class DecksCardsComponentBase {
     return ret;
   }
 
-  OrderCardsByOption (orderingOption) {
-    let lastOption = {...this.lastOrderingCardsOption};
+  OrderCardsByOption(orderingOption) {
+    let lastOption = { ...this.lastOrderingCardsOption };
     if (!!orderingOption && !!orderingOption.isOrdering) {
       lastOption.value = orderingOption.value;
     }
@@ -973,11 +974,11 @@ export class DecksCardsComponentBase {
     if (!!orderingOption) {
       // set the option as the selected one, while others as not selected
       let _orderingOptions = [];
-      basicOrderingCardsOptions.forEach(p => _orderingOptions.push({...p}));
+      basicOrderingCardsOptions.forEach(p => _orderingOptions.push({ ...p }));
       _orderingOptions.map(p => p.isSelected = undefined);
       _orderingOptions.filter(p => p.value === lastOption.value || p.value === lastOption.direction)
-                      .map(p => p.isSelected = true);
-                      this.setOrderingCardsOptions(_orderingOptions);
+        .map(p => p.isSelected = true);
+      this.setOrderingCardsOptions(_orderingOptions);
     }
 
     let cards = this.cardsToShow.sort((a, b) => {
@@ -991,7 +992,7 @@ export class DecksCardsComponentBase {
     this.setAvailableCards(availableCards);
   }
 
-  OrderCardsList (cardsList) {
+  OrderCardsList(cardsList) {
     const orderedCards = cardsList.sort((a, b) => {
       if (a.cost !== b.cost) {
         return this.OrderCards(a, b, { value: OrderingOptions.BaseCost, direction: OrderingDirections.Ascending });
@@ -1026,7 +1027,7 @@ export class DecksCardsComponentBase {
         else if (aIsEvent) {
           aTypeIndex = OrderingPriorities.Event;
         }
-        
+
         const bIsCreature = this.IsCardTypeOf("CRIATURA", b.cardTypes);
         const bIsEquipent = this.IsCardTypeOf("EQUIPAMENTO", b.cardTypes);
         const bIsSupport = this.IsCardTypeOf("SUPORTE", b.cardTypes);
@@ -1066,11 +1067,12 @@ export class DecksCardsComponentBase {
           return this.OrderCards(a, b, { value: OrderingOptions.Name, direction: OrderingDirections.Ascending });
         }
       }
+
     });
     return orderedCards;
   }
 
-  OrderDeckCards (cardsList) {
+  OrderDeckCards(cardsList) {
     const normals = cardsList.filter(card => !card.specialCard);
     const normalsOrdered = this.OrderCardsList(normals);
 
@@ -1082,7 +1084,7 @@ export class DecksCardsComponentBase {
 
     const fortresses = cardsList.filter(card => !!this.IsCardTypeOf('FORTALEZA', card.cardTypes));
     const fortressesOrdered = this.OrderCardsList(fortresses);
-    
+
     let orderedCards = [];
     for (let i = 0; i < normalsOrdered.length; i++) {
       orderedCards.push(normalsOrdered[i]);
@@ -1096,11 +1098,11 @@ export class DecksCardsComponentBase {
     for (let i = 0; i < fortressesOrdered.length; i++) {
       orderedCards.push(fortressesOrdered[i]);
     }
-    
+
     return orderedCards;
   }
 
-  ToggleFilter (filterType, value) {
+  ToggleFilter(filterType, value) {
     if (!this.IsFilterSelected(filterType, value)) {
       this.advancedFilters.push({ "filterType": filterType, "value": value });
     }
@@ -1122,7 +1124,7 @@ export class DecksCardsComponentBase {
   }
 
   GetFilterClass(filterType, value) {
-    return `deckBuilder-filterContainer-item bt-filterOption ${this.IsFilterSelected(filterType, value) ? 'filter-selected' : ''}`;
+    return `deckBuilder-filter-item bt-filterOption ${this.IsFilterSelected(filterType, value) ? 'filter-selected' : ''}`;
   }
 
   //#endregion

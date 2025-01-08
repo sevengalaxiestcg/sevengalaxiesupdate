@@ -52,8 +52,7 @@
 }
 
 .deckBuilder-header-block .deckBuilder-cards-results-info,
-.deckBuilder-header-block .deckBuilder-decks-results-info {
-}
+.deckBuilder-header-block .deckBuilder-decks-results-info {}
 
 .deckBuilder-header .bt-deckBuilder-search {
   margin: 0 2vmin 0 2vmin;
@@ -272,7 +271,7 @@
   display: grid;
 }
 
-.deckBuilder-footer-itemBox img  {
+.deckBuilder-footer-itemBox img {
   margin: auto;
   height: 5vmin;
 }
@@ -326,7 +325,7 @@
   }
 }
 
-@media screen and (min-width: 500px) and (max-width: 971px){
+@media screen and (min-width: 500px) and (max-width: 971px) {
   .deckBuilder-item-nameBox input[type='text'] {
     /* max-width: 23vmin; */
   }
