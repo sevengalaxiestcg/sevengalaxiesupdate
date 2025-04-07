@@ -108,11 +108,16 @@ export class DecksCardsComponentBase {
         card.effects.forEach(eff => {
           eff.costs.forEach(effCost => {
             if (effectsCosts.filter(p => p.cost === effCost.costAmount).length === 0) {
-              var costAmount = effCost.costAmount;
-              if (effCost.costAmount === 99) {
-                costAmount = "X";
+              if (effCost.costAmount === 99 &&
+                effectsCosts.filter(p => p.cost === "X").length === 0
+              ) {
+                effectsCosts.push({ cost: "X", amount: 0 });
               }
-              effectsCosts.push({ cost: costAmount, amount: 0 });
+              else if(effCost.costAmount !== 99 &&
+                effectsCosts.filter(p => p.cost === effCost.costAmount).length === 0
+              ) {
+                effectsCosts.push({ cost: effCost.costAmount, amount: 0 });
+              }
             }
           });
         });
@@ -139,6 +144,8 @@ export class DecksCardsComponentBase {
         return a.cost - b.cost;
       });
       effectsCosts = effectsCosts.sort((a, b) => {
+        if (a.cost === "X") return 1;
+        else if (b.cost === "X") return -1;
         return a.cost - b.cost;
       });
       cardTypes = cardTypes.sort((a, b) => {
