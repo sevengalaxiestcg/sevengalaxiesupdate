@@ -66,7 +66,7 @@ export class DecksCardsComponentBase {
   GetAllAvailableCards() {
     CardsLibrary.cards.forEach(card => {
       if (!card.thumb || card.thumb === thumbPadrao) {
-        let cardCodeArr = card.code.split(" - ");
+        let cardCodeArr = card.code.includes(" - ") ? card.code.split(" - ") : card.code.split("-");
         if (cardCodeArr.length < 2) {
           cardCodeArr = card.code.split("-");
         }
@@ -74,7 +74,7 @@ export class DecksCardsComponentBase {
           cardCodeArr[1] = cardCodeArr[1].substring(1);
         }
         const cardCode = cardCodeArr[0] + " - " + cardCodeArr[1];
-        const filtered = cardsThumbs().filter(p => p.key === cardCode);
+        const filtered = cardsThumbs().filter(p => p.key.replaceAll(" ", "").replaceAll("-", "") === cardCode.replaceAll(" ", "").replaceAll("-", ""));
         card.thumb = filtered[0].image;
       }
     });
@@ -353,7 +353,7 @@ export class DecksCardsComponentBase {
 
   GetCardAmountInDeck(card) {
     if (!this.currDeck) return 0;
-    const cardsFiltered = this.currDeck.cards.filter(p => p.code === card.code);
+    const cardsFiltered = this.currDeck.cards.filter(p => p.code.replaceAll(" ", "").replaceAll("-", "") === card.code.replaceAll(" ", "").replaceAll("-", ""));
     if (cardsFiltered && cardsFiltered.length) return cardsFiltered[0].amount;
     return 0;
   }
@@ -372,7 +372,7 @@ export class DecksCardsComponentBase {
     if (!this.currDeck.cards) this.currDeck.cards = [];
 
     for (var i = 0; i < this.currDeck.cards.length; i++) {
-      if (card.code === this.currDeck.cards[i].code) {
+      if (card.code.replaceAll(" ", "").replaceAll("-", "") === this.currDeck.cards[i].code.replaceAll(" ", "").replaceAll("-", "")) {
         return i;
       }
     }
@@ -534,6 +534,9 @@ export class DecksCardsComponentBase {
 
     content += "<li style='margin-top: 1em;'></li>";
     content += "<li>NÍVEL DO DECK</li>";
+    counters.levelCosts = counters.levelCosts.sort((a, b) => {
+      return a.cost - b.cost;
+    });
     if (counters.levelCosts.length > 0) {
       counters.levelCosts.forEach(levelCost => {
         if (levelCost.amount > 0) {
@@ -544,6 +547,9 @@ export class DecksCardsComponentBase {
 
     content += "<li style='margin-top: 1em;'></li>";
     content += "<li>ENERGIA DO DECK</li>";
+    counters.effectsCosts = counters.effectsCosts.sort((a, b) => {
+      return a.cost - b.cost;
+    });
     if (counters.effectsCosts.length > 0) {
       counters.effectsCosts.forEach(effectCost => {
         content += `<li><strong>E${effectCost.cost}:</strong><span style='margin-left: 1em;'>${effectCost.amount}</span></li>`;
@@ -753,13 +759,23 @@ export class DecksCardsComponentBase {
       list.push({ ...card });
     });
 
-    // filter by search term
-    if (term && term !== "") {
-      list = list.filter(p => p.name.toUpperCase().includes(term.toUpperCase()) ||
-        p.description.toUpperCase().includes(term.toUpperCase()) ||
-        (p.effects && p.effects.filter(q => q.description.toUpperCase().includes(term.toUpperCase())).length > 0) ||
-        this.IsCardTypeOf(term, p.cardTypes)
-      );
+    const isNumber = !isNaN(term);
+    if (isNumber) {
+      // filter by key, only numbers
+      list = list.filter(p => !isNaN(p.key) && parseInt(p.key) === parseInt(term));
+    }
+    else {
+      // filter by search term
+      if (term && term !== "") {
+        term = term.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+        list = list.filter(p => p.name.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toUpperCase().includes(term.toUpperCase()) ||
+          p.description.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toUpperCase().includes(term.toUpperCase()) ||
+          (p.effects && p.effects.filter(q => q.description.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toUpperCase().includes(term.toUpperCase())).length > 0) ||
+          this.IsCardTypeOf(term, p.cardTypes) ||
+          p.code.toUpperCase().includes(term.toUpperCase()) ||
+          p.code.toUpperCase().replaceAll(" ", "").replaceAll("-", "").includes(term.toUpperCase())
+        );
+      }
     }
 
     // filter by galaxies
@@ -888,8 +904,8 @@ export class DecksCardsComponentBase {
     var ret = 0;
     switch (option.value) {
       case OrderingOptions.Key:
-        strList = [a.key, b.key].sort(collator.compare);
-        if (strList[0] === a.key) { ret = -1; }
+        strList = [a.key.replaceAll(" ", ""), b.key.replaceAll(" ", "")].sort(collator.compare);
+        if (strList[0] === a.key.replaceAll(" ", "")) { ret = -1; }
         else { ret = 1; }
         break;
       case OrderingOptions.Name:
@@ -955,8 +971,8 @@ export class DecksCardsComponentBase {
         break;
       case OrderingOptions.Code:
       default:
-        strList = [a.code, b.code].sort(collator.compare);
-        if (strList[0] === a.code) { ret = -1; }
+        strList = [a.code.replaceAll(" ", "").replaceAll("-", ""), b.code.replaceAll(" ", "").replaceAll("-", "")].sort(collator.compare);
+        if (strList[0] === a.code.replaceAll(" ", "").replaceAll("-", "")) { ret = -1; }
         else { ret = 1; }
         break;
     }

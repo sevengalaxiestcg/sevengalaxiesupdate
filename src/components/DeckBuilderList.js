@@ -84,41 +84,6 @@ export class DeckBuilderDecksListHeader extends React.Component {
     this.SearchDeck();
   }
 
-  // ImportDeck() {
-  //   const input = document.createElement("input");
-  //   input.style.display = 'none';
-  //   input.type = 'file';
-
-  //   const appRoot = document.getElementsByClassName("app")[0];
-  //   appRoot.appendChild(input);
-
-  //   input.onchange = (event) => {
-  //     const file = event.target.files[0];
-  //     const reader = new FileReader();
-
-  //     reader.onloadend = (data) => {
-  //       const base64 = data.target.result.split("base64,")[1];
-  //       const jsonString = atob(base64);
-  //       let newDeck = JSON.parse(jsonString);
-  //       newDeck.mainCards = newDeck.cards.filter(card => !card.specialCard);
-  //       newDeck.specialCards = newDeck.cards.filter(card => card.specialCard);
-
-  //       let deckList = this.props.DeckList;
-  //       deckList.push(newDeck);
-  //       this.props.SetDeckListInSession(deckList);
-
-  //       this.props.setShowMainDeck(false);
-  //       this.props.setShowSpecialDeck(false);
-  //       this.props.setShowFortressDeck(false);
-  //       this.props.setCurrDeck(newDeck);
-  //       this.props.setViewState(DeckBuilderViewStates.DeckEdit);
-  //     };
-
-  //     reader.readAsDataURL(file);
-  //   };
-  //   input.click();
-  // }
-
   ImportDeck() {
     const input = document.createElement("input");
     input.style.display = 'none';
@@ -143,7 +108,8 @@ export class DeckBuilderDecksListHeader extends React.Component {
         newDeck.name = deckToImport.name;
 
         deckToImport.cards.forEach(card => {
-          const filteredCards = this.props.AvailableCards.filter(p => p.key === card.key && p.code === card.code);
+          const filteredCards = this.props.AvailableCards.filter(p => p.key.replaceAll(" ", "") === card.key.replaceAll(" ", "") &&
+            p.code.replaceAll(" ", "").replaceAll("-", "") === card.code.replaceAll(" ", "").replaceAll("-", ""));
           if (!!filteredCards.length) {
             let copy = deepCopy(filteredCards[0]);
             copy.amount = card.amount;
@@ -347,7 +313,7 @@ export class DeckBuilderDecksListBody extends React.Component {
     };
     for (var i = 0; i < origin.cards.length; i++) {
       const card = origin.cards[i];
-      deck.cards.push({ key: card.key, code: card.code, amount: card.amount });
+      deck.cards.push({ key: card.key.replaceAll(" ", ""), code: card.code.replaceAll(" ", "").replaceAll("-", ""), amount: card.amount });
     }
 
 
@@ -364,82 +330,6 @@ export class DeckBuilderDecksListBody extends React.Component {
     URL.revokeObjectURL(link.href);
   }
 
-  // ExportDeck(index) {
-  //   const deck = this.props.DeckList[index];
-  //   const link = document.createElement("a");
-  //   const file = new Blob([JSON.stringify(deck)], { type: 'text/plain' });
-  //   link.href = URL.createObjectURL(file);
-  //   // file extension ".sgd" ("sgd" stands for "Seven Galaxies Deck")
-  //   link.download = `${deck.name.normalize("NFD").replace(/[\u0300-\u036f]/g, "").replaceAll(" ", "")}.sgd`;
-  //   link.click();
-  //   URL.revokeObjectURL(link.href);
-  // }
-
-
-
-  // ExportDeck(index) {
-  //   const deck = this.props.DeckList[index];
-
-  //   function unicodeEscape(str) {
-  //     return str.replace(/[\u00C0-\u00FF]/g, function (match) {
-  //       return '\\u' + match.charCodeAt(0).toString(16).padStart(4, '0');
-  //     });
-  //   }
-
-  //   const deckJson = JSON.stringify(deck, (key, value) => {
-  //     if (typeof value === 'string') {
-  //       return unicodeEscape(value);
-  //     }
-  //     return value;
-  //   });
-
-  //   // Corrigir as barras invertidas duplas
-  //   const correctedJson = deckJson.replace(/\\\\u/g, '\\u');
-
-  //   const link = document.createElement("a");
-  //   const file = new Blob([correctedJson], { type: 'text/plain' });
-  //   link.href = URL.createObjectURL(file);
-  //   // file extension ".sgd" ("sgd" stands for "Seven Galaxies Deck")
-  //   link.download = `${deck.name.normalize("NFD").replace(/[\u0300-\u036f]/g, "").replaceAll(" ", "")}.json`;
-  //   link.click();
-  //   URL.revokeObjectURL(link.href);
-  // }
-
-  // ExportDeckText(index) {
-  //   const deck = this.props.DeckList[index];
-  //   const link = document.createElement("a");
-
-  //   const fortress = deck.cards.filter(p => !!this.props.IsCardTypeOf("FORTALEZA", p.cardTypes));
-  //   var deckText = deck.name +
-  //     "\n\nFORTALEZA\n" +
-  //     (fortress ? "1 " : "0 ") + (fortress ? fortress[0].name : "Nenhuma") + " [cod" + (fortress ? fortress[0].key : "N/A") + "]";
-
-  //   deckText += "\n\nDECK\n";
-  //   const deckCards = deck.cards.filter(p => !p.specialCard && !this.props.IsCardTypeOf("FORTALEZA", p.cardTypes));
-  //   deckCards.forEach(card => {
-  //     deckText += card.amount + " " + card.name + " [cod" + card.key + "]\n"
-  //   });
-
-  //   const specialCards = deck.cards.filter(p => !!p.specialCard &&
-  //     !this.props.IsCardTypeOf("FORTALEZA", p.cardTypes) &&
-  //     !this.props.IsCardTypeOf("RECURSO", p.cardTypes));
-  //   deckText += "\nDECK ESPECIAL\n";
-  //   specialCards.forEach(card => {
-  //     deckText += card.amount + " " + card.name + " [cod" + card.key + "]\n"
-  //   });
-
-  //   const resourceCards = deck.cards.filter(p => this.props.IsCardTypeOf("RECURSO", p.cardTypes));
-  //   resourceCards.forEach(card => {
-  //     deckText += card.amount + " " + card.name + " [cod" + card.key + "]\n"
-  //   });
-
-  //   const file = new Blob([deckText], { type: 'text/plain' });
-  //   link.href = URL.createObjectURL(file);
-  //   // file extension ".sgd" ("sgd" stands for "Seven Galaxies Deck")
-  //   link.download = `${deck.name.normalize("NFD").replace(/[\u0300-\u036f]/g, "").replaceAll(" ", "")}.txt`;
-  //   link.click();
-  //   URL.revokeObjectURL(link.href);
-  // }
   ExportDeckText(index) {
     const deck = this.props.DeckList[index];
 
@@ -480,7 +370,6 @@ export class DeckBuilderDecksListBody extends React.Component {
     link.click();
     URL.revokeObjectURL(link.href);
   }
-
 
   TryExportDeck(index, exportType) {
     const messages = this.props.TestDeck(this.props.DeckList[index]);

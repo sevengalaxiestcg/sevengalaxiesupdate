@@ -100,7 +100,6 @@ export class DeckBuilderEditHeader extends React.Component {
     this.props.setThumbWidth(option);
   }
 
-
   render() {
     return (
       <>

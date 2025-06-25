@@ -165,7 +165,7 @@ export default function DeckBuilder() {
   function GetAllAvailableCards() {
     CardsLibrary.cards.forEach(card => {
       if (!card.thumb || card.thumb === thumbPadrao) {
-        let cardCodeArr = card.code.split(" - ");
+        let cardCodeArr = card.code.includes(" - ") ? card.code.split(" - ") : card.code.split("-");
         if (cardCodeArr.length < 2) {
           cardCodeArr = card.code.split("-");
         }
@@ -173,7 +173,7 @@ export default function DeckBuilder() {
           cardCodeArr[1] = cardCodeArr[1].substring(1);
         }
         const cardCode = cardCodeArr[0] + " - " + cardCodeArr[1];
-        const filtered = cardsThumbs().filter(p => p.key === cardCode);
+        const filtered = cardsThumbs().filter(p => p.key.replaceAll(" ", "").replaceAll("-", "") === cardCode.replaceAll(" ", "").replaceAll("-", ""));
         card.thumb = filtered[0].image;
       }
     });
