@@ -535,7 +535,8 @@ export class DecksCardsComponentBase {
     content += "<li style='margin-top: 1em;'></li>";
     content += "<li>NÍVEL DO DECK</li>";
     counters.levelCosts = counters.levelCosts.sort((a, b) => {
-      return a.cost - b.cost;
+      if (a.cost == "X") return 1;
+      return parseInt(a.cost + "") - parseInt(b.cost + "");
     });
     if (counters.levelCosts.length > 0) {
       counters.levelCosts.forEach(levelCost => {
@@ -544,15 +545,18 @@ export class DecksCardsComponentBase {
         }
       });
     }
-
+    
     content += "<li style='margin-top: 1em;'></li>";
     content += "<li>ENERGIA DO DECK</li>";
     counters.effectsCosts = counters.effectsCosts.sort((a, b) => {
-      return a.cost - b.cost;
+      if (a.cost == "X") return 1;
+      return parseInt(a.cost + "") - parseInt(b.cost + "");
     });
     if (counters.effectsCosts.length > 0) {
       counters.effectsCosts.forEach(effectCost => {
-        content += `<li><strong>E${effectCost.cost}:</strong><span style='margin-left: 1em;'>${effectCost.amount}</span></li>`;
+        if (effectCost.amount > 0) {
+          content += `<li><strong>E${effectCost.cost}:</strong><span style='margin-left: 1em;'>${effectCost.amount}</span></li>`;
+        }
       });
     }
 
@@ -898,7 +902,7 @@ export class DecksCardsComponentBase {
   }
 
   OrderCards(a, b, option) {
-    var collator = new Intl.Collator(undefined, { numeric: true, sensitivity: 'base' });
+    const collator = new Intl.Collator(undefined, { numeric: true, sensitivity: 'base' });
     var strList = [];
 
     var ret = 0;
