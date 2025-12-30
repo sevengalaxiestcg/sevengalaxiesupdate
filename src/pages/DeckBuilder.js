@@ -72,7 +72,7 @@ export default function DeckBuilder() {
   const [isShowModalDeckInfos, setIsShowModalDeckInfos] = useState(false);
   const [DeckListToShow, setDeckListToShow] = useState([]);
   const [isShowEditDeckName, setIsShowEditDeckName] = useState(-1);
-  const [DecksSearchTerm, setDecksSearchTerm] = useState(undefined);
+  const [DecksSearchTerm, setDecksSearchTerm] = useState();
   const [isDeckEdit, setIsDeckEdit] = useState(false);
   const [currDeck, setCurrDeck] = useState();
   const [showMainDeck, setShowMainDeck] = useState(true);
@@ -89,6 +89,9 @@ export default function DeckBuilder() {
   const [CarouselForwardAction, setCarouselForwardAction] = useState({ action: () => { } });
   const [CarouselMinusAction, setCarouselMinusAction] = useState({ action: () => { } });
   const [CarouselPlusAction, setCarouselPlusAction] = useState({ action: () => { } });
+  const [CarouselThumbAction, setCarouselThumbAction] = useState({ action: () => { } });
+  const [CarouselThumbCard, setCarouselThumbCard] = useState();
+
   const [deckErrorMessages, setDeckErrorMessages] = useState([]);
   const [thumbWidth, setThumbWidth] = useState(window.localStorage.getItem("sevengalaxies@thumbWidth") ?? "small");
 
@@ -162,13 +165,17 @@ export default function DeckBuilder() {
 
   //#region Globals
 
+  // MUST BE EQUAL to the one in Cards.js
   function GetAllAvailableCards() {
     CardsLibrary.cards.forEach(card => {
       if (!card.thumb || card.thumb === thumbPadrao) {
         const thumbs = cardsThumbs();
         const filtered = thumbs.filter(p => p.key === card.key);
         if (!filtered.length) debugger;
-        else card.thumb = filtered[0].image;
+        else {
+          card.thumb = filtered[0].image;
+          card.isAlternateArt = card.key.endsWith("-B");
+        }
       }
     });
     return CardsLibrary.cards;
@@ -179,10 +186,10 @@ export default function DeckBuilder() {
   }
 
   const Base = new DecksCardsComponentBase(setCountNormals, setCountSpecials, setCountFortress, DeckList, setDeckList, currDeck, setViewState, setIsDeckEdit, setShowBottomMenu,
-    setShowBodyInnerTopShadow, isDeckEdit, viewState, setRefresh, galaxyFilters, setGalaxyFilters, orderingDecksOptions, orderingCardsOptions, setDecksSearchTerm,
-    setDeckListToShow, lastOrderingDecksOption, setLastOrderingDecksOption, setOrderingDecksOptions, setCurrDeck, AvailableCards, setAvailableCards, advancedFilters, categoryFilters,
-    setAdvancedFilters, setCategoryFilters, cardsToShow, setCardsToShow, lastOrderingCardsOption, setLastOrderingCardsOption, DecksSearchTerm, DeckListToShow,
-    setOrderingCardsOptions, setModalTransparentContent, setIsShowModalDeckInfos, deckErrorMessages, setDeckErrorMessages, thumbWidth, setThumbWidth);
+      setShowBodyInnerTopShadow, isDeckEdit, viewState, setRefresh, galaxyFilters, setGalaxyFilters, orderingDecksOptions, orderingCardsOptions, setDecksSearchTerm,
+      setDeckListToShow, lastOrderingDecksOption, setLastOrderingDecksOption, setOrderingDecksOptions, setCurrDeck, AvailableCards, setAvailableCards, advancedFilters, categoryFilters,
+      setAdvancedFilters, setCategoryFilters, cardsToShow, setCardsToShow, lastOrderingCardsOption, setLastOrderingCardsOption, DecksSearchTerm, DeckListToShow,
+      setOrderingCardsOptions, setModalTransparentContent, setIsShowModalDeckInfos, deckErrorMessages, setDeckErrorMessages, thumbWidth, setThumbWidth);
 
   function Refresh() {
     return Base.Refresh();
@@ -304,6 +311,10 @@ export default function DeckBuilder() {
     (CarouselPlusAction.action)(card);
   }
 
+  function ExecuteCarouselThumbAction(card) {
+    (CarouselThumbAction.action)(card, !card.isAlternateArtSelected);
+  }
+
   function ShowDeckInformations() {
     return Base.ShowDeckInformations();
   }
@@ -413,7 +424,7 @@ export default function DeckBuilder() {
                   // setIsShowModal={setIsShowModalDeckInfos}
                   // setModalContent={setModalTransparentContent}
                   cardsToShow={cardsToShow} setCardsToShow={setCardsToShow}
-                  AvailableCards={AvailableCards}
+                  AvailableCards={AvailableCards} setAvailableCards={setAvailableCards}
                   deckErrorMessages={deckErrorMessages}
                   setShowMainDeck={setShowMainDeck}
                   setShowSpecialDeck={setShowSpecialDeck}
@@ -442,6 +453,7 @@ export default function DeckBuilder() {
                 ? <div className={'deckBuilder-body-cards-container ' + (isDeckEdit && thumbWidth == 'mini' ? 'small' : thumbWidth)}>
                   <CardsListBody setViewState={setViewState}
                     cardsList={cardsToShow}
+                    AvailableCards={AvailableCards} setAvailableCards={setAvailableCards}
                     currDeck={currDeck}
                     isDeckEdit={isDeckEdit}
                     ChangeAmountOfCardInDeck={ChangeAmountOfCardInDeck}
@@ -468,6 +480,8 @@ export default function DeckBuilder() {
                     setCarouselForwardAction={setCarouselForwardAction}
                     setCarouselMinusAction={setCarouselMinusAction}
                     setCarouselPlusAction={setCarouselPlusAction}
+                    setCarouselThumbAction={setCarouselThumbAction}
+                    setCarouselThumbCard={setCarouselThumbCard}
                     OrderDeckCards={OrderDeckCards}
                     TestDeck={TestDeck}
                     setDeckErrorMessages={setDeckErrorMessages}
@@ -502,6 +516,7 @@ export default function DeckBuilder() {
                   isShowEditDeckName={isShowEditDeckName} setIsShowEditDeckName={setIsShowEditDeckName}
                   setCurrDeck={setCurrDeck}
                   setViewState={setViewState}
+                  cardsToShow={cardsToShow} setCardsToShow={setCardsToShow}
                   setShowBottomMenu={setShowBottomMenu}
                   IsCardTypeOf={IsCardTypeOf}
                   setShowMainDeck={setShowMainDeck}
@@ -528,6 +543,7 @@ export default function DeckBuilder() {
               {viewState === DeckBuilderViewStates.DeckEdit
                 ? <DeckBuilderEditBody
                   setViewState={setViewState}
+                  availableCards={AvailableCards}
                   cardsList={cardsToShow}
                   currDeck={currDeck} setCurrDeck={setCurrDeck}
                   ChangeAmountOfCardInDeck={ChangeAmountOfCardInDeck}
@@ -546,6 +562,9 @@ export default function DeckBuilder() {
                   setCarouselForwardAction={setCarouselForwardAction}
                   setCarouselMinusAction={setCarouselMinusAction}
                   setCarouselPlusAction={setCarouselPlusAction}
+                  setCarouselThumbAction={setCarouselThumbAction}
+                  setCarouselThumbCard={setCarouselThumbCard}
+
                   setDeckErrorMessages={setDeckErrorMessages}
                   TestDeck={TestDeck}
                 />
@@ -600,6 +619,7 @@ export default function DeckBuilder() {
           GetCardAmountInDeck={GetCardAmountInDeck} GetMaximumCardAmount={GetMaximumCardAmount}
           backAction={ExecuteCarouselBackAction} forwardAction={ExecuteCarouselForwardAction}
           minusAction={ExecuteCarouselMinusAction} plusAction={ExecuteCarouselPlusAction}
+          thumbAction={ExecuteCarouselThumbAction} thumbCard={CarouselThumbCard}
         />
 
         {isShowAlertModal

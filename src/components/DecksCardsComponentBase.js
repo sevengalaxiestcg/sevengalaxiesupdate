@@ -63,24 +63,6 @@ export class DecksCardsComponentBase {
     this.setRefresh(atual => atual + 1);
   }
 
-  GetAllAvailableCards() {
-    CardsLibrary.cards.forEach(card => {
-      if (!card.thumb || card.thumb === thumbPadrao) {
-        let cardCodeArr = card.code.includes(" - ") ? card.code.split(" - ") : card.code.split("-");
-        if (cardCodeArr.length < 2) {
-          cardCodeArr = card.code.split("-");
-        }
-        if (cardCodeArr[1].startsWith("0")) {
-          cardCodeArr[1] = cardCodeArr[1].substring(1);
-        }
-        const cardCode = cardCodeArr[0] + " - " + cardCodeArr[1];
-        const filtered = cardsThumbs().filter(p => p.key.replaceAll(" ", "").replaceAll("-", "") === cardCode.replaceAll(" ", "").replaceAll("-", ""));
-        card.thumb = filtered[0].image;
-      }
-    });
-    return CardsLibrary.cards;
-  }
-
   GetDeckListFromSession() {
     return JSON.parse(window.localStorage.getItem("sevengalaxies@deckList") ?? "[{}]");
   }
@@ -1152,6 +1134,10 @@ export class DecksCardsComponentBase {
 
   GetFilterClass(filterType, value) {
     return `deckBuilder-filter-item bt-filterOption ${this.IsFilterSelected(filterType, value) ? 'filter-selected' : ''}`;
+  }
+
+  SetCardAlternateArtVisibility(card, isAlternateArtSelected) {
+    card.isAlternateArtSelected = isAlternateArtSelected;
   }
 
   //#endregion

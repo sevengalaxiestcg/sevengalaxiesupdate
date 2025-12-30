@@ -136,6 +136,11 @@ export class ModalTransparentCarousel extends React.Component {
     this.forceUpdate();
   }
 
+  ThumbAction() {
+    this.props.thumbAction(this.props.card);
+    this.forceUpdate();
+  }
+
   render() {
     return (
       <div className="modal-transparent-carousel"
@@ -173,22 +178,35 @@ export class ModalTransparentCarousel extends React.Component {
           </div>
           <div className="modal-transparent-carousel-footer">
             <div className="modal-transparent-carousel-footer-content">
-              {this.props.isShowFooter === true
-                ? <div className='deckBuilder-item-nameBox transparent'>
-                  <div className='bt-deckBuilder'
-                    onClick={() => { this.MinusAction() }}>
-                    <img alt="Decrementar" className='icon-minus-plus' src={iconMinus}></img>
+              <div className='deckBuilder-item-nameBox2'>
+                {this.props.isShowFooter === true
+                  ? <>
+                    <div className='bt-deckBuilder left'
+                      onClick={() => { this.MinusAction() }}>
+                      <img alt="Decrementar" className='icon-minus-plus' src={iconMinus}></img>
+                    </div>
+                    <div className='deckBuilder-span-cardAmount'>
+                      <span>{this.props.GetCardAmountInDeck(this.props.card)}/{this.props.GetMaximumCardAmount(this.props.card)}</span>
+                    </div>
+                    <div className='bt-deckBuilder right'
+                      onClick={() => { this.PlusAction() }}>
+                      <img alt="Incrementar" className='icon-minus-plus' src={iconPlus}></img>
+                    </div>
+                  </>
+                  : <></>
+                }
+                {!!this.props.thumbCard
+                  ? <div className='bt-deckBuilder icon-card-thumb'
+                      onClick={() => { this.ThumbAction() }} style={ this.props.isShowFooter ? { position: "absolute", right: "6vmin", width: "auto" } : {} }>
+                    <img alt="Toggle arte alternativa" className='icon-minus-plus' src={this.props.thumbCard.thumb}></img>
+                    {!this.props.thumbCard.isAlternateArtSelected
+                      ? <span>Alternativa</span>
+                      : <span>Original</span>
+                    }
                   </div>
-                  <div className='deckBuilder-span-cardAmount'>
-                    <span>{this.props.GetCardAmountInDeck(this.props.card)}/{this.props.GetMaximumCardAmount(this.props.card)}</span>
-                  </div>
-                  <div className='bt-deckBuilder'
-                    onClick={() => { this.PlusAction() }}>
-                    <img alt="Incrementar" className='icon-minus-plus' src={iconPlus}></img>
-                  </div>
-                </div>
-                : <></>
-              }
+                  : <></>
+                }
+              </div>
             </div>
           </div>
         </div>

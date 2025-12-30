@@ -25,9 +25,19 @@ export class DeckBuilderEditHeader extends React.Component {
 
     ActiveAnimation("bt-edit", "destaque-bt");
 
-    if (!this.props.cardsToShow || !this.props.cardsToShow.length) {
-      this.props.setCardsToShow(this.props.AvailableCards);
+    let cardsToShow = this.props.cardsToShow;
+    if (!cardsToShow || !cardsToShow.length) {
+      cardsToShow = this.props.AvailableCards;
     }
+    this.props.currDeck.cards.forEach(card => {
+      cardsToShow.filter(p => p.code === card.code)
+        .forEach(p => { p.isAlternateArtSelected = card.isAlternateArtSelected; });
+      this.props.AvailableCards.filter(p => p.code === card.code)
+        .forEach(p => { p.isAlternateArtSelected = card.isAlternateArtSelected; });
+    });
+    this.props.setCardsToShow(cardsToShow);
+    this.props.setAvailableCards(this.props.AvailableCards);
+
     this.props.setIsDeckEdit(true);
     this.props.setShowBottomMenu(true);
     this.props.setViewState(DeckBuilderViewStates.CardsList);
@@ -166,6 +176,14 @@ export class DeckBuilderEditHeader extends React.Component {
 
 export class DeckBuilderEditBody extends React.Component {
 
+  UpdateCurrDeck() {
+    this.props.currDeck.mainCards = this.props.currDeck.cards.filter(card => !card.specialCard);
+    this.props.currDeck.specialCards = this.props.currDeck.cards.filter(card => card.specialCard && !this.props.IsCardTypeOf("FORTALEZA", card.cardTypes));
+    this.props.currDeck.fortressCards = this.props.currDeck.cards.filter(card => !!this.props.IsCardTypeOf("FORTALEZA", card.cardTypes));
+
+    this.props.UpdateDeckListInSession();
+  }
+
   ChangeAmountOfCardInDeck(cardCode, amount) {
     let index = -1;
     this.props.currDeck.cards.forEach((card, i) => {
@@ -176,21 +194,40 @@ export class DeckBuilderEditBody extends React.Component {
 
     if (index > -1) {
       this.props.ChangeAmountOfCardInDeck(index, amount);
-      this.props.currDeck.mainCards = this.props.currDeck.cards.filter(card => !card.specialCard);
-      this.props.currDeck.specialCards = this.props.currDeck.cards.filter(card => card.specialCard && !this.props.IsCardTypeOf("FORTALEZA", card.cardTypes));
-      this.props.currDeck.fortressCards = this.props.currDeck.cards.filter(card => !!this.props.IsCardTypeOf("FORTALEZA", card.cardTypes));
-      this.props.UpdateDeckListInSession();
+      this.UpdateCurrDeck();
       this.forceUpdate();
     }
   }
-  ShowAllCard() {
+
+  ShowAllCards() {
     return (!this.props.showMainDeck && !this.props.showSpecialDeck && !this.props.showFortressDeck);
   }
 
   ShowPreviousCard(card) {
     const index = this.props.IndexOfCardInDeck(card);
     if (index <= 0) return;
-    const prevCard = this.props.currDeck.cards[index - 1];
+    let prevCard = this.props.currDeck.cards[index - 1];
+    if (prevCard.code === card.code) {
+      prevCard = this.props.currDeck.cards[index - 2];
+    }
+
+    // thumb card
+    let thumbCard = undefined;
+    const hasAlternateArt = !!this.props.availableCards.filter(p => !!p.isAlternateArt && p.code === prevCard.code).length;
+    if (hasAlternateArt) {
+      if (!prevCard.isAlternateArt && !prevCard.isAlternateArtSelected ||
+        !!prevCard.isAlternateArt && !!prevCard.isAlternateArtSelected
+      ) {
+        thumbCard = this.props.availableCards.filter(p => p.isAlternateArt !== prevCard.isAlternateArt && p.code === prevCard.code)[0];
+      }
+      else {
+        thumbCard = prevCard;
+        prevCard = this.props.availableCards.filter(p => p.isAlternateArt !== thumbCard.isAlternateArt && p.code === prevCard.code)[0];
+      }
+    }
+    /////////////
+
+    this.props.setCarouselThumbCard(thumbCard);
     this.props.setCarouselModalCard(prevCard);
     this.forceUpdate();
   }
@@ -198,8 +235,55 @@ export class DeckBuilderEditBody extends React.Component {
   ShowNextCard(card) {
     const index = this.props.IndexOfCardInDeck(card);
     if (index >= (this.props.currDeck.cards.length - 1)) return;
-    const nextCard = this.props.currDeck.cards[index + 1];
+    let nextCard = this.props.currDeck.cards[index + 1];
+    if (nextCard.code === card.code) {
+      nextCard = this.props.currDeck.cards[index + 2];
+    }
+
+    // thumb card
+    let thumbCard = undefined;
+    const hasAlternateArt = !!this.props.availableCards.filter(p => !!p.isAlternateArt && p.code === nextCard.code).length;
+    if (hasAlternateArt) {
+      if (!nextCard.isAlternateArt && !nextCard.isAlternateArtSelected ||
+        !!nextCard.isAlternateArt && !!nextCard.isAlternateArtSelected
+      ) {
+        thumbCard = this.props.availableCards.filter(p => p.isAlternateArt !== nextCard.isAlternateArt && p.code === nextCard.code)[0];
+      }
+      else {
+        thumbCard = nextCard;
+        nextCard = this.props.availableCards.filter(p => p.isAlternateArt !== thumbCard.isAlternateArt && p.code === nextCard.code)[0];
+      }
+    }
+    /////////////
+
+    this.props.setCarouselThumbCard(thumbCard);
     this.props.setCarouselModalCard(nextCard);
+    this.forceUpdate();
+  }
+
+  SetCardAlternateArtVisibility(card, isAlternateArtSelected) {
+    const key = card.key.split("-B")[0];
+    let thumbCard = undefined;
+
+    this.props.availableCards.forEach((_card) => {
+      if(_card.key.startsWith(key)) {
+        _card.isAlternateArtSelected = isAlternateArtSelected;
+        if(_card.key != card.key) {
+          thumbCard = _card;
+        }
+      }
+    });
+
+    this.props.currDeck.cards.forEach((_card) => {
+      if(_card.key.startsWith(key)) {
+        _card.isAlternateArtSelected = isAlternateArtSelected;
+      }
+    });
+
+    // invert cards
+    this.props.setCarouselThumbCard(card);
+    this.props.setCarouselModalCard(thumbCard);
+    this.UpdateCurrDeck();
     this.forceUpdate();
   }
 
@@ -209,16 +293,47 @@ export class DeckBuilderEditBody extends React.Component {
     this.props.setCarouselForwardAction({ action: (card) => { _this.ShowNextCard(card) } });
     this.props.setCarouselMinusAction({ action: (card) => { _this.ChangeAmountOfCardInDeck(card.code, -1) } });
     this.props.setCarouselPlusAction({ action: (card) => { _this.ChangeAmountOfCardInDeck(card.code, 1) } });
+    this.props.setCarouselThumbAction({ action: (card, isAlternateArtSelected) => { _this.SetCardAlternateArtVisibility(card, isAlternateArtSelected) } });
 
-    this.props.setCarouselModalCard(card);
+    let modalCard = undefined;
+    let thumbCard = undefined;
+
+    // thumb card
+    const key = card.key.split("-B")[0];
+    this.props.availableCards.forEach((_card) => {
+      if(_card.key.startsWith(key)) {
+        _card.isAlternateArtSelected = card.isAlternateArtSelected;
+
+        if (!!card.isAlternateArtSelected && !!_card.isAlternateArt ||
+          !card.isAlternateArtSelected && !_card.isAlternateArt
+        ) {
+          modalCard = _card;
+        }
+        else {
+          thumbCard = _card;
+        }
+      }
+    });
+    /////////////
+    
+    this.props.setCarouselThumbCard(thumbCard);
+    this.props.setCarouselModalCard(modalCard);
     this.props.setIsShowCarouselModal(true);
     this.forceUpdate();
+  }
+
+  GetThumbToShow(card) {
+    const hasAlternateArt = !!this.props.availableCards.filter(p => p.code === card.code && !!p.isAlternateArt).length;
+    const original = this.props.availableCards.filter(p => p.code === card.code && !p.isAlternateArt)[0];
+    const alternate = this.props.availableCards.filter(p => p.code === card.code && !!p.isAlternateArt)[0];
+    if (!!hasAlternateArt && !!card.isAlternateArtSelected) return alternate.thumb;
+    return original.thumb;
   }
 
   render() {
     return (
       <div className={'deckBuilder-body-cards-container ' + this.props.thumbWidth}>
-        {this.props.showMainDeck || this.ShowAllCard()
+        {this.props.showMainDeck || this.ShowAllCards()
           ? this.props.currDeck.mainCards.length > 0 ?
             this.props.currDeck.mainCards.map((card, i) =>
 
@@ -226,7 +341,7 @@ export class DeckBuilderEditBody extends React.Component {
                 <div className='deckBuilder-item entrada' key={`${card.key}-${idx}`}>
                   <div onClick={() => { this.OnClickCard(card); }}>
                     {/* <h4 className='text-title'>{card.name}</h4> */}
-                    <img alt="Thumbnail" className={'deckBuilder-card-thumb ' + this.props.thumbWidth} src={card.thumb}></img>
+                    <img alt="Thumbnail" className={'deckBuilder-card-thumb ' + this.props.thumbWidth} src={this.GetThumbToShow(card)}></img>
                   </div>
                 </div>
               ))
@@ -238,7 +353,7 @@ export class DeckBuilderEditBody extends React.Component {
 
           : <></>
         }
-        {this.props.showSpecialDeck || this.ShowAllCard()
+        {this.props.showSpecialDeck || this.ShowAllCards()
           ? this.props.currDeck.specialCards.length > 0 ?
             this.props.currDeck.specialCards.map((card, i) =>
 
@@ -258,7 +373,7 @@ export class DeckBuilderEditBody extends React.Component {
 
           : <></>
         }
-        {this.props.showFortressDeck || this.ShowAllCard()
+        {this.props.showFortressDeck || this.ShowAllCards()
           ? this.props.currDeck.fortressCards.length > 0 ?
             this.props.currDeck.fortressCards.map((card, i) =>
 

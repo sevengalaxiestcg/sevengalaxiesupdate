@@ -330,7 +330,28 @@ export class CardsListBody extends React.Component {
   ShowPreviousCard(card) {
     const index = this.IndexOfCardInList(card);
     if (index <= 0) return;
-    const prevCard = this.props.cardsList[index - 1];
+    let prevCard = this.props.cardsList[index - 1];
+    if (prevCard.code === card.code) {
+      prevCard = this.props.cardsList[index - 2];
+    }
+
+    // thumb card
+    let thumbCard = undefined;
+    const hasAlternateArt = !!this.props.cardsList.filter(p => !!p.isAlternateArt && p.code === prevCard.code).length;
+    if (hasAlternateArt) {
+      if (!prevCard.isAlternateArt && !prevCard.isAlternateArtSelected ||
+        !!prevCard.isAlternateArt && !!prevCard.isAlternateArtSelected
+      ) {
+        thumbCard = this.props.cardsList.filter(p => p.isAlternateArt !== prevCard.isAlternateArt && p.code === prevCard.code)[0];
+      }
+      else {
+        thumbCard = prevCard;
+        prevCard = this.props.cardsList.filter(p => p.isAlternateArt !== thumbCard.isAlternateArt && p.code === prevCard.code)[0];
+      }
+    }
+    /////////////
+    
+    this.props.setCarouselThumbCard(thumbCard);
     this.props.setCarouselModalCard(prevCard);
     this.forceUpdate();
   }
@@ -338,8 +359,64 @@ export class CardsListBody extends React.Component {
   ShowNextCard(card) {
     const index = this.IndexOfCardInList(card);
     if (index >= (this.props.cardsList.length - 1)) return;
-    const nextCard = this.props.cardsList[index + 1];
+    let nextCard = this.props.cardsList[index + 1];
+    if (nextCard.code === card.code) {
+      nextCard = this.props.cardsList[index + 2];
+    }
+    
+    // thumb card
+    let thumbCard = undefined;
+    const hasAlternateArt = !!this.props.cardsList.filter(p => !!p.isAlternateArt && p.code === nextCard.code).length;
+    if (hasAlternateArt) {
+      if (!nextCard.isAlternateArt && !nextCard.isAlternateArtSelected ||
+        !!nextCard.isAlternateArt && !!nextCard.isAlternateArtSelected
+      ) {
+        thumbCard = this.props.cardsList.filter(p => p.isAlternateArt !== nextCard.isAlternateArt && p.code === nextCard.code)[0];
+      }
+      else {
+        thumbCard = nextCard;
+        nextCard = this.props.cardsList.filter(p => p.isAlternateArt !== thumbCard.isAlternateArt && p.code === nextCard.code)[0];
+      }
+    }
+    /////////////
+    
+    this.props.setCarouselThumbCard(thumbCard);
     this.props.setCarouselModalCard(nextCard);
+    this.forceUpdate();
+  }
+
+  SetCardAlternateArtVisibility(card, isAlternateArtSelected) {
+    const key = card.key.split("-B")[0];
+    let thumbCard = undefined;
+    
+    this.props.cardsList.forEach((_card) => {
+      if(_card.key.startsWith(key)) {
+        _card.isAlternateArtSelected = isAlternateArtSelected;
+        if(_card.key != card.key) {
+          thumbCard = _card;
+        }
+      }
+    });
+
+    if (!!this.props.currDeck) {
+      this.props.currDeck.cards.forEach((_card) => {
+        if(_card.key.startsWith(key)) {
+          _card.isAlternateArtSelected = isAlternateArtSelected;
+        }
+      });
+      this.UpdateCurrDeck();
+    }
+
+    this.props.AvailableCards.forEach((_card) => {
+      if (_card.key.startsWith(key)) {
+        _card.isAlternateArtSelected = isAlternateArtSelected;
+      }
+    });
+    this.props.setAvailableCards(this.props.AvailableCards);
+
+    // invert cards
+    this.props.setCarouselThumbCard(card);
+    this.props.setCarouselModalCard(thumbCard);
     this.forceUpdate();
   }
 
@@ -349,7 +426,22 @@ export class CardsListBody extends React.Component {
     this.props.setCarouselForwardAction({ action: (card) => { _this.ShowNextCard(card) } });
     this.props.setCarouselMinusAction({ action: (card) => { _this.RemoveCardFromDeck(card) } });
     this.props.setCarouselPlusAction({ action: (card) => { _this.TryAddCardToDeck(card, false) } });
+    this.props.setCarouselThumbAction({ action: (card, isAlternateArtSelected) => { _this.SetCardAlternateArtVisibility(card, isAlternateArtSelected) } });
 
+    // thumb card
+    const key = card.key.split("-B")[0];
+    let thumbCard = undefined;
+    this.props.cardsList.forEach((_card) => {
+      if(_card.key.startsWith(key)) {
+        _card.isAlternateArtSelected = card.isAlternateArtSelected;
+        if(_card.key != card.key) {
+          thumbCard = _card;
+        }
+      }
+    });
+    /////////////
+    
+    this.props.setCarouselThumbCard(thumbCard);
     this.props.setCarouselModalCard(card);
     this.props.setIsShowCarouselModal(true);
     this.forceUpdate();
@@ -358,7 +450,7 @@ export class CardsListBody extends React.Component {
   render() {
     return (
       <>
-        {this.props.cardsList.map((card, i) =>
+        {this.props.cardsList.map((card, i) => !!card.isAlternateArt && !!card.isAlternateArtSelected || !card.isAlternateArt && !card.isAlternateArtSelected ?
           <div className='deckBuilder-item entrada' key={card.key}>
             <div onClick={() => { this.OnClickCard(card); }}>
               <img alt={card.name} className={'deckBuilder-card-thumb ' + (this.props.isDeckEdit && this.props.thumbWidth == 'mini' ? 'small' : this.props.thumbWidth)} src={card.thumb}></img>
@@ -380,20 +472,9 @@ export class CardsListBody extends React.Component {
               : <></>
             }
           </div>
+          : <></>
         )
         }
-        {/* {this.props.isDeckEdit === true && this.props.showBottomMenu === true
-          ? <div className='deckBuilder-footer'>
-            <div className='deckBuilder-footer-item' onClick={() => this.props.setViewState(DeckBuilderViewStates.DeckEdit)}>
-              <div className='deckBuilder-footer-itemBox'>
-                <button className="action padding-top-1 padding-bottom-1 margin-top-3 margin-bottom-3 padding-left-1 padding-right-1">
-                  Ver deck ({this.props.GetCurrDeckCountNormals()}/40)
-                </button>
-              </div>
-            </div>
-          </div>
-          : <></>
-        } */}
       </>
     );
   }

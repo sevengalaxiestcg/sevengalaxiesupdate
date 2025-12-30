@@ -87,6 +87,8 @@ export default function CardsLibrary() {
   const [CarouselForwardAction, setCarouselForwardAction] = useState({ action: () => { } });
   const [CarouselMinusAction, setCarouselMinusAction] = useState({ action: () => { } });
   const [CarouselPlusAction, setCarouselPlusAction] = useState({ action: () => { } });
+  const [CarouselThumbAction, setCarouselThumbAction] = useState({ action: () => { } });
+  const [CarouselThumbCard, setCarouselThumbCard] = useState(undefined);
   const [thumbWidth, setThumbWidth] = useState(window.localStorage.getItem("sevengalaxies@thumbWidth") ?? "small");
 
   //#endregion
@@ -158,19 +160,17 @@ export default function CardsLibrary() {
 
   //#region Globals
 
+  // MUST BE EQUAL to the one in DeckBuilder.js
   function GetAllAvailableCards() {
     cardsLibrary.cards.forEach(card => {
       if (!card.thumb || card.thumb === thumbPadrao) {
-        let cardCodeArr = card.code.split(" - ");
-        if (cardCodeArr.length < 2) {
-          cardCodeArr = card.code.split("-");
+        const thumbs = cardsThumbs();
+        const filtered = thumbs.filter(p => p.key === card.key);
+        if (!filtered.length) debugger;
+        else {
+          card.thumb = filtered[0].image;
+          card.isAlternateArt = card.key.endsWith("-B");
         }
-        if (cardCodeArr[1].startsWith("0")) {
-          cardCodeArr[1] = cardCodeArr[1].substring(1);
-        }
-        const cardCode = cardCodeArr[0] + " - " + cardCodeArr[1];
-        const filtered = cardsThumbs().filter(p => p.key === cardCode);
-        card.thumb = filtered[0].image;
       }
     });
     return cardsLibrary.cards;
@@ -181,10 +181,10 @@ export default function CardsLibrary() {
   }
 
   const Base = new DecksCardsComponentBase(setCountNormals, setCountSpecials, setCountFortress, DeckList, setDeckList, currDeck, setViewState, setIsDeckEdit, setShowBottomMenu,
-    setShowBodyInnerTopShadow, isDeckEdit, viewState, setRefresh, galaxyFilters, setGalaxyFilters, orderingDecksOptions, orderingCardsOptions, setDecksSearchTerm,
-    setDeckListToShow, lastOrderingDecksOption, setLastOrderingDecksOption, setOrderingDecksOptions, setCurrDeck, AvailableCards, setAvailableCards, advancedFilters, categoryFilters,
-    setAdvancedFilters, setCategoryFilters, cardsToShow, setCardsToShow, lastOrderingCardsOption, setLastOrderingCardsOption, DecksSearchTerm, DeckListToShow,
-    setOrderingCardsOptions, thumbWidth, setThumbWidth);
+      setShowBodyInnerTopShadow, isDeckEdit, viewState, setRefresh, galaxyFilters, setGalaxyFilters, orderingDecksOptions, orderingCardsOptions, setDecksSearchTerm,
+      setDeckListToShow, lastOrderingDecksOption, setLastOrderingDecksOption, setOrderingDecksOptions, setCurrDeck, AvailableCards, setAvailableCards, advancedFilters, categoryFilters,
+      setAdvancedFilters, setCategoryFilters, cardsToShow, setCardsToShow, lastOrderingCardsOption, setLastOrderingCardsOption, DecksSearchTerm, DeckListToShow,
+      setOrderingCardsOptions, thumbWidth, setThumbWidth);
 
   function Refresh() {
     return Base.Refresh();
@@ -307,6 +307,10 @@ export default function CardsLibrary() {
     (CarouselPlusAction.action)(card);
   }
 
+  function ExecuteCarouselThumbAction(card) {
+    (CarouselThumbAction.action)(card, !card.isAlternateArtSelected);
+  }
+
   //#endregion
 
   return (
@@ -370,6 +374,7 @@ export default function CardsLibrary() {
                 ? <div className={'deckBuilder-body-cards-container ' + thumbWidth}>
                   <CardsListBody setViewState={setViewState}
                     cardsList={cardsToShow}
+                    AvailableCards={AvailableCards} setAvailableCards={setAvailableCards}
                     currDeck={currDeck}
                     isDeckEdit={isDeckEdit}
                     ChangeAmountOfCardInDeck={ChangeAmountOfCardInDeck}
@@ -394,6 +399,8 @@ export default function CardsLibrary() {
                     setCarouselForwardAction={setCarouselForwardAction}
                     setCarouselMinusAction={setCarouselMinusAction}
                     setCarouselPlusAction={setCarouselPlusAction}
+                    setCarouselThumbAction={setCarouselThumbAction}
+                    setCarouselThumbCard={setCarouselThumbCard}
                     thumbWidth={thumbWidth}
                     setThumbWidth={setThumbWidth}
                   />
@@ -452,6 +459,7 @@ export default function CardsLibrary() {
           GetCardAmountInDeck={GetCardAmountInDeck} GetMaximumCardAmount={GetMaximumCardAmount}
           backAction={ExecuteCarouselBackAction} forwardAction={ExecuteCarouselForwardAction}
           minusAction={ExecuteCarouselMinusAction} plusAction={ExecuteCarouselPlusAction}
+          thumbAction={ExecuteCarouselThumbAction} thumbCard={CarouselThumbCard}
         />
 
         {isShowAlertModal

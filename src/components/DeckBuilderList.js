@@ -263,6 +263,12 @@ export class DeckBuilderDecksListBody extends React.Component {
     deck.specialCards = deck.cards.filter(card => card.specialCard && !this.props.IsCardTypeOf('FORTALEZA', card.cardTypes));
     deck.fortressCards = deck.cards.filter(card => !!this.props.IsCardTypeOf('FORTALEZA', card.cardTypes));
 
+    let cardsToShow = this.props.cardsToShow;
+    cardsToShow.forEach(card =>{
+      card.isAlternateArtSelected = !!deck.cards.filter(p => p.code === card.code && !!p.isAlternateArtSelected).length;
+    });
+    this.props.setCardsToShow(cardsToShow);
+
     const errorMessages = this.props.TestDeck(deck);
 
     this.props.setShowMainDeck(false);

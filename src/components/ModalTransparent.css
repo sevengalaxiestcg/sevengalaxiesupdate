@@ -218,36 +218,91 @@
 
 .modal-transparent-carousel-footer {
   display: flex;
+  width: 90vmin;
+  padding: 0 5vmin;
   flex-direction: row;
-  align-items: flex-end;
 }
 
 .modal-transparent-carousel-footer-content {
-  padding: 0 2vmin;
-  align-items: center;
+  width: -webkit-fill-available;
+  padding: 0;
   font-size: 7vmin;
   font-weight: 600;
 }
 
 .modal-transparent-carousel-footer-content .deckBuilder-item-nameBox.transparent {
+  display: flex;
+  width: -webkit-fill-available;
   background-color: transparent;
   border: none;
+  align-self: center;
+  align-items: center;
+}
+
+
+.modal-transparent-carousel-footer-content .deckBuilder-item-nameBox2 {
+  display: flex;
+  height: 11vmin;
+  width: -webkit-fill-available;
+  background-color: transparent;
+  border: none;
+  align-self: center;
+  align-items: center;
 }
 
 .modal-transparent-carousel-footer-content .bt-deckBuilder {
   padding: 0 5vmin;
+  width: -webkit-fill-available;
 }
 
-.modal-transparent-carousel-footer-content .bt-deckBuilder img {
-  width: 9vmin !important;
-  height: 9vmin !important;
-}
+  .modal-transparent-carousel-footer-content .bt-deckBuilder.left {
+    margin-left: 14vmin;
+  }
+
+  .modal-transparent-carousel-footer-content .bt-deckBuilder.right {
+    margin-right: 14vmin;
+  }
+
+  .modal-transparent-carousel-footer-content .bt-deckBuilder img {
+    width: 9vmin !important;
+    height: 9vmin !important;
+    margin: auto;
+  }
+
+  .modal-transparent-carousel-footer-content .bt-deckBuilder.icon-card-thumb {
+    display: flex;
+    flex-direction: column;
+    padding: 0;
+  }
+
+    .modal-transparent-carousel-footer-content .bt-deckBuilder.icon-card-thumb img {
+      width: 13vmin !important;
+      height: auto !important;
+      border-radius: 5px !important;
+      padding: 0;
+    }
+
+    .modal-transparent-carousel-footer-content .bt-deckBuilder.icon-card-thumb span {
+      font-size: 2.5vmin;
+      font-style: italic;
+      padding-top: .2rem;
+    }
 
 .modal-transparent-carousel-footer-content .deckBuilder-span-cardAmount {
+  display: flex;
   font-size: 8vmin;
+  width: -webkit-fill-available;
 }
 
+  .modal-transparent-carousel-footer-content .deckBuilder-span-cardAmount span {
+    margin: auto;
+  }
 
+@media screen and (min-width: 350px) and (max-width: 380px) {
+  .modal-transparent-carousel-footer-content .bt-deckBuilder.icon-card-thumb {
+    right: 10vmin !important;
+  }
+}
 
 @media screen and (min-width: 300px) And (max-height: 890px) And (min-aspect-ratio: 9/16) {}
 

@@ -36,6 +36,8 @@ export class Card {
     this.counterDamage = 0;
     this.agilityCost = 0;
     this.multiAttackType = CreatureMultiAttackTypes.Undefined;
+    this.isAlternateArt = false;
+    this.isAlternateArtSelected = false;
   }
 }
 
