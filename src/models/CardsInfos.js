@@ -217,4 +217,5 @@ export const SupportCardsSubtypes = [
   "Fonte",
   "Mecanismo",
   "Nave",
+  "Lugar"
 ];
