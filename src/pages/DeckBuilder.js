@@ -516,6 +516,7 @@ export default function DeckBuilder() {
                   isShowEditDeckName={isShowEditDeckName} setIsShowEditDeckName={setIsShowEditDeckName}
                   setCurrDeck={setCurrDeck}
                   setViewState={setViewState}
+                  AvailableCards={AvailableCards}
                   cardsToShow={cardsToShow} setCardsToShow={setCardsToShow}
                   setShowBottomMenu={setShowBottomMenu}
                   IsCardTypeOf={IsCardTypeOf}

@@ -255,10 +255,26 @@ export class DeckBuilderDecksListBody extends React.Component {
   }
 
   SendToEditDeck(index) {
+    const $this = this;
     const deck = this.props.DeckList[index];
     if (!deck.creationDate) deck.creationDate = new Date();
 
+    let deckCards = [];
     deck.cards = this.props.OrderDeckCards(deck.cards);
+    deck.cards.forEach(card => {
+      const filteredList = $this.props.AvailableCards.filter(p => p.key === card.key && p.code === card.code);
+      if (!!filteredList.length) {
+        let availableCard = deepCopy(filteredList[0]);
+        availableCard.amount = card.amount;
+        availableCard.isAlternateArtSelected = card.isAlternateArtSelected;
+        deckCards.push(availableCard);
+      }
+    });
+    deck.cards = deckCards;
+    this.props.DeckList[index] = deck;
+    const deckList = deepCopy(this.props.DeckList);
+    this.props.SetDeckListInSession(deckList);
+
     deck.mainCards = deck.cards.filter(card => !card.specialCard);
     deck.specialCards = deck.cards.filter(card => card.specialCard && !this.props.IsCardTypeOf('FORTALEZA', card.cardTypes));
     deck.fortressCards = deck.cards.filter(card => !!this.props.IsCardTypeOf('FORTALEZA', card.cardTypes));
