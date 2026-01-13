@@ -429,10 +429,10 @@ export class CardsListBody extends React.Component {
     this.props.setCarouselThumbAction({ action: (card, isAlternateArtSelected) => { _this.SetCardAlternateArtVisibility(card, isAlternateArtSelected) } });
 
     // thumb card
-    const key = card.key.split("-B")[0];
     let thumbCard = undefined;
     this.props.cardsList.forEach((_card) => {
-      if(_card.key.startsWith(key)) {
+      if(_card.code === card.code) {
+        // debugger
         _card.isAlternateArtSelected = card.isAlternateArtSelected;
         if(_card.key != card.key) {
           thumbCard = _card;
@@ -440,7 +440,7 @@ export class CardsListBody extends React.Component {
       }
     });
     /////////////
-    
+
     this.props.setCarouselThumbCard(thumbCard);
     this.props.setCarouselModalCard(card);
     this.props.setIsShowCarouselModal(true);

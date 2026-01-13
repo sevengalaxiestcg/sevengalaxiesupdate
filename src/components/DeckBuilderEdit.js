@@ -299,9 +299,9 @@ export class DeckBuilderEditBody extends React.Component {
     let thumbCard = undefined;
 
     // thumb card
-    const key = card.key.split("-B")[0];
     this.props.availableCards.forEach((_card) => {
-      if(_card.key.startsWith(key)) {
+      if(_card.code === card.code) {
+        // debugger
         _card.isAlternateArtSelected = card.isAlternateArtSelected;
 
         if (!!card.isAlternateArtSelected && !!_card.isAlternateArt ||
