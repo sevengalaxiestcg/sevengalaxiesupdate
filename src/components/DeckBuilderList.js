@@ -258,13 +258,11 @@ export class DeckBuilderDecksListBody extends React.Component {
     const $this = this;
     const deck = this.props.DeckList[index];
     if (!deck.creationDate) deck.creationDate = new Date();
-    
+
     let deckCards = [];
     deck.cards = this.props.OrderDeckCards(deck.cards);
     deck.cards.forEach(card => {
-      const filteredList = $this.props.AvailableCards
-        .filter(p => p.key.replaceAll(" ", "") === card.key.replaceAll(" ", "") &&
-                     p.code.replaceAll(" ", "") === card.code.replaceAll(" ", ""));
+      const filteredList = $this.props.AvailableCards.filter(p => p.key === card.key && p.code === card.code);
       if (!!filteredList.length) {
         let availableCard = deepCopy(filteredList[0]);
         availableCard.amount = card.amount;
