@@ -361,7 +361,7 @@ export class DeckBuilderEditBody extends React.Component {
                 <div className='deckBuilder-item entrada' key={`${card.key}-${idx}`}>
                   <div onClick={() => { this.OnClickCard(card); }}>
                     {/* <h4 className='text-title'>{card.name}</h4> */}
-                    <img alt="Thumbnail" className={'deckBuilder-card-thumb ' + this.props.thumbWidth} src={card.thumb}></img>
+                    <img alt="Thumbnail" className={'deckBuilder-card-thumb ' + this.props.thumbWidth} src={this.GetThumbToShow(card)}></img>
                   </div>
                 </div>
               ))
@@ -381,7 +381,7 @@ export class DeckBuilderEditBody extends React.Component {
                 <div className='deckBuilder-item entrada' key={`${card.key}-${idx}`}>
                   <div onClick={() => { this.OnClickCard(card); }}>
                     {/* <h4 className='text-title'>{card.name}</h4> */}
-                    <img alt="Thumbnail" className={'deckBuilder-card-thumb ' + this.props.thumbWidth} src={card.thumb}></img>
+                    <img alt="Thumbnail" className={'deckBuilder-card-thumb ' + this.props.thumbWidth} src={this.GetThumbToShow(card)}></img>
                   </div>
                 </div>
               ))

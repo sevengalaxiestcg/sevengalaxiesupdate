@@ -143,6 +143,8 @@ export class DecksCardsComponentBase {
     }
 
     cardsList.forEach(card => {
+      if (!!card.isAlternateArt) return;
+
       if (card.specialCard && !this.IsCardTypeOf('FORTALEZA', card.cardTypes) && !this.IsCardTypeOf('RECURSO', card.cardTypes)) {
         countSpecials += card.amount ?? 1;
       }
